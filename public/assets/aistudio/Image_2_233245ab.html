@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Landing Time</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Epilogue:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;background-color:#F7F7F2;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        canvas: "#F7F7F2",
+        card: "#FFFFFF",
+        "border-subtle": "#E5E5DF",
+        "surface-sub": "#F8F8F5",
+        "surface-dimmed": "#F1F0E9",
+        charcoal: "#202124",
+        slate: "#737780",
+        muted: "#9CA3AF",
+        sage: {
+          DEFAULT: "#3D8065",
+          tint: "#EBF4F0",
+          hover: "#336d56",
+          dark: "#265442"
+        },
+        amber: {
+          accent: "#D97706",
+          tint: "#FEF3C7",
+          border: "#FDE68A"
+        },
+        info: {
+          accent: "#0284C7",
+          tint: "#F0F9FF"
+        }
+      },
+      boxShadow: {
+        apple: "0 1px 3px rgba(0,0,0,0.04), 0 10px 25px -5px rgba(0,0,0,0.03)",
+        card: "0 1px 2px rgba(0,0,0,0.03)",
+        float: "0 8px 30px rgba(0,0,0,0.08)"
+      },
+      fontFamily: {
+        sans: ["Plus Jakarta Sans", "Inter", "-apple-system", "sans-serif"],
+        display: ["Epilogue", "-apple-system", "sans-serif"],
+        mono: ["SF Mono", "Menlo", "Consolas", "monospace"]
+      }
+    }
+  }
+};</script></head><body class="bg-canvas font-sans text-charcoal antialiased min-h-screen selection:bg-sage-tint selection:text-sage-dark"><header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-border-subtle"><div class="max-w-7xl mx-auto h-[76px] px-6 lg:px-8 flex items-center justify-between"><div class="flex items-center gap-3.5"><img alt="Landing Time" class="w-8 h-8 rounded-full object-cover ring-1 ring-border-subtle shadow-sm" src="https://lh3.googleusercontent.com/aida/AEtjO1XWx6NU9sObaaaCS85Hltpt7sQLtcgxT5al9_eDCkoBPZt7wSKCgvJA3vqKNTQUHLWyWNQhEkQYM68nhFYfqGlS8W0_qHc6rIb_0qLazk4Ex4cLnherLmmAogQre79Qq5non-vkdnHbpYxGT1OtEvF6aopk35KBsK6CO9pqWvxt_O09MQ_f54Jdxn5SfxYAyrEpgFZf96IoXHC3fquY8ygn-kkBhJ1LeO2az8rKRkRlJ2SYkUVBAs0Bl-Y"/><div class="flex flex-col"><div class="flex items-center gap-1.5"><span class="font-display font-bold tracking-tight text-charcoal text-[17px] leading-tight">LANDING TIME</span><span class="w-1.5 h-1.5 rounded-full bg-sage inline-block"></span></div><span class="text-[10px] font-semibold tracking-widest text-slate uppercase">SMART COOKING COORDINATION</span></div></div><div class="flex items-center gap-3"><div class="hidden sm:flex items-center px-3.5 py-1.5 rounded-full bg-surface-sub border border-border-subtle text-slate text-xs font-semibold tracking-wide uppercase">NEW COOKING SESSION</div><div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sage-tint border border-sage/20"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-sage"></span></span><span class="material-symbols-outlined text-sage text-[16px]">mic</span><span class="text-xs font-bold tracking-wider text-sage-dark uppercase">VOICE READY</span></div><button aria-label="Settings" class="w-9 h-9 flex items-center justify-center rounded-xl bg-surface-sub hover:bg-surface-dimmed text-slate hover:text-charcoal transition-colors border border-border-subtle focus:outline-none focus:ring-2 focus:ring-sage/20" type="button"><span class="material-symbols-outlined text-[19px]">settings</span></button></div></div></header><main class="w-full pt-[76px] bg-canvas min-h-screen"><div class="max-w-7xl mx-auto px-6 lg:px-8 py-8"><div class="flex flex-col w-full pb-16">
+<!-- Top Intro Section -->
+<header class="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="flex flex-col max-w-3xl">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-sage"></span>
+<span class="text-[11px] font-bold tracking-widest text-sage uppercase">PLAN YOUR MEAL</span>
+<span class="text-border-subtle text-xs">/</span>
+<span class="text-[11px] font-semibold tracking-wider text-slate uppercase">SYNCHRONIZED DEPLOYMENT</span>
+</div>
+<h1 class="font-display text-3xl lg:text-4xl text-charcoal tracking-tight font-bold leading-tight">Let's get dinner to the table together.</h1>
+<p class="text-[15px] leading-relaxed text-slate mt-2 max-w-2xl font-normal">
+        Add the dishes you want to serve. Landing Time will coordinate your cooking steps, oven thermal capacity, and stovetop stages backwards from one shared landing moment.
+      </p>
+</div>
+<div class="flex items-center gap-2.5 self-start md:self-auto shrink-0 bg-white border border-border-subtle px-4 py-2 rounded-full shadow-apple">
+<div class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-sage"></span>
+</div>
+<span class="text-xs font-bold text-charcoal tracking-wider uppercase">PLANNING MODE</span>
+<span class="text-[11px] px-2 py-0.5 rounded-full bg-surface-sub border border-border-subtle text-slate font-mono font-medium">SESSION #284</span>
+</div>
+</header>
+<!-- Main 2-Column Responsive Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT COLUMN: Dish Orchestration (~60%) -->
+<section class="lg:col-span-7 flex flex-col gap-4">
+<!-- Dish Section Header -->
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-3">
+<h2 class="text-sm font-bold text-charcoal tracking-wider uppercase">YOUR MENU</h2>
+<span class="text-xs px-2.5 py-0.5 rounded-full bg-sage-tint text-sage-dark font-semibold tracking-wide border border-sage/20" id="dishCountBadge">3 DISHES SELECTED</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate text-xs font-medium">
+<span class="material-symbols-outlined text-[15px] text-muted">sync_alt</span>
+<span>PARALLEL EXECUTION</span>
+</div>
+</div>
+<!-- Dish Cards Container -->
+<div class="flex flex-col gap-4" id="dishList">
+<!-- Dish 1 -->
+<article class="group relative bg-white border border-border-subtle rounded-2xl p-5 hover:border-border-subtle/80 hover:shadow-apple transition-all duration-200 shadow-card flex flex-col gap-4" id="dish-1">
+<div class="flex items-start justify-between gap-4">
+<div class="flex items-center gap-4 min-w-0">
+<div class="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-surface-dimmed ring-1 ring-black/5 shadow-inner">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" data-alt="Golden crisp herb-crusted roast chicken fresh from the oven, garnished with rosemary sprigs, cracked black pepper, and garlic cloves, resting in a cast iron skillet under dramatic moody warm kitchen lighting, deep contrast shadows, culinary macro photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhYlJphmpyxnUVn8hDB7cRAnYhsGWGoF-bktmLCarORV_rN-bLN8i-ShN7e2MX_0M1GqUefz1xhWZC28pSIOQeCzFGeTez-YPY9rKdZ_gCxROgBFTnsN3FFqOecsSrsQXsA4gngwGTlpOZq1TPXGb1qItvg_-pHGf3VKvX-_8ZMGWMtpE-yca7-yhDwhKG3FfLnJCl4qPOgkKXOMwzmLUsD9-Wv4y6Pa9SDNrq_vJRvqEku-odqIC2"/>
+<span class="absolute bottom-1 left-1 bg-black/60 backdrop-blur-xs text-[10px] px-1.5 py-0.5 rounded text-white font-mono font-medium">D-01</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[11px] font-bold tracking-wider text-sage-dark px-2 py-0.5 rounded-md bg-sage-tint uppercase">MAIN COURSE</span>
+<span class="text-[11px] text-slate flex items-center gap-1 font-mono">
+<span class="material-symbols-outlined text-[14px] text-amber-accent">local_fire_department</span> High Thermal Priority
+                  </span>
+</div>
+<h3 class="text-base font-semibold text-charcoal truncate group-hover:text-sage transition-colors">
+                  Herb-Crusted Roast Chicken
+                </h3>
+<p class="text-xs text-slate mt-0.5 line-clamp-1">Whole 4.5 lb bird, herbed compound butter, garlic aromatic cavity cavity pack.</p>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button class="px-3 py-1.5 rounded-lg bg-surface-sub hover:bg-surface-dimmed text-charcoal text-xs font-semibold transition-colors flex items-center gap-1 border border-border-subtle" type="button">
+<span class="material-symbols-outlined text-[15px] text-slate">edit</span>
+<span>Edit</span>
+</button>
+<button aria-label="Remove dish" class="w-8 h-8 rounded-lg bg-surface-sub hover:bg-red-50 hover:text-red-600 text-slate transition-colors flex items-center justify-center border border-border-subtle" onclick="removeDish('dish-1', 'Herb-Crusted Roast Chicken')" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Timeline Phases & Appliance Chips -->
+<div class="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-border-subtle/60 bg-surface-sub/50 -mx-5 -mb-5 px-5 py-3 rounded-b-2xl">
+<div class="flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-border-subtle text-charcoal text-xs font-mono">
+<span class="material-symbols-outlined text-slate text-[15px]">timer</span>
+<span>Prep 10m</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-tint border border-amber-border text-amber-accent text-xs font-mono font-medium">
+<span class="material-symbols-outlined text-[15px]">heat</span>
+<span>Oven 45m @ 425°F</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-border-subtle text-slate text-xs font-mono">
+<span class="material-symbols-outlined text-[15px] text-muted">hourglass_empty</span>
+<span>Rest 15m</span>
+</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-dimmed border border-border-subtle text-charcoal text-[11px] font-semibold tracking-wider">
+<span class="material-symbols-outlined text-amber-accent text-[15px]">microwave</span>
+<span>SHARED OVEN (RACK 2)</span>
+</div>
+</div>
+</article>
+<!-- Dish 2 -->
+<article class="group relative bg-white border border-border-subtle rounded-2xl p-5 hover:border-border-subtle/80 hover:shadow-apple transition-all duration-200 shadow-card flex flex-col gap-4" id="dish-2">
+<div class="flex items-start justify-between gap-4">
+<div class="flex items-center gap-4 min-w-0">
+<div class="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-surface-dimmed ring-1 ring-black/5 shadow-inner">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" data-alt="Crispy golden smashed Yukon gold baby potatoes scattered with flaky Maldon sea salt crystals, rosemary needles, and browned edges on dark parchment paper, overhead high-contrast shot with subtle steam wisps, culinary masterclass aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQUb3rjK-CS4oDLRlhMx5pRlmvmu7BeUWM7ewwJELQ-Qy_ggXxhwVJdezQYDSDAID2qTdMwg_J2v6-iXnboofoAf-c-FBGkVnwDKKEB0rpjX_-s8PHARHIv_lDPwze_9mLGdha2ynrCFTeSScjlkjkedzvIcP6YMA42vXQBM50m5CdSbN5v-WJ_VPIgG3WSmtd6K8a8OMyXjnUIjExyFlh2mLjxuAeNy2D5RQMOM1vYICVjjzYVJxl"/>
+<span class="absolute bottom-1 left-1 bg-black/60 backdrop-blur-xs text-[10px] px-1.5 py-0.5 rounded text-white font-mono font-medium">D-02</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[11px] font-bold tracking-wider text-amber-accent px-2 py-0.5 rounded-md bg-amber-tint uppercase">SIDE</span>
+<span class="text-[11px] text-slate flex items-center gap-1 font-mono">
+<span class="material-symbols-outlined text-[14px]">link</span> Dual Appliance Dependent
+                  </span>
+</div>
+<h3 class="text-base font-semibold text-charcoal truncate group-hover:text-sage transition-colors">
+                  Crispy Smashed Potatoes
+                </h3>
+<p class="text-xs text-slate mt-0.5 line-clamp-1">Parboiled baby yukons, smashed flat, crisped under high ambient heat.</p>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button class="px-3 py-1.5 rounded-lg bg-surface-sub hover:bg-surface-dimmed text-charcoal text-xs font-semibold transition-colors flex items-center gap-1 border border-border-subtle" type="button">
+<span class="material-symbols-outlined text-[15px] text-slate">edit</span>
+<span>Edit</span>
+</button>
+<button aria-label="Remove dish" class="w-8 h-8 rounded-lg bg-surface-sub hover:bg-red-50 hover:text-red-600 text-slate transition-colors flex items-center justify-center border border-border-subtle" onclick="removeDish('dish-2', 'Crispy Smashed Potatoes')" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Timeline Phases & Appliance Chips -->
+<div class="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-border-subtle/60 bg-surface-sub/50 -mx-5 -mb-5 px-5 py-3 rounded-b-2xl">
+<div class="flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-border-subtle text-charcoal text-xs font-mono">
+<span class="material-symbols-outlined text-info-accent text-[15px]">skillet</span>
+<span>Boiling 15m</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-border-subtle text-charcoal text-xs font-mono">
+<span class="material-symbols-outlined text-slate text-[15px]">pan_tool</span>
+<span>Active Prep 5m</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-tint border border-amber-border text-amber-accent text-xs font-mono font-medium">
+<span class="material-symbols-outlined text-[15px]">heat</span>
+<span>Shared Oven 25m @ 425°F</span>
+</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-dimmed border border-border-subtle text-charcoal text-[11px] font-semibold tracking-wider">
+<span class="material-symbols-outlined text-info-accent text-[15px]">stream_apps</span>
+<span class="material-symbols-outlined text-amber-accent text-[15px]">microwave</span>
+<span>STOVETOP + OVEN</span>
+</div>
+</div>
+</article>
+<!-- Dish 3 -->
+<article class="group relative bg-white border border-border-subtle rounded-2xl p-5 hover:border-border-subtle/80 hover:shadow-apple transition-all duration-200 shadow-card flex flex-col gap-4" id="dish-3">
+<div class="flex items-start justify-between gap-4">
+<div class="flex items-center gap-4 min-w-0">
+<div class="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-surface-dimmed ring-1 ring-black/5 shadow-inner">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" data-alt="Tender charred bright emerald-green asparagus spears plated alongside a glossy silk pan gravy jus reduction in a rustic dark ceramic bowl, soft natural diffused side rim light, rich textures and droplets, Michelin-quality plating aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcEdHGf8olxrjDJq97WjQBxN8ppCRaf4RNinf0gkuavl-oRjQwUwARwa0rXIA8aejtKLqvE4iQp10SYpYf8iQBnwtDMCMMgqDn6BjHGx-Z9CQMJSMryViYNjbPH7y2rwLFpVMnlPgVxNxbTucSSDsUYUJBd849wD_qeeVrUOguWK-C7BRgsPTE0p3fQrOxhtuFc3YQD8qG_VEWyG6NS-5S-AbjqTLw5H_ZsHwDDe8tpaVqBryE4nyj"/>
+<span class="absolute bottom-1 left-1 bg-black/60 backdrop-blur-xs text-[10px] px-1.5 py-0.5 rounded text-white font-mono font-medium">D-03</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[11px] font-bold tracking-wider text-sage-dark px-2 py-0.5 rounded-md bg-sage-tint uppercase">SIDE + SAUCE</span>
+<span class="text-[11px] text-slate flex items-center gap-1 font-mono">
+<span class="material-symbols-outlined text-[14px]">bolt</span> Final 12-Minute Countdown
+                  </span>
+</div>
+<h3 class="text-base font-semibold text-charcoal truncate group-hover:text-sage transition-colors">
+                  Sautéed Asparagus &amp; Pan Gravy
+                </h3>
+<p class="text-xs text-slate mt-0.5 line-clamp-1">Quick high-heat blistered spears plus rich skillet pan dripping deglaze.</p>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button class="px-3 py-1.5 rounded-lg bg-surface-sub hover:bg-surface-dimmed text-charcoal text-xs font-semibold transition-colors flex items-center gap-1 border border-border-subtle" type="button">
+<span class="material-symbols-outlined text-[15px] text-slate">edit</span>
+<span>Edit</span>
+</button>
+<button aria-label="Remove dish" class="w-8 h-8 rounded-lg bg-surface-sub hover:bg-red-50 hover:text-red-600 text-slate transition-colors flex items-center justify-center border border-border-subtle" onclick="removeDish('dish-3', 'Sautéed Asparagus &amp; Pan Gravy')" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Timeline Phases & Appliance Chips -->
+<div class="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-border-subtle/60 bg-surface-sub/50 -mx-5 -mb-5 px-5 py-3 rounded-b-2xl">
+<div class="flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-sage-tint border border-sage/20 text-sage-dark text-xs font-mono font-semibold">
+<span class="material-symbols-outlined text-[15px]">microwave</span>
+<span>Stovetop 12m Active Finish</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-border-subtle text-slate text-xs">
+<span>Synchronized with Chicken Rest</span>
+</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-dimmed border border-border-subtle text-charcoal text-[11px] font-semibold tracking-wider">
+<span class="material-symbols-outlined text-sage text-[15px]">skillet</span>
+<span>STOVETOP (BURNER 1 &amp; 2)</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Add Dish Action -->
+<button class="w-full h-13 py-3.5 rounded-2xl bg-white hover:bg-surface-sub text-charcoal border border-dashed border-border-subtle hover:border-slate/40 flex items-center justify-center gap-2 text-sm font-semibold tracking-wide transition-all shadow-card focus:outline-none focus:ring-2 focus:ring-sage/20" onclick="addNewDishSimulation()" type="button">
+<span class="material-symbols-outlined text-sage text-[20px]">add_circle</span>
+<span>+ ADD ANOTHER DISH</span>
+</button>
+<!-- Calibration Footnote -->
+<div class="flex items-center justify-between px-2 pt-1 text-slate text-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-sage">check_circle</span>
+<span>Estimates calibrated for standard residential convection &amp; gas ranges</span>
+</div>
+<span class="font-mono text-muted text-[11px]">TOLERANCE ±2 MIN</span>
+</div>
+<!-- Live Timeline Synchronizer Preview -->
+<div class="bg-white border border-border-subtle rounded-2xl p-5 mt-2 flex flex-col gap-3 shadow-apple">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sage text-[18px]">waterfall_chart</span>
+<span class="text-xs font-bold text-charcoal tracking-wider uppercase">SYNCHRONIZATION CASCADE</span>
+</div>
+<span class="font-mono text-xs text-slate">T-minus 70 min start</span>
+</div>
+<!-- Tabular Gantt Mini Graphic -->
+<div class="w-full bg-surface-sub border border-border-subtle p-3.5 rounded-xl flex flex-col gap-2.5">
+<!-- Track 1: Chicken -->
+<div class="flex items-center gap-3">
+<span class="w-24 shrink-0 text-xs font-medium text-slate truncate">Roast Chicken</span>
+<div class="relative flex-1 h-3 bg-surface-dimmed rounded-full overflow-hidden flex">
+<div class="w-[14%] bg-sage/60 h-full" title="Prep 10m"></div>
+<div class="w-[64%] bg-amber-accent h-full" title="Oven 45m"></div>
+<div class="w-[22%] bg-info-accent h-full" title="Rest 15m"></div>
+</div>
+<span class="w-10 text-right font-mono text-xs font-semibold text-charcoal shrink-0">70m</span>
+</div>
+<!-- Track 2: Potatoes -->
+<div class="flex items-center gap-3">
+<span class="w-24 shrink-0 text-xs font-medium text-slate truncate">Smashed Pot.</span>
+<div class="relative flex-1 h-3 bg-surface-dimmed rounded-full overflow-hidden flex">
+<div class="w-[35%] bg-transparent h-full"></div>
+<div class="w-[21%] bg-info-accent/70 h-full" title="Boil 15m"></div>
+<div class="w-[8%] bg-sage/60 h-full" title="Smash 5m"></div>
+<div class="w-[36%] bg-amber-accent h-full" title="Bake 25m"></div>
+</div>
+<span class="w-10 text-right font-mono text-xs font-semibold text-charcoal shrink-0">45m</span>
+</div>
+<!-- Track 3: Asparagus -->
+<div class="flex items-center gap-3">
+<span class="w-24 shrink-0 text-xs font-medium text-slate truncate">Asparagus &amp; Jus</span>
+<div class="relative flex-1 h-3 bg-surface-dimmed rounded-full overflow-hidden flex">
+<div class="w-[82%] bg-transparent h-full"></div>
+<div class="w-[18%] bg-sage h-full" title="Active Finish 12m"></div>
+</div>
+<span class="w-10 text-right font-mono text-xs font-semibold text-charcoal shrink-0">12m</span>
+</div>
+<!-- Sync Marker Line -->
+<div class="flex items-center justify-between pt-1 border-t border-border-subtle text-[11px] text-slate font-mono">
+<span>6:20 PM (Prep Start)</span>
+<span class="text-sage font-bold">7:30 PM (All Landed)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: Serving Time & Plan Readiness (~40%) -->
+<aside class="lg:col-span-5 flex flex-col gap-5 sticky top-[92px]">
+<!-- CARD A: Target Serving Time -->
+<section class="bg-white border border-border-subtle rounded-2xl p-6 shadow-apple flex flex-col gap-5">
+<div class="flex items-start justify-between">
+<div>
+<span class="text-[11px] font-bold tracking-widest text-sage uppercase">TARGET SERVING TIME</span>
+<h2 class="text-base font-semibold text-charcoal mt-0.5">When should dinner land?</h2>
+</div>
+<!-- Compact Date Pill -->
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-sub border border-border-subtle text-charcoal text-xs font-semibold">
+<span class="material-symbols-outlined text-[15px] text-slate">calendar_today</span>
+<span id="targetDate">Today, Nov 14</span>
+</div>
+</div>
+<!-- Tactile Display Time Picker Module -->
+<div class="bg-surface-sub border border-border-subtle rounded-2xl p-4 flex flex-col items-center justify-center gap-4">
+<div class="flex items-center justify-center gap-3">
+<!-- Digital Tabular Clock -->
+<div class="flex items-baseline font-display text-5xl tracking-tight font-bold text-charcoal font-mono select-none">
+<span class="transition-all" id="displayHour">07</span>
+<span class="text-sage mx-1 animate-pulse">:</span>
+<span class="transition-all" id="displayMinute">30</span>
+</div>
+<!-- AM/PM Segmented Control -->
+<div class="flex flex-col rounded-xl bg-surface-dimmed p-1 ml-2 border border-border-subtle">
+<button class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate hover:text-charcoal transition-all" id="btnAM" onclick="setMeridiem('AM')" type="button">
+                AM
+              </button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-bold bg-white text-charcoal shadow-sm transition-all border border-border-subtle/80" id="btnPM" onclick="setMeridiem('PM')" type="button">
+                PM
+              </button>
+</div>
+</div>
+<!-- Stepper Controls (+/- 15 min & presets) -->
+<div class="grid grid-cols-4 w-full gap-2">
+<button class="h-10 rounded-xl bg-white hover:bg-surface-dimmed text-charcoal border border-border-subtle flex items-center justify-center gap-1 text-xs font-bold transition-colors active:scale-95 shadow-xs" onclick="adjustMinutes(-15)" title="Minus 15 minutes" type="button">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+<span>15m</span>
+</button>
+<button class="h-10 rounded-xl bg-white hover:bg-surface-dimmed text-slate hover:text-charcoal border border-border-subtle font-mono text-xs font-semibold transition-colors shadow-xs" onclick="setTimePreset(19, 0)" type="button">
+              7:00
+            </button>
+<button class="h-10 rounded-xl bg-sage-tint text-sage-dark border border-sage/20 font-mono text-xs font-bold transition-colors" onclick="setTimePreset(19, 30)" type="button">
+              7:30
+            </button>
+<button class="h-10 rounded-xl bg-white hover:bg-surface-dimmed text-charcoal border border-border-subtle flex items-center justify-center gap-1 text-xs font-bold transition-colors active:scale-95 shadow-xs" onclick="adjustMinutes(15)" title="Add 15 minutes" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>15m</span>
+</button>
+</div>
+</div>
+<!-- Dynamic Backward Scheduling Explainer -->
+<div class="p-3.5 rounded-xl bg-surface-sub border border-border-subtle flex items-start gap-3">
+<span class="material-symbols-outlined text-sage text-[19px] mt-0.5 shrink-0">schedule</span>
+<div class="flex flex-col">
+<span class="text-[11px] font-bold text-sage uppercase tracking-wider">
+              TARGET LANDING — <span id="bannerTimeText">7:30 PM</span>
+</span>
+<p class="text-xs text-slate mt-0.5 leading-relaxed">
+              We'll work backward to generate step alerts. First chicken prep triggers at <span class="text-charcoal font-semibold font-mono" id="prepTriggerText">6:20 PM</span>.
+            </p>
+</div>
+</div>
+</section>
+<!-- CARD B: Cooking Workload Metrics -->
+<section class="bg-white border border-border-subtle rounded-2xl p-6 shadow-apple flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold tracking-widest text-charcoal uppercase">YOUR COOKING PLAN</span>
+<span class="text-[11px] text-muted font-mono">TOTAL ESTIMATE 70M</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Metric 1: Active Time -->
+<div class="bg-surface-sub border border-border-subtle rounded-xl p-4 flex flex-col justify-between">
+<span class="text-[11px] text-slate font-semibold uppercase tracking-wider">ACTIVE EFFORT</span>
+<div class="my-2">
+<span class="text-3xl font-bold text-sage font-mono">31</span>
+<span class="text-xs text-muted font-semibold ml-1">MIN</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-slate">
+<span class="material-symbols-outlined text-[14px] text-sage">skillet</span>
+<span>Chop, baste, stir</span>
+</div>
+</div>
+<!-- Metric 2: Passive Time -->
+<div class="bg-surface-sub border border-border-subtle rounded-xl p-4 flex flex-col justify-between">
+<span class="text-[11px] text-slate font-semibold uppercase tracking-wider">PASSIVE COOKING</span>
+<div class="my-2">
+<span class="text-3xl font-bold text-amber-accent font-mono">64</span>
+<span class="text-xs text-muted font-semibold ml-1">MIN</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-slate">
+<span class="material-symbols-outlined text-[14px] text-amber-accent">hourglass_bottom</span>
+<span>Bake, simmer, rest</span>
+</div>
+</div>
+</div>
+<p class="text-xs text-slate leading-relaxed">
+          Active time is hands-on task execution. Passive stages allow you to step away without pausing the synchronizer.
+        </p>
+<!-- Summary Badge Strip -->
+<div class="py-2 px-3 rounded-xl bg-surface-sub border border-border-subtle flex items-center justify-between text-slate text-[11px] font-mono">
+<span>3 DISHES</span>
+<span>•</span>
+<span>SHARED APPLIANCES</span>
+<span>•</span>
+<span class="text-sage font-bold">LOCKED TIMELINE</span>
+</div>
+</section>
+<!-- CARD C: Equipment Readiness Check -->
+<section class="bg-white border border-border-subtle rounded-2xl p-6 shadow-apple flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold tracking-widest text-charcoal uppercase">EQUIPMENT CHECK</span>
+<span class="material-symbols-outlined text-muted text-[18px]">tune</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Row 1: Oven -->
+<div class="p-3.5 rounded-xl bg-surface-sub border border-border-subtle flex items-start justify-between gap-3">
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-amber-tint border border-amber-border flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-amber-accent text-[19px]">microwave</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-charcoal">SHARED OVEN (425°F)</span>
+</div>
+<p class="text-xs text-slate mt-0.5">
+                  Roast Chicken &amp; Smashed Potatoes fit side-by-side on upper/middle racks without heat distortion.
+                </p>
+</div>
+</div>
+<span class="shrink-0 text-[10px] font-semibold tracking-wider px-2.5 py-1 rounded-full bg-amber-tint border border-amber-border text-amber-accent uppercase">
+              READY TO VERIFY
+            </span>
+</div>
+<!-- Row 2: Stovetop -->
+<div class="p-3.5 rounded-xl bg-surface-sub border border-border-subtle flex items-start justify-between gap-3">
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-info-tint border border-info-accent/20 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-info-accent text-[19px]">stream_apps</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-charcoal">2 OF 4 BURNERS</span>
+</div>
+<p class="text-xs text-slate mt-0.5">
+                  Boiling potatoes (Front Left, Med-High) and Asparagus finishing skillet (Front Right, High).
+                </p>
+</div>
+</div>
+<span class="shrink-0 text-[10px] font-semibold tracking-wider px-2.5 py-1 rounded-full bg-info-tint border border-info-accent/20 text-info-accent uppercase">
+              READY TO VERIFY
+            </span>
+</div>
+</div>
+<span class="text-[11px] text-muted italic">
+          Appliance thermal curves and rack occupancy are continuously balanced during live cook-along.
+        </span>
+</section>
+<!-- Primary Action & Save Trigger -->
+<div class="flex flex-col gap-3 pt-2">
+<button class="w-full h-16 rounded-2xl bg-sage hover:bg-sage-hover text-white flex items-center justify-center gap-2.5 text-sm font-bold tracking-wide transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.99] focus:outline-none focus:ring-4 focus:ring-sage/20 cursor-pointer" id="btnStartCook" onclick="simulateLaunchCookAlong()" type="button">
+<span>START LIVE COOK-ALONG</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<p class="text-center text-xs text-slate">
+          Your coordinated step sequence will be generated and validated before timers start.
+        </p>
+<button class="w-full py-2.5 text-center text-slate hover:text-charcoal text-xs font-semibold tracking-wide transition-colors focus:outline-none" onclick="savePlanNotification()" type="button">
+          SAVE PLAN FOR LATER
+        </button>
+</div>
+</aside>
+</div>
+<!-- Simulation Feedback Toast / Modal Layer (Self-Contained) -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none max-w-md w-full px-4" id="statusToast">
+<div class="bg-white/95 backdrop-blur-md border border-border-subtle rounded-2xl p-4 shadow-float flex items-center gap-3 text-charcoal">
+<div class="w-10 h-10 rounded-xl bg-sage-tint border border-sage/20 flex items-center justify-center shrink-0" id="toastIconContainer">
+<span class="material-symbols-outlined text-sage-dark text-[20px]" id="toastIcon">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="text-xs font-bold text-charcoal truncate" id="toastTitle">Plan Saved</span>
+<span class="text-xs text-slate truncate" id="toastBody">Session stored in local storage buffer.</span>
+</div>
+</div>
+</div>
+<!-- Verification Simulation Overlay Dialog -->
+<div class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm hidden items-center justify-center p-4" id="verificationOverlay">
+<div class="bg-white border border-border-subtle rounded-3xl p-8 max-w-lg w-full flex flex-col gap-6 shadow-float animate-in fade-in zoom-in-95 duration-200">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-sage animate-ping"></span>
+<span class="text-xs font-bold tracking-widest text-sage uppercase">SEQUENCE VERIFICATION</span>
+</div>
+<button class="text-slate hover:text-charcoal" onclick="closeVerificationOverlay()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="font-display text-xl font-bold text-charcoal">Aligning Cooking Trajectories</h3>
+<p class="text-xs text-slate">Checking burner allocations, thermal overlap, and landing timeline at 7:30 PM...</p>
+<!-- Progress Steps Animation -->
+<div class="space-y-3 pt-2">
+<div class="flex items-center justify-between p-3 rounded-xl bg-surface-sub border border-border-subtle" id="step1">
+<span class="text-xs text-charcoal font-medium">1. Oven rack spacing &amp; 425°F overlap</span>
+<span class="material-symbols-outlined text-sage text-[20px]">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl bg-surface-sub border border-border-subtle" id="step2">
+<span class="text-xs text-charcoal font-medium">2. Stovetop burner conflict check</span>
+<span class="material-symbols-outlined text-sage text-[20px]">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl bg-surface-sub border border-border-subtle" id="step3">
+<span class="text-xs text-charcoal font-medium">3. Voice prompt calibration</span>
+<div class="w-4 h-4 rounded-full border-2 border-sage border-t-transparent animate-spin"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="px-5 py-2.5 rounded-xl bg-surface-sub hover:bg-surface-dimmed text-charcoal text-xs font-semibold border border-border-subtle transition-colors" onclick="closeVerificationOverlay()" type="button">
+          Adjust Plan
+        </button>
+<button class="px-6 py-2.5 rounded-xl bg-sage hover:bg-sage-hover text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-colors" onclick="confirmLaunch()" type="button">
+<span>Proceed to Active Kitchen Display</span>
+<span class="material-symbols-outlined text-[17px]">fast_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    // State management
+    let state = {
+      hour: 7,
+      minute: 30,
+      meridiem: 'PM',
+      dishesCount: 3
+    };
+
+    function updateTimeDisplay() {
+      const hStr = state.hour < 10 ? '0' + state.hour : '' + state.hour;
+      const mStr = state.minute < 10 ? '0' + state.minute : '' + state.minute;
+      
+      const hourEl = document.getElementById('displayHour');
+      const minEl = document.getElementById('displayMinute');
+      const bannerTimeEl = document.getElementById('bannerTimeText');
+      const prepTriggerEl = document.getElementById('prepTriggerText');
+
+      if (hourEl) hourEl.textContent = hStr;
+      if (minEl) minEl.textContent = mStr;
+      if (bannerTimeEl) bannerTimeEl.textContent = `${state.hour}:${mStr} ${state.meridiem}`;
+
+      // Calculate backwards 70 mins for prep alert
+      let totalMins = (state.hour % 12) * 60 + state.minute;
+      if (state.meridiem === 'PM') totalMins += 12 * 60;
+      let prepMins = totalMins - 70;
+      if (prepMins < 0) prepMins += 24 * 60;
+
+      let prepH = Math.floor(prepMins / 60);
+      let prepM = prepMins % 60;
+      let prepMeridiem = prepH >= 12 ? 'PM' : 'AM';
+      let prepH12 = prepH % 12 || 12;
+      let prepMStr = prepM < 10 ? '0' + prepM : '' + prepM;
+
+      if (prepTriggerEl) prepTriggerEl.textContent = `${prepH12}:${prepMStr} ${prepMeridiem}`;
+    }
+
+    function setMeridiem(meridiem) {
+      state.meridiem = meridiem;
+      const btnAM = document.getElementById('btnAM');
+      const btnPM = document.getElementById('btnPM');
+
+      if (meridiem === 'AM') {
+        btnAM.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-white text-charcoal shadow-sm transition-all border border-border-subtle/80';
+        btnPM.className = 'px-2.5 py-1 rounded-lg text-xs font-bold text-slate hover:text-charcoal transition-all';
+      } else {
+        btnPM.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-white text-charcoal shadow-sm transition-all border border-border-subtle/80';
+        btnAM.className = 'px-2.5 py-1 rounded-lg text-xs font-bold text-slate hover:text-charcoal transition-all';
+      }
+      updateTimeDisplay();
+      triggerMicroToast('Serving Time Updated', `Target set to ${state.hour}:${state.minute < 10 ? '0' + state.minute : state.minute} ${state.meridiem}`);
+    }
+
+    function adjustMinutes(delta) {
+      let currentTotal = state.hour * 60 + state.minute + delta;
+      if (currentTotal < 60) currentTotal = 12 * 60;
+      if (currentTotal > 12 * 60 + 45) currentTotal = 60;
+
+      let newH = Math.floor(currentTotal / 60);
+      let newM = currentTotal % 60;
+
+      if (newH > 12) newH = 1;
+      if (newH === 0) newH = 12;
+
+      state.hour = newH;
+      state.minute = newM;
+      updateTimeDisplay();
+    }
+
+    function setTimePreset(militaryHour, minute) {
+      let h12 = militaryHour % 12 || 12;
+      let mer = militaryHour >= 12 ? 'PM' : 'AM';
+      state.hour = h12;
+      state.minute = minute;
+      setMeridiem(mer);
+    }
+
+    function removeDish(cardId, name) {
+      const el = document.getElementById(cardId);
+      if (el) {
+        el.style.opacity = '0.3';
+        el.style.pointerEvents = 'none';
+        setTimeout(() => {
+          el.remove();
+          state.dishesCount = Math.max(0, state.dishesCount - 1);
+          const badge = document.getElementById('dishCountBadge');
+          if (badge) badge.textContent = `${state.dishesCount} DISHES SELECTED`;
+          triggerMicroToast('Dish Removed', `${name} cleared from schedule.`);
+        }, 200);
+      }
+    }
+
+    function addNewDishSimulation() {
+      triggerMicroToast('Add Recipe', 'Opening culinary database & quick recipe builder...');
+    }
+
+    function savePlanNotification() {
+      triggerMicroToast('Plan Saved', 'Coordination schedule backed up to session storage.');
+    }
+
+    function simulateLaunchCookAlong() {
+      const overlay = document.getElementById('verificationOverlay');
+      if (overlay) {
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        
+        setTimeout(() => {
+          const s3 = document.getElementById('step3');
+          if (s3) {
+            s3.innerHTML = '<span class="text-xs text-charcoal font-medium">3. Voice prompt calibration</span><span class="material-symbols-outlined text-sage text-[20px]">check_circle</span>';
+          }
+        }, 1200);
+      }
+    }
+
+    function closeVerificationOverlay() {
+      const overlay = document.getElementById('verificationOverlay');
+      if (overlay) {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+      }
+    }
+
+    function confirmLaunch() {
+      closeVerificationOverlay();
+      triggerMicroToast('Cook-Along Initiated', 'Transferring telemetry to active kitchen display...');
+    }
+
+    function triggerMicroToast(title, body) {
+      const toast = document.getElementById('statusToast');
+      const titleEl = document.getElementById('toastTitle');
+      const bodyEl = document.getElementById('toastBody');
+      if (!toast) return;
+
+      if (titleEl) titleEl.textContent = title;
+      if (bodyEl) bodyEl.textContent = body;
+
+      toast.classList.remove('translate-y-32', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-32', 'opacity-0');
+      }, 2600);
+    }
+
+    // Init
+    updateTimeDisplay();
+  </script>
+</div></div></main></body></html>

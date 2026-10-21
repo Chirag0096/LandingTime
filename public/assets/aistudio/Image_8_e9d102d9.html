@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>Landing Time · Session Complete</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Epilogue:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #F7F7F2;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: "#F7F7F2",
+            card: "#FFFFFF",
+            "card-sub": "#F8F8F5",
+            "card-sub-alt": "#F1F0E9",
+            border: "#E5E5DF",
+            "border-subtle": "#EDEDE8",
+            charcoal: "#202124",
+            slate: "#737780",
+            muted: "#9CA3AF",
+            sage: {
+              DEFAULT: "#3D8065",
+              dark: "#316952",
+              light: "#EAF3EF",
+              border: "#C2DDCF",
+            },
+            amber: {
+              DEFAULT: "#D97706",
+              light: "#FEF3C7",
+              border: "#FDE68A",
+            },
+            sky: {
+              DEFAULT: "#0284C7",
+              light: "#F0F9FF",
+              border: "#BAE6FD",
+            },
+            rose: {
+              DEFAULT: "#DC2626",
+              light: "#FEF2F2",
+              border: "#FECACA",
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Epilogue"', 'sans-serif'],
+          },
+          boxShadow: {
+            apple: "0 1px 3px rgba(0,0,0,0.03), 0 4px 14px rgba(0,0,0,0.03)",
+            "apple-md": "0 2px 6px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
+            "apple-lg": "0 8px 30px rgba(0,0,0,0.06)",
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-canvas font-sans text-charcoal antialiased min-h-screen selection:bg-sage/20 selection:text-sage-dark">
+<!-- Header: 76px clean light header -->
+<header class="fixed top-0 w-full z-50 bg-card/90 backdrop-blur-md border-b border-border shadow-sm">
+<div class="h-[76px] w-full max-w-[1720px] mx-auto px-6 md:px-10 flex items-center justify-between">
+<!-- Left: Brand & Context -->
+<div class="flex items-center gap-4 lg:gap-6">
+<div class="flex items-center gap-3">
+<img alt="Landing Time" class="w-8 h-8 rounded-full object-cover ring-2 ring-border shadow-sm" src="https://lh3.googleusercontent.com/aida/AEtjO1XWx6NU9sObaaaCS85Hltpt7sQLtcgxT5al9_eDCkoBPZt7wSKCgvJA3vqKNTQUHLWyWNQhEkQYM68nhFYfqGlS8W0_qHc6rIb_0qLazk4Ex4cLnherLmmAogQre79Qq5non-vkdnHbpYxGT1OtEvF6aopk35KBsK6CO9pqWvxt_O09MQ_f54Jdxn5SfxYAyrEpgFZf96IoXHC3fquY8ygn-kkBhJ1LeO2az8rKRkRlJ2SYkUVBAs0Bl-Y"/>
+<div class="flex flex-col">
+<span class="font-display font-bold text-base tracking-tight text-charcoal uppercase leading-none">LANDING TIME</span>
+<span class="text-[10px] font-semibold tracking-wider text-slate uppercase mt-0.5">SMART COOKING COORDINATION</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-2 pl-4 border-l border-border">
+<span class="text-xs font-semibold text-slate bg-card-sub px-3 py-1 rounded-full uppercase tracking-wider border border-border">
+            SUNDAY DINNER · 4 GUESTS
+          </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-light text-sage border border-sage-border text-xs font-semibold tracking-wide">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+            ALL 3 PLANNED DISHES SYNCHRONIZED
+          </span>
+</div>
+</div>
+<!-- Right: Live indicators & Session log -->
+<div class="flex items-center gap-3 md:gap-5">
+<div class="flex items-center gap-1.5 text-xs font-semibold text-charcoal bg-card-sub px-3 py-1.5 rounded-full border border-border">
+<span class="text-slate uppercase text-[11px] tracking-wider">ELAPSED:</span>
+<span class="tabular-nums text-sage font-bold">1h 17m</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-light border border-sky-border text-sky text-xs font-semibold tracking-wider">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-sky"></span>
+</span>
+<span class="material-symbols-outlined text-[16px]">record_voice_over</span>
+<span class="hidden sm:inline">VOICE IDLE · TAP TO SPEAK</span>
+</div>
+<button aria-label="Session Log" class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium text-slate hover:text-charcoal hover:bg-card-sub transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">history_toggle_off</span>
+<span>SESSION LOG</span>
+</button>
+<button aria-label="Settings" class="w-10 h-10 flex items-center justify-center rounded-xl bg-card-sub hover:bg-card border border-border text-slate hover:text-charcoal transition-all shadow-sm focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full pt-[76px] pb-24">
+<!-- Hero Landing Banner -->
+<section class="w-full px-6 md:px-10 py-10 md:py-12 border-b border-border bg-gradient-to-b from-card to-canvas">
+<div class="max-w-[1720px] mx-auto flex flex-col xl:flex-row items-start xl:items-center justify-between gap-8">
+<div class="flex-1 space-y-3">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-light text-sage border border-sage-border text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+            SYNCHRONIZED LANDING ACHIEVED
+          </div>
+<h1 class="font-display text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-charcoal tracking-tight leading-tight">
+            Dinner landed. Everything is ready.
+          </h1>
+<p class="text-slate text-base md:text-lg max-w-3xl font-normal leading-relaxed">
+            Landing Time coordinated remaining thermal tasks around the oven roast variance, absorbing the 12-minute delay to deliver a tight 2-minute spread across all plates.
+          </p>
+</div>
+<!-- Serving Time Comparison Card (Apple-styled high contrast light card) -->
+<div class="w-full xl:w-auto min-w-[420px] p-6 rounded-2xl bg-card border border-border shadow-apple flex items-center justify-between gap-6">
+<div class="space-y-1">
+<span class="text-[11px] font-bold text-slate uppercase tracking-wider block">ORIGINAL TARGET</span>
+<span class="text-xl font-bold text-slate tabular-nums">7:30 PM</span>
+<span class="text-[11px] text-muted block">Model forecast</span>
+</div>
+<div class="h-12 w-px bg-border"></div>
+<div class="space-y-1 text-center">
+<span class="text-[11px] font-bold text-sage uppercase tracking-wider block">ACTUAL LANDING</span>
+<div class="flex items-baseline justify-center gap-1">
+<span class="font-display text-4xl sm:text-5xl font-extrabold text-charcoal leading-none tabular-nums tracking-tight">7:37</span>
+<span class="text-sm font-bold text-slate">PM</span>
+</div>
+<span class="text-[11px] font-semibold text-sage bg-sage-light border border-sage-border px-2.5 py-0.5 rounded-full inline-block">
+              Finish Spread: 2 min
+            </span>
+</div>
+<div class="h-12 w-px bg-border"></div>
+<div class="space-y-1 text-right">
+<span class="text-[11px] font-bold text-amber uppercase tracking-wider block">RECOVERED SPREAD</span>
+<div class="inline-flex items-center gap-1 text-amber text-xl font-bold tabular-nums">
+<span>+7m</span>
+<span class="material-symbols-outlined text-[18px]">trending_down</span>
+</div>
+<span class="text-[11px] font-medium text-amber block">5m absorbed safely</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Dish Readiness Row (3 Cards with images) -->
+<section class="w-full px-6 md:px-10 py-8 md:py-10">
+<div class="max-w-[1720px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Dish 1: Herb-Crusted Roast Chicken -->
+<div class="rounded-2xl bg-card border border-border hover:border-sage/50 p-6 flex flex-col justify-between shadow-apple hover:shadow-apple-md transition-all duration-300 group">
+<div class="space-y-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<span class="text-[11px] font-bold text-slate uppercase tracking-wider block">MAIN COURSE · OVEN CENTER RACK</span>
+<h3 class="font-display text-xl font-bold text-charcoal mt-0.5">Herb-Crusted Roast Chicken</h3>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-light text-sage border border-sage-border text-xs font-bold tracking-wide shrink-0">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span>READY</span>
+</div>
+</div>
+<div class="relative w-full h-40 rounded-xl overflow-hidden bg-card-sub border border-border">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A golden-brown, crispy herb-crusted roast whole chicken garnished with fresh rosemary and thyme sprigs resting on a rustic dark slate board in a warm kitchen setting with cinematic atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMP2Q5oyLjAOqbzQ1xlOp8qEAKMhWM5JeXhktiHROO88J7cI7yuNM9m1R5s2maJUuCtWuuwdRyGLql5LdWorJRnRlF1Nm98Cw0zSpk9lnFihaka2JD7rURNpNv-ioT-57dtTyX34JqSA_mY6fgyV2rF84t0WsfRTwiA_vW-IEWjkayBCfKwR2SgUh22Rysf0cg6mNpGi6_a4yd9rq_Z3O_Dpypmh7LKM-8daQnUkO8pFEgMFjIt7br"/>
+<div class="absolute bottom-2 left-2 bg-card/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-charcoal text-xs font-medium flex items-center gap-1.5 border border-border/80 shadow-sm">
+<span class="material-symbols-outlined text-sage text-[15px]">thermostat</span>
+<span class="font-semibold">165°F Verified Core</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-1">
+<div class="p-3 rounded-xl bg-card-sub border border-border">
+<span class="text-[10px] font-bold text-slate uppercase block tracking-wider">TARGET FINISH</span>
+<span class="text-base font-bold text-charcoal tabular-nums">7:35 PM</span>
+</div>
+<div class="p-3 rounded-xl bg-card-sub border border-border">
+<span class="text-[10px] font-bold text-slate uppercase block tracking-wider">RESTING STATUS</span>
+<span class="text-base font-bold text-sage">10m Complete</span>
+</div>
+</div>
+</div>
+<div class="mt-5 pt-4 border-t border-border flex items-center justify-between text-xs text-slate">
+<span class="flex items-center gap-1.5 font-medium text-charcoal">
+<span class="material-symbols-outlined text-sage text-[16px]">check</span>
+              Carved &amp; warm rested
+            </span>
+<span class="text-slate font-medium">Board temp 148°F</span>
+</div>
+</div>
+<!-- Dish 2: Crispy Smashed Potatoes -->
+<div class="rounded-2xl bg-card border border-border hover:border-sage/50 p-6 flex flex-col justify-between shadow-apple hover:shadow-apple-md transition-all duration-300 group">
+<div class="space-y-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<span class="text-[11px] font-bold text-slate uppercase tracking-wider block">SIDE DISH · STOVETOP &amp; OVEN</span>
+<h3 class="font-display text-xl font-bold text-charcoal mt-0.5">Crispy Smashed Potatoes</h3>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-light text-sage border border-sage-border text-xs font-bold tracking-wide shrink-0">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span>READY</span>
+</div>
+</div>
+<div class="relative w-full h-40 rounded-xl overflow-hidden bg-card-sub border border-border">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Golden smashed Yukon gold potatoes with deeply crisped serrated edges, flaky sea salt, cracked black pepper, and minced chives on a dark cast iron baking sheet with gentle steam rising" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaf955uO9lkeEHCCJA7HZCi_EZiO_koGMSytwiAiWw-j9ls4GGdBK_fwKRON3V0DU574kO47VHEsnY12HbX2O3JF_5N3K2Ir6vXNfbXBPzPM5YKUgpetWDbNdVPDOMDbbK5N3oLqR78hmOykBLeq4b4FYCnXRW4A5XtehrPEovxjgl3Q8fG8UdTyeIsfEKHpBee5R2qJUUQ4NMkBceStk-b--ioV8rq1fBGpElwtbHwB14YXY0Q7f9"/>
+<div class="absolute bottom-2 left-2 bg-card/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-charcoal text-xs font-medium flex items-center gap-1.5 border border-border/80 shadow-sm">
+<span class="material-symbols-outlined text-amber text-[15px]">local_fire_department</span>
+<span class="font-semibold">Crust Intact · 185°F</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-1">
+<div class="p-3 rounded-xl bg-card-sub border border-border">
+<span class="text-[10px] font-bold text-slate uppercase block tracking-wider">TARGET FINISH</span>
+<span class="text-base font-bold text-charcoal tabular-nums">7:36 PM</span>
+</div>
+<div class="p-3 rounded-xl bg-card-sub border border-border">
+<span class="text-[10px] font-bold text-slate uppercase block tracking-wider">HOLDING WINDOW</span>
+<span class="text-base font-bold text-sage">Ventilated Rack</span>
+</div>
+</div>
+</div>
+<div class="mt-5 pt-4 border-t border-border flex items-center justify-between text-xs text-slate">
+<span class="flex items-center gap-1.5 font-medium text-charcoal">
+<span class="material-symbols-outlined text-sage text-[16px]">check</span>
+              Sea salt finish applied
+            </span>
+<span class="text-slate font-medium">Yield: 4 portions</span>
+</div>
+</div>
+<!-- Dish 3: Sautéed Asparagus & Pan Gravy -->
+<div class="rounded-2xl bg-card border border-border hover:border-sage/50 p-6 flex flex-col justify-between shadow-apple hover:shadow-apple-md transition-all duration-300 group">
+<div class="space-y-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<span class="text-[11px] font-bold text-slate uppercase tracking-wider block">SIDE &amp; SAUCE · BURNERS #1 &amp; #2</span>
+<h3 class="font-display text-xl font-bold text-charcoal mt-0.5">Asparagus &amp; Pan Gravy</h3>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-light text-sage border border-sage-border text-xs font-bold tracking-wide shrink-0">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span>READY</span>
+</div>
+</div>
+<div class="relative w-full h-40 rounded-xl overflow-hidden bg-card-sub border border-border">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Vibrant tender-crisp green asparagus spears blistered in lemon garlic oil alongside a porcelain gravy boat overflowing with glossy, silky brown pan sauce reduction in a modern kitchen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFoCA67iAaDVQG7oKXlkF_WaVhafnCB5AB3P8RqNumINwci1Ruvxcf72j6nNmXMtIic1KUonuLUEj7APDV0x6beIEc4niaiF9fr-ALs6mWctFtdA5P-fHc1g4mtlxF7tgMhF2UgQz5e9e9cRZyH4F_Qe5FdTHmx1CkLWPTtgpvILH-suPu2Yxy_QNSkfCyMcWxpVYIGk7gYG-K9sy0zFAZs-4sAOg_oUYymJ_Wse210AUq9TqP0lQF"/>
+<div class="absolute bottom-2 left-2 bg-card/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-charcoal text-xs font-medium flex items-center gap-1.5 border border-border/80 shadow-sm">
+<span class="material-symbols-outlined text-sky text-[15px]">soup_kitchen</span>
+<span class="font-semibold">Emulsion Stabilized</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-1">
+<div class="p-3 rounded-xl bg-card-sub border border-border">
+<span class="text-[10px] font-bold text-slate uppercase block tracking-wider">TARGET FINISH</span>
+<span class="text-base font-bold text-charcoal tabular-nums">7:37 PM</span>
+</div>
+<div class="p-3 rounded-xl bg-card-sub border border-border">
+<span class="text-[10px] font-bold text-slate uppercase block tracking-wider">ADAPTATION</span>
+<span class="text-base font-bold text-charcoal truncate block">Milk+Butter Sub</span>
+</div>
+</div>
+</div>
+<div class="mt-5 pt-4 border-t border-border flex items-center justify-between text-xs text-slate">
+<span class="flex items-center gap-1.5 font-medium text-charcoal">
+<span class="material-symbols-outlined text-sage text-[16px]">check</span>
+              Skillet warm &amp; ready
+            </span>
+<span class="text-slate font-medium">Delayed +7m for sync</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Lower Content: Two-Column Section (55% vs 45%) -->
+<section class="w-full px-6 md:px-10 pb-12">
+<div class="max-w-[1720px] mx-auto grid grid-cols-1 xl:grid-cols-12 gap-8">
+<!-- Left Column: READY TO PLATE (Plating Checklist) (55% / 7 cols) -->
+<div class="xl:col-span-7 rounded-2xl bg-card border border-border p-6 md:p-8 flex flex-col justify-between shadow-apple">
+<div class="space-y-6">
+<div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-border">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sage text-[26px]">restaurant</span>
+<h2 class="font-display text-2xl font-bold text-charcoal">Ready to Plate</h2>
+</div>
+<p class="text-slate text-sm mt-0.5">
+                  Final assembly steps before serving · Hands-free voice enabled
+                </p>
+</div>
+<div class="text-right">
+<span class="text-lg font-bold text-sage tabular-nums" id="platingCount">0 of 5</span>
+<span class="text-[11px] font-semibold text-slate uppercase block tracking-wider">Steps Complete</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-card-sub-alt h-2 rounded-full overflow-hidden">
+<div class="bg-sage h-full transition-all duration-300 ease-out" id="platingProgress" style="width: 0%;"></div>
+</div>
+<!-- Interactive Checklist Stack (comfortable tap targets) -->
+<div class="space-y-3" id="checklistGroup">
+<!-- Step 1 -->
+<label class="flex items-center gap-4 p-4 rounded-xl bg-card-sub hover:bg-card-sub-alt transition-colors cursor-pointer border border-border select-none group">
+<input class="plating-checkbox w-6 h-6 rounded-md border-border text-sage focus:ring-0 focus:ring-offset-0 cursor-pointer accent-sage" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<span class="text-base font-semibold text-charcoal block leading-snug">1. Transfer carved chicken to main serving platter</span>
+<span class="text-xs text-slate mt-0.5 block">Warm oval dish · Collect cutting board juices for gravy</span>
+</div>
+<span class="material-symbols-outlined text-muted group-hover:text-slate transition-colors text-[20px]">drag_indicator</span>
+</label>
+<!-- Step 2 -->
+<label class="flex items-center gap-4 p-4 rounded-xl bg-card-sub hover:bg-card-sub-alt transition-colors cursor-pointer border border-border select-none group">
+<input class="plating-checkbox w-6 h-6 rounded-md border-border text-sage focus:ring-0 focus:ring-offset-0 cursor-pointer accent-sage" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<span class="text-base font-semibold text-charcoal block leading-snug">2. Arrange crispy potatoes on warm serving plate</span>
+<span class="text-xs text-slate mt-0.5 block">Gently tumble to preserve crisp skin · Top with chopped chives</span>
+</div>
+<span class="material-symbols-outlined text-muted group-hover:text-slate transition-colors text-[20px]">drag_indicator</span>
+</label>
+<!-- Step 3 -->
+<label class="flex items-center gap-4 p-4 rounded-xl bg-card-sub hover:bg-card-sub-alt transition-colors cursor-pointer border border-border select-none group">
+<input class="plating-checkbox w-6 h-6 rounded-md border-border text-sage focus:ring-0 focus:ring-offset-0 cursor-pointer accent-sage" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<span class="text-base font-semibold text-charcoal block leading-snug">3. Plate high-heat sautéed asparagus spears</span>
+<span class="text-xs text-slate mt-0.5 block">Align tips parallel · Drizzle fresh lemon juice and zest</span>
+</div>
+<span class="material-symbols-outlined text-muted group-hover:text-slate transition-colors text-[20px]">drag_indicator</span>
+</label>
+<!-- Step 4 -->
+<label class="flex items-center gap-4 p-4 rounded-xl bg-card-sub hover:bg-card-sub-alt transition-colors cursor-pointer border border-border select-none group">
+<input class="plating-checkbox w-6 h-6 rounded-md border-border text-sage focus:ring-0 focus:ring-offset-0 cursor-pointer accent-sage" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<span class="text-base font-semibold text-charcoal block leading-snug">4. Pour warm pan gravy into gravy boat &amp; bring to table</span>
+<span class="text-xs text-slate mt-0.5 block">Stir once to re-incorporate herb fats · Place saucer underneath</span>
+</div>
+<span class="material-symbols-outlined text-muted group-hover:text-slate transition-colors text-[20px]">drag_indicator</span>
+</label>
+<!-- Step 5 -->
+<label class="flex items-center gap-4 p-4 rounded-xl bg-card-sub hover:bg-card-sub-alt transition-colors cursor-pointer border border-border select-none group">
+<input class="plating-checkbox w-6 h-6 rounded-md border-border text-sage focus:ring-0 focus:ring-offset-0 cursor-pointer accent-sage" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<span class="text-base font-semibold text-charcoal block leading-snug">5. Check serving tongs, carving knife, and table settings</span>
+<span class="text-xs text-slate mt-0.5 block">Water glasses filled · Cloth napkins arranged · Serving spoons placed</span>
+</div>
+<span class="material-symbols-outlined text-muted group-hover:text-slate transition-colors text-[20px]">drag_indicator</span>
+</label>
+</div>
+</div>
+<!-- Bottom Voice helper strip -->
+<div class="mt-8 pt-4 border-t border-border flex flex-wrap items-center justify-between gap-4 bg-card-sub -mx-6 md:-mx-8 -mb-6 md:-mb-8 p-5 rounded-b-2xl">
+<div class="flex items-center gap-2 text-sky text-xs font-semibold">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+<span>Say "Mark chicken plated" or "Mark all plated"</span>
+</div>
+<button class="px-4 py-2 rounded-xl bg-card hover:bg-card-sub-alt text-charcoal text-xs font-bold uppercase tracking-wider transition-all border border-border shadow-sm" id="markAllBtn" type="button">
+              MARK ALL COMPLETE
+            </button>
+</div>
+</div>
+<!-- Right Column: Analytics, Convergence Timeline, Pantry & Voice (45% / 5 cols) -->
+<div class="xl:col-span-5 flex flex-col gap-6">
+<!-- YOUR COOKING SESSION (4 KPI Tiles Grid) -->
+<div class="grid grid-cols-2 gap-4">
+<div class="p-5 rounded-2xl bg-card border border-border shadow-apple">
+<span class="text-[10px] font-bold text-slate uppercase tracking-wider block">TARGET ACCURACY</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-display text-2xl font-bold text-amber tabular-nums">+7m</span>
+<span class="text-xs font-bold text-sage">5m recouped</span>
+</div>
+<p class="text-xs text-slate mt-1">Initial drift 12m safely compressed</p>
+</div>
+<div class="p-5 rounded-2xl bg-card border border-border shadow-apple">
+<span class="text-[10px] font-bold text-slate uppercase tracking-wider block">COMPLETION SPREAD</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-display text-2xl font-bold text-sage tabular-nums">2 min</span>
+<span class="text-[11px] text-muted">7:35 - 7:37 PM</span>
+</div>
+<p class="text-xs text-slate mt-1">Near-zero temperature dropoff</p>
+</div>
+<div class="p-5 rounded-2xl bg-card border border-border shadow-apple">
+<span class="text-[10px] font-bold text-slate uppercase tracking-wider block">DYNAMIC ADJUSTMENTS</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-display text-2xl font-bold text-charcoal tabular-nums">2</span>
+<span class="text-xs font-bold text-sage">Accepted</span>
+</div>
+<p class="text-xs text-slate mt-1">Resting -5m, Asparagus +7m</p>
+</div>
+<div class="p-5 rounded-2xl bg-card border border-border shadow-apple">
+<span class="text-[10px] font-bold text-slate uppercase tracking-wider block">HANDS-ON DURATION</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-display text-2xl font-bold text-charcoal tabular-nums">34 min</span>
+<span class="text-[11px] text-muted">of 1h 17m</span>
+</div>
+<p class="text-xs text-slate mt-1">44% active execution efficiency</p>
+</div>
+</div>
+<!-- Convergence Timeline Visualization -->
+<div class="rounded-2xl bg-card border border-border p-6 shadow-apple flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-display text-lg font-bold text-charcoal">Synchronization Convergence</h3>
+<span class="text-[10px] font-bold text-slate uppercase tracking-wider">PLANNED VS ACTUAL</span>
+</div>
+<p class="text-xs text-slate mt-0.5">
+                Visualizes how Landing Time adapted the stovetop tracks when the roast ran past target.
+              </p>
+</div>
+<!-- Apple-clean light Timeline SVG diagram -->
+<div class="my-4 p-4 rounded-xl bg-card-sub border border-border">
+<svg class="w-full h-auto" fill="none" viewbox="0 0 500 130" xmlns="http://www.w3.org/2000/svg">
+<!-- Timeline Axis labels -->
+<text fill="#737780" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" x="30" y="18">6:45</text>
+<text fill="#737780" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" x="180" y="18">7:00</text>
+<text fill="#737780" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" x="310" y="18">7:15</text>
+<text fill="#D97706" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" x="385" y="18">7:30 [PLANNED]</text>
+<text fill="#3D8065" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" x="460" y="18">7:37</text>
+<line stroke="#E5E5DF" stroke-width="1" x1="30" x2="485" y1="26" y2="26"></line>
+<!-- Track 1: Chicken (Drifted) -->
+<text fill="#202124" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" x="30" y="46">Roast Chicken</text>
+<rect fill="#F1F0E9" height="10" rx="5" width="280" x="110" y="38"></rect>
+<rect fill="#3D8065" height="10" rx="5" width="345" x="110" y="38"></rect>
+<!-- Planned finish tick -->
+<line stroke="#D97706" stroke-dasharray="2 2" stroke-width="2" x1="390" x2="390" y1="34" y2="52"></line>
+<!-- Track 2: Potatoes (Held) -->
+<text fill="#202124" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" x="30" y="74">Smashed Potatoes</text>
+<rect fill="#F1F0E9" height="10" rx="5" width="170" x="220" y="66"></rect>
+<rect fill="#3D8065" height="10" rx="5" width="240" x="220" y="66"></rect>
+<line stroke="#D97706" stroke-dasharray="2 2" stroke-width="2" x1="390" x2="390" y1="62" y2="80"></line>
+<!-- Track 3: Asparagus + Gravy (Delayed Start) -->
+<text fill="#202124" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" x="30" y="102">Asparagus &amp; Sauce</text>
+<!-- Shifted start indicator -->
+<line stroke="#0284C7" stroke-dasharray="3 3" stroke-width="1.5" x1="310" x2="360" y1="94" y2="94"></line>
+<rect fill="#3D8065" height="10" rx="5" width="115" x="360" y="94"></rect>
+<line stroke="#D97706" stroke-dasharray="2 2" stroke-width="2" x1="390" x2="390" y1="90" y2="108"></line>
+<!-- Final Convergence Bracket -->
+<line stroke="#3D8065" stroke-width="2" x1="455" x2="475" y1="36" y2="36"></line>
+<line stroke="#3D8065" stroke-width="2" x1="475" x2="475" y1="36" y2="106"></line>
+<line stroke="#3D8065" stroke-width="2" x1="460" x2="475" y1="106" y2="106"></line>
+<circle cx="475" cy="71" fill="#3D8065" r="3.5"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between text-xs text-slate">
+<span class="flex items-center gap-1.5 font-medium">
+<span class="w-2.5 h-2.5 rounded-full bg-amber"></span>
+                Original Schedule (7:30 PM)
+              </span>
+<span class="flex items-center gap-1.5 font-medium">
+<span class="w-2.5 h-2.5 rounded-full bg-sage"></span>
+                Synchronized Landing (7:37 PM)
+              </span>
+</div>
+</div>
+<!-- PANTRY & RESTOCK CHECK -->
+<div class="rounded-2xl bg-card border border-border p-6 shadow-apple flex flex-col justify-between">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-amber text-[22px]">inventory_2</span>
+<h3 class="font-display text-lg font-bold text-charcoal">Pantry &amp; Restock Check</h3>
+</div>
+<span class="text-[10px] font-bold text-amber bg-amber-light border border-amber-border px-2.5 py-0.5 rounded-full uppercase">1 REORDER FLAGGED</span>
+</div>
+<p class="text-xs text-slate">
+                Automated consumption analysis logged missing ingredients substituted mid-cook.
+              </p>
+<div class="p-4 rounded-xl bg-card-sub border border-border flex items-start justify-between gap-4">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="text-base font-bold text-charcoal">Heavy Cream</span>
+<span class="text-[10px] font-bold text-rose bg-rose-light border border-rose-border px-2 py-0.5 rounded-full uppercase">Depleted</span>
+</div>
+<p class="text-xs text-slate">
+                    Missing during pan gravy reduction · Used Milk + Butter substitute successfully.
+                  </p>
+</div>
+<button class="shrink-0 px-3.5 py-2 rounded-xl bg-sage hover:bg-sage-dark text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-sm" id="restockBtn" type="button">
+                  + RESTOCK LIST
+                </button>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs text-slate">
+<span>Active pantry inventory tracks 14 ingredients</span>
+<button class="text-sage font-semibold hover:underline" type="button">View Pantry Log →</button>
+</div>
+</div>
+<!-- LANDING TIME ASSISTANT: Voice Companion -->
+<div class="rounded-2xl bg-card border border-border p-6 shadow-apple flex flex-col justify-between">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-sky animate-pulse"></div>
+<span class="text-xs font-bold text-sky uppercase tracking-wider">LANDING TIME ASSISTANT</span>
+</div>
+<span class="text-[11px] font-semibold text-slate uppercase tracking-wide">VOICE COMPANION ACTIVE</span>
+</div>
+<div class="p-4 rounded-xl bg-sky-light border border-sky-border flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-full bg-card flex items-center justify-center shrink-0 text-sky shadow-sm border border-sky-border">
+<span class="material-symbols-outlined text-[24px]">graphic_eq</span>
+</div>
+<p class="text-sm text-charcoal leading-relaxed italic">
+                  "Dinner is ready! All dishes are synchronized within 2 minutes. Your plating checklist is ready on screen, and I've flagged heavy cream for your restock list."
+                </p>
+</div>
+<!-- Quick suggestions -->
+<div class="flex flex-wrap items-center gap-2 pt-1">
+<span class="text-[10px] font-bold text-slate uppercase mr-1">Suggestions:</span>
+<button class="px-3 py-1.5 rounded-full bg-card-sub hover:bg-card-sub-alt text-charcoal text-xs font-medium transition-colors border border-border flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[14px] text-sky">mic</span>
+                  "What's left to plate?"
+                </button>
+<button class="px-3 py-1.5 rounded-full bg-card-sub hover:bg-card-sub-alt text-charcoal text-xs font-medium transition-colors border border-border flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[14px] text-sky">mic</span>
+                  "Add cream to restock"
+                </button>
+<button class="px-3 py-1.5 rounded-full bg-card-sub hover:bg-card-sub-alt text-charcoal text-xs font-medium transition-colors border border-border flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[14px] text-sky">mic</span>
+                  "Save session summary"
+                </button>
+<button class="px-3 py-1.5 rounded-full bg-card-sub hover:bg-card-sub-alt text-charcoal text-xs font-medium transition-colors border border-border flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[14px] text-sky">mic</span>
+                  "Start another meal"
+                </button>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs text-slate">
+<span>Counter Mic sensitivity tuned for kitchen noise</span>
+<span class="text-sage font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                Awaiting Command
+              </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Sticky Bottom Kitchen Action Bar -->
+<footer class="fixed bottom-0 w-full z-40 bg-card/95 backdrop-blur-md border-t border-border py-3.5 px-6 md:px-10 shadow-apple-lg">
+<div class="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<button class="h-12 md:h-14 px-5 md:px-6 rounded-2xl bg-card border border-border hover:bg-card-sub text-charcoal text-xs md:text-sm font-bold tracking-wide transition-all shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px] text-slate">assignment</span>
+<span>VIEW COOKING SUMMARY</span>
+</button>
+<button class="h-12 md:h-14 px-5 md:px-6 rounded-2xl bg-card border border-border hover:bg-card-sub text-slate hover:text-charcoal text-xs md:text-sm font-bold tracking-wide transition-all shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px] text-slate">replay</span>
+<span>START ANOTHER MEAL</span>
+</button>
+</div>
+<!-- Dominant 60px Sage Green button "FINISH SESSION" with white text -->
+<button class="h-[60px] px-8 md:px-12 rounded-2xl bg-sage hover:bg-sage-dark text-white font-display text-base md:text-lg font-bold tracking-wide transition-all duration-200 shadow-lg shadow-sage/25 flex items-center gap-3" id="finishSessionBtn" type="button">
+<span class="material-symbols-outlined text-[26px]">task_alt</span>
+<span>FINISH SESSION</span>
+</button>
+</div>
+</footer>
+<script>
+    // Interactive Plating Checklist logic
+    const checkboxes = document.querySelectorAll('.plating-checkbox');
+    const countDisplay = document.getElementById('platingCount');
+    const progressBar = document.getElementById('platingProgress');
+    const markAllBtn = document.getElementById('markAllBtn');
+    const restockBtn = document.getElementById('restockBtn');
+    const finishBtn = document.getElementById('finishSessionBtn');
+
+    function updatePlatingState() {
+      const total = checkboxes.length;
+      let checkedCount = 0;
+      checkboxes.forEach(cb => {
+        if (cb.checked) checkedCount++;
+      });
+
+      const percent = Math.round((checkedCount / total) * 100);
+      progressBar.style.width = percent + '%';
+      countDisplay.textContent = checkedCount + ' of ' + total;
+
+      if (checkedCount === total) {
+        countDisplay.textContent = 'All Plated!';
+      }
+    }
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', updatePlatingState);
+    });
+
+    if (markAllBtn) {
+      markAllBtn.addEventListener('click', () => {
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        checkboxes.forEach(cb => {
+          cb.checked = !allChecked;
+        });
+        updatePlatingState();
+      });
+    }
+
+    if (restockBtn) {
+      restockBtn.addEventListener('click', () => {
+        restockBtn.textContent = 'ADDED TO RESTOCK LIST';
+        restockBtn.classList.remove('bg-sage', 'hover:bg-sage-dark', 'text-white');
+        restockBtn.classList.add('bg-card-sub-alt', 'text-sage', 'border', 'border-sage-border');
+      });
+    }
+
+    if (finishBtn) {
+      finishBtn.addEventListener('click', () => {
+        finishBtn.innerHTML = '<span class="material-symbols-outlined text-[26px]">check_circle</span><span>SESSION ARCHIVED</span>';
+        finishBtn.classList.add('opacity-90');
+      });
+    }
+  </script>
+</body></html>

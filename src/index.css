@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Epilogue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --color-canvas: #F7F7F2;
+  --color-card: #FFFFFF;
+  --color-surface-sub: #F8F8F5;
+  --color-surface-dimmed: #F1F0E9;
+  --color-border-subtle: #E5E5DF;
+  --color-charcoal: #202124;
+  --color-slate-text: #737780;
+  --color-muted-text: #9CA3AF;
+
+  --color-sage: #3D8065;
+  --color-sage-hover: #336C55;
+  --color-sage-tint: #EBF4F0;
+  --color-sage-border: #C4DDD3;
+  --color-sage-dark: #265442;
+
+  --color-amber-accent: #D97706;
+  --color-amber-tint: #FEF3C7;
+  --color-amber-border: #FDE68A;
+
+  --color-indigo-accent: #4F46E5;
+  --color-indigo-tint: #EEF2FF;
+  --color-indigo-border: #C7D2FE;
+
+  --color-sky-accent: #0284C7;
+  --color-sky-tint: #F0F9FF;
+  --color-sky-border: #BAE6FD;
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #F7F7F2;
+    color: #202124;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Custom scrollbar and utilities */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

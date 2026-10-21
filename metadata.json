@@ -1,0 +1,6 @@
+{
+  "name": "Landing Time",
+  "description": "Smart kitchen coordination assistant that synchronizes multi-dish cooking steps, oven thermal capacity, and timers backwards from a shared serving time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

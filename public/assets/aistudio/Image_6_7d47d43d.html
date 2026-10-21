@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Landing Time - Pantry Substitution &amp; Recovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Epilogue:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "sage": {
+            50: "#f2f7f4",
+            100: "#e1ede6",
+            200: "#c4dbcf",
+            600: "#3D8065",
+            700: "#2f6550",
+            800: "#254f3f"
+          },
+          "charcoal": {
+            900: "#202124",
+            800: "#2d2f33",
+            700: "#3c4043",
+            500: "#5f6368",
+            400: "#80868b",
+            200: "#dadce0",
+            100: "#e8eaed",
+            50: "#f8f9fa"
+          },
+          "warm-amber": {
+            50: "#fff8f1",
+            100: "#feecdc",
+            200: "#fcd9bd",
+            600: "#d97706",
+            700: "#b45309",
+            800: "#92400e"
+          }
+        },
+        fontFamily: {
+          sans: ["Plus Jakarta Sans", "system-ui", "-apple-system", "sans-serif"],
+          display: ["Epilogue", "Plus Jakarta Sans", "sans-serif"]
+        },
+        boxShadow: {
+          "apple-modal": "0 20px 40px -10px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06)",
+          "apple-card": "0 2px 10px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04)"
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="bg-[#F8F9FA] font-sans text-charcoal-900 antialiased min-h-screen">
+<!-- Top Navigation Header -->
+<header class="fixed top-0 w-full z-40 bg-[#FFFFFF]/90 backdrop-blur-md border-b border-[#E5E5DF]">
+<div class="h-[72px] w-full px-8 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center text-sage-600">
+<span class="material-symbols-outlined text-[22px]">timer</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display font-bold text-[17px] tracking-tight text-charcoal-900 uppercase">LANDING TIME</span>
+<span class="text-[11px] font-semibold tracking-wider text-charcoal-500 uppercase">SMART COOKING COORDINATION</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center px-4 py-1.5 rounded-full bg-charcoal-50 border border-[#E5E5DF] text-charcoal-700 text-xs font-semibold tracking-wide uppercase">
+        ACTIVE DINNER SESSION
+      </div>
+<div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sage-50 border border-sage-200">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage-600 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-sage-600"></span>
+</span>
+<span class="material-symbols-outlined text-sage-600 text-[18px]">mic</span>
+<span class="text-xs font-bold tracking-wider text-sage-700 uppercase">VOICE READY</span>
+</div>
+<button aria-label="Settings" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white hover:bg-charcoal-50 text-charcoal-500 hover:text-charcoal-900 transition-colors border border-[#E5E5DF]" type="button">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full pt-[72px] min-h-screen relative overflow-hidden bg-[#F6F7F8]">
+<!-- ========================================================================= -->
+<!-- SUBDUED LIGHT-MODE LIVE DASHBOARD (Backdrop Underlay)                      -->
+<!-- ========================================================================= -->
+<div class="w-full flex flex-col p-8 space-y-6 opacity-45 blur-[3px] pointer-events-none select-none transition-all duration-300">
+<!-- Top Cockpit Row -->
+<div class="w-full flex items-center justify-between bg-white border border-[#E5E5DF] p-5 rounded-2xl shadow-sm">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage-600 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-sage-600"></span>
+</span>
+<span class="font-display text-xl font-bold tracking-tight text-charcoal-900">DINNER FOR 4</span>
+</div>
+<div class="h-6 w-px bg-[#E5E5DF]"></div>
+<div class="flex items-center gap-2 text-charcoal-500 text-sm font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+<span>ROAST CHICKEN + HERBED ROOT VEG &amp; GRAVY</span>
+</div>
+</div>
+<!-- Center Landing Clock -->
+<div class="flex items-center gap-5 bg-charcoal-50 border border-[#E5E5DF] px-6 py-2.5 rounded-full">
+<div class="flex flex-col items-center">
+<span class="text-[11px] uppercase tracking-widest text-charcoal-500 font-semibold">COORDINATED LANDING</span>
+<span class="font-display text-2xl font-extrabold text-charcoal-900">7:30 PM</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-100 text-sage-800 text-xs font-semibold uppercase">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>42 MIN REMAINING · ON TRACK</span>
+</div>
+</div>
+<!-- Right Telemetry & Hardware Matrix -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2.5 bg-warm-amber-50 border border-warm-amber-200 px-4 py-2 rounded-xl">
+<span class="material-symbols-outlined text-warm-amber-600 text-[18px]">oven_gen</span>
+<div class="flex flex-col text-left">
+<span class="text-xs text-warm-amber-800 font-bold">OVEN 425°F</span>
+<span class="text-[11px] text-warm-amber-600">RACK 2 BUSY</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 bg-sage-50 border border-sage-200 px-4 py-2 rounded-xl">
+<span class="material-symbols-outlined text-sage-600 text-[18px]">skillet</span>
+<div class="flex flex-col text-left">
+<span class="text-xs text-sage-800 font-bold">BURNERS 2/4</span>
+<span class="text-[11px] text-sage-600">ACTIVE FLAME</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Background Task Grid -->
+<div class="grid grid-cols-12 gap-6 w-full">
+<div class="col-span-8 bg-white border border-[#E5E5DF] rounded-2xl p-6 flex flex-col justify-between h-[340px]">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-4">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-charcoal-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-sage-600" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="absolute text-sm font-bold text-charcoal-900">04:18</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs uppercase tracking-widest text-sage-600 font-bold">PREP LANE · ACTIVE STEP 3</span>
+<span class="font-display text-xl font-bold text-charcoal-900">SMASH &amp; SEASON BOILED POTATOES</span>
+<span class="text-sm text-charcoal-500">Toss with duck fat, coarse salt, and rosemary sprigs.</span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-warm-amber-50 border border-warm-amber-200 text-warm-amber-700 text-xs font-semibold uppercase">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span>INGREDIENT ISSUE REPORTED (PAN GRAVY)</span>
+</div>
+</div>
+</div>
+<div class="col-span-4 bg-white border border-[#E5E5DF] rounded-2xl p-6 flex flex-col justify-between h-[340px]">
+<div class="flex items-center justify-between">
+<span class="font-display text-base font-bold text-charcoal-900">STOVETOP GRID</span>
+<span class="text-xs text-charcoal-400 font-semibold uppercase">2X2 INDUCTION</span>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-3">
+<div class="bg-charcoal-50 rounded-xl p-3 border border-[#E5E5DF]">
+<span class="text-[11px] text-charcoal-500 font-medium">B1 · POTATOES</span>
+<p class="text-xs font-semibold text-charcoal-800 mt-1">OFF / RESTING</p>
+</div>
+<div class="bg-warm-amber-50 rounded-xl p-3 border border-warm-amber-200">
+<span class="text-[11px] text-warm-amber-700 font-bold">B2 · PAN GRAVY</span>
+<p class="text-xs font-bold text-warm-amber-800 mt-1">PREP PAUSED</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- FOREGROUND LIGHT-MODE MODAL: PANTRY SUBSTITUTION & RECOVERY               -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-charcoal-900/25 backdrop-blur-md transition-opacity duration-300" id="modal-container">
+<div class="w-full max-w-[1360px] max-h-[92vh] bg-[#FFFFFF] border border-[#E5E5DF] rounded-[24px] shadow-apple-modal flex flex-col justify-between p-8 md:p-10 relative overflow-hidden">
+<!-- ================= MODAL HEADER ================= -->
+<div class="relative z-10 flex items-start justify-between pb-6 border-b border-[#EBEBE6]">
+<div class="flex flex-col space-y-2">
+<div class="flex flex-wrap items-center gap-3">
+<span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sage-600">
+<span class="w-2 h-2 rounded-full bg-sage-600 inline-block"></span>
+              LIVE COOK SESSION · RECIPE RECOVERY
+            </span>
+<span class="px-3 py-1 rounded-full bg-warm-amber-50 border border-warm-amber-200 text-warm-amber-700 text-xs font-bold tracking-wider uppercase inline-flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[15px] text-warm-amber-600">inventory_2</span>
+              HEAVY CREAM MISSING
+            </span>
+</div>
+<h1 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight text-[#202124]">
+            Missing an ingredient?
+          </h1>
+<p class="text-charcoal-500 text-base max-w-3xl leading-relaxed">
+            Let's find a practical kitchen pantry substitute and keep dinner synchronization completely frictionless.
+          </p>
+</div>
+<!-- Top Right Voice Status & Close Button -->
+<div class="flex items-center gap-3 shrink-0 ml-4">
+<div class="hidden sm:flex items-center gap-2 bg-charcoal-50 border border-[#E5E5DF] px-4 py-2 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-sage-600 text-[18px]">graphic_eq</span>
+<span class="text-xs font-bold uppercase tracking-wider text-charcoal-700">VOICE ASSISTANT: AWAITING CONFIRMATION</span>
+</div>
+<button aria-label="Dismiss Modal" class="w-11 h-11 rounded-full bg-charcoal-50 hover:bg-charcoal-100 text-charcoal-500 hover:text-charcoal-900 border border-[#E5E5DF] flex items-center justify-center transition-all cursor-pointer" id="close-modal-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+<!-- ================= MODAL MAIN CONTENT (2-COLUMN 50/50 GRID) ================= -->
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-7 flex-1 min-h-0 py-6 overflow-y-auto">
+<!-- LEFT COLUMN: Problem Context & Recommended Swap -->
+<div class="lg:col-span-6 flex flex-col space-y-5">
+<!-- Card 1: Missing Ingredient Context -->
+<div class="bg-[#FBFBFA] border border-[#E5E5DF] rounded-2xl p-5 shadow-apple-card flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-warm-amber-50 border border-warm-amber-200 flex items-center justify-center text-warm-amber-600">
+<span class="material-symbols-outlined text-[22px]">not_interested</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[11px] font-bold uppercase tracking-widest text-charcoal-400">RECIPE DISH CONTEXT</span>
+<span class="font-display text-lg font-bold text-charcoal-900">
+                    Creamy Pan Gravy <span class="text-sm font-normal text-charcoal-500">(Side &amp; Finishing Sauce)</span>
+</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-warm-amber-50 border border-warm-amber-200 text-warm-amber-700 text-xs font-semibold uppercase">
+<span class="material-symbols-outlined text-[15px]">mic</span>
+                Reported by Voice
+              </div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-3 mt-4 p-4 bg-white border border-[#EBEBE6] rounded-xl">
+<div class="flex items-center gap-3">
+<span class="text-sm font-semibold text-charcoal-900">Missing: Heavy Whipping Cream</span>
+<span class="text-charcoal-300">|</span>
+<span class="text-sm font-mono font-bold text-warm-amber-700 bg-warm-amber-50 px-2 py-0.5 rounded border border-warm-amber-200">⅓ cup (80ml)</span>
+</div>
+<button class="text-sage-600 hover:text-sage-700 text-xs font-bold tracking-wider uppercase transition-colors flex items-center gap-1 cursor-pointer hover:underline" id="restore-item-btn" type="button">
+<span>I FOUND THE INGREDIENT</span>
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+</div>
+<p class="text-xs text-charcoal-500 mt-3">
+              This ingredient contributes essential milkfat and emulsion body. Select a vetted substitute below before firing Burner #2.
+            </p>
+</div>
+<!-- Card 2: Recommended Substitute Hero Card -->
+<div class="bg-white border-2 border-sage-600/30 rounded-2xl p-6 shadow-apple-card flex flex-col justify-between flex-1 relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1.5 bg-sage-600"></div>
+<div class="flex flex-col space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sage-600 text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-xs font-extrabold uppercase tracking-wider text-sage-700">BEST MATCH · PANTRY COMPATIBLE</span>
+</div>
+<span class="px-3 py-0.5 rounded-full bg-sage-50 border border-sage-200 text-sage-700 text-xs font-bold">
+                  98% FLAVOR MATCH
+                </span>
+</div>
+<div class="flex items-baseline justify-between pt-1">
+<h2 class="font-display text-2xl font-extrabold text-charcoal-900 tracking-tight">Whole Milk + Melted Butter</h2>
+<span class="text-[11px] font-semibold text-charcoal-500 uppercase tracking-wider">Exact Fat Reconstitution</span>
+</div>
+<!-- Measurement Breakdown Pills -->
+<div class="grid grid-cols-2 gap-3.5 pt-1">
+<div class="bg-[#FBFBFA] border border-[#E5E5DF] p-3.5 rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-sage-50 border border-sage-200 flex items-center justify-center text-sage-600 shrink-0">
+<span class="material-symbols-outlined text-[20px]">water_drop</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display text-lg font-bold text-charcoal-900">⅓ cup</span>
+<span class="text-xs text-charcoal-500 font-medium">Whole Milk (Volume base)</span>
+</div>
+</div>
+<div class="bg-[#FBFBFA] border border-[#E5E5DF] p-3.5 rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-warm-amber-50 border border-warm-amber-200 flex items-center justify-center text-warm-amber-600 shrink-0">
+<span class="material-symbols-outlined text-[20px]">lunch_dining</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display text-lg font-bold text-charcoal-900">2 tbsp</span>
+<span class="text-xs text-charcoal-500 font-medium">Melted Butter (Milkfat)</span>
+</div>
+</div>
+</div>
+<p class="text-xs text-charcoal-600 leading-relaxed pt-1">
+                Whole milk provides the liquid volume and natural dairy lactose, while melted butter supplies the identical ~36% butterfat density of heavy cream. Emulsifies smoothly into pan drippings with complete richness.
+              </p>
+</div>
+<!-- Alternative Options Accordion Trigger -->
+<div class="pt-4 mt-2 border-t border-[#EBEBE6] flex items-center justify-between">
+<button class="flex items-center gap-2 text-charcoal-600 hover:text-charcoal-900 text-xs font-semibold transition-colors cursor-pointer" id="toggle-alt-options" type="button">
+<span class="material-symbols-outlined text-[17px] text-sage-600">tune</span>
+<span>View other options (Greek Yogurt, Evaporated Milk, Cashew)</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<span class="text-[11px] font-semibold text-charcoal-400 uppercase">Zero allergen change</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Culinary Adaptation & Timing Matrix -->
+<div class="lg:col-span-6 flex flex-col space-y-5">
+<!-- Card 3: How to Adjust the Step -->
+<div class="bg-[#FBFBFA] border border-[#E5E5DF] rounded-2xl p-5 shadow-apple-card flex flex-col justify-between">
+<div class="flex items-center justify-between pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-charcoal-500 text-[20px]">reorder</span>
+<span class="text-xs font-extrabold uppercase tracking-widest text-charcoal-900">HOW TO ADJUST THE STEP</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-warm-amber-50 border border-warm-amber-200 text-warm-amber-700 text-xs font-bold tracking-wider uppercase">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                +2 MIN SIMMER EXTENSION
+              </div>
+</div>
+<!-- Ordered Recipe Adjustments -->
+<div class="flex flex-col space-y-2.5">
+<div class="flex items-start gap-3.5 bg-white border border-[#EBEBE6] p-3.5 rounded-xl">
+<span class="w-6 h-6 rounded-full bg-sage-50 border border-sage-200 text-sage-700 text-xs font-bold flex items-center justify-center shrink-0">1</span>
+<p class="text-xs text-charcoal-800 leading-snug">
+<strong class="font-bold text-charcoal-900">Melt Butter First:</strong> Swirl 2 tbsp butter directly into warm pan drippings before whisking roux to prevent separation.
+                </p>
+</div>
+<div class="flex items-start gap-3.5 bg-white border border-[#EBEBE6] p-3.5 rounded-xl">
+<span class="w-6 h-6 rounded-full bg-sage-50 border border-sage-200 text-sage-700 text-xs font-bold flex items-center justify-center shrink-0">2</span>
+<p class="text-xs text-charcoal-800 leading-snug">
+<strong class="font-bold text-charcoal-900">Slow Stream Whisk:</strong> Gradually stream in ⅓ cup whole milk over <span class="text-warm-amber-700 font-semibold">Medium-Low heat (Burner #2)</span> to emulsify smoothly.
+                </p>
+</div>
+<div class="flex items-start gap-3.5 bg-white border border-[#EBEBE6] p-3.5 rounded-xl">
+<span class="w-6 h-6 rounded-full bg-sage-50 border border-sage-200 text-sage-700 text-xs font-bold flex items-center justify-center shrink-0">3</span>
+<p class="text-xs text-charcoal-800 leading-snug">
+<strong class="font-bold text-charcoal-900">Simmer for +2 Minutes:</strong> Total 10 min reduction until gravy coats the back of a spoon. Taste test for seasoning.
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-3 pt-2 text-charcoal-500 text-xs">
+<span class="material-symbols-outlined text-[16px] text-charcoal-400">info</span>
+<span>Monitor sauce bubbling; remove early if desired spoon-coating density is reached.</span>
+</div>
+</div>
+<!-- Card 4: Timing Engine Impact & Timeline Visualizer -->
+<div class="bg-white border border-[#E5E5DF] rounded-2xl p-5 shadow-apple-card flex flex-col justify-between flex-1">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sage-600 text-[20px]">schedule_send</span>
+<span class="text-xs font-extrabold uppercase tracking-widest text-charcoal-900">IMPACT ON DINNER TIMING</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-sage-50 border border-sage-200 text-sage-700 text-xs font-bold uppercase tracking-wider">
+                FEASIBILITY RECHECKED · SYNC SAFE
+              </span>
+</div>
+<!-- Metric Telemetry -->
+<div class="grid grid-cols-3 gap-3 my-2">
+<div class="bg-[#FBFBFA] border border-[#E5E5DF] p-3 rounded-xl flex flex-col">
+<span class="text-[11px] font-semibold text-charcoal-400">PAN GRAVY DURATION</span>
+<span class="font-display text-base font-bold text-warm-amber-700">10 MIN (+2m)</span>
+<span class="text-[11px] text-charcoal-500">Absorbed in buffer</span>
+</div>
+<div class="bg-[#FBFBFA] border border-[#E5E5DF] p-3 rounded-xl flex flex-col">
+<span class="text-[11px] font-semibold text-charcoal-400">STOVETOP BURNER #2</span>
+<span class="font-display text-base font-bold text-charcoal-900">UNTIL 7:27 PM</span>
+<span class="text-[11px] text-sage-600 font-semibold">No contention</span>
+</div>
+<div class="bg-[#FBFBFA] border border-[#E5E5DF] p-3 rounded-xl flex flex-col">
+<span class="text-[11px] font-semibold text-charcoal-400">TARGET LANDING</span>
+<span class="font-display text-base font-bold text-sage-600">7:30 PM FIXED</span>
+<span class="text-[11px] text-sage-600 font-semibold">0 min net delay</span>
+</div>
+</div>
+<!-- Synchronized Rail Visualizer Graphic -->
+<div class="w-full bg-[#FBFBFA] border border-[#E5E5DF] rounded-xl p-3.5 flex flex-col space-y-2 mt-1">
+<div class="flex justify-between items-center text-charcoal-400 text-xs font-mono font-medium">
+<span>6:51 PM (NOW)</span>
+<span>7:05 PM</span>
+<span>7:15 PM</span>
+<span>7:25 PM</span>
+<span class="text-sage-700 font-bold">7:30 PM (TARGET)</span>
+</div>
+<!-- Synchronized Timeline Bar Tracks -->
+<div class="relative w-full h-16 bg-white border border-[#EBEBE6] rounded-lg overflow-hidden flex flex-col justify-center px-3 space-y-1.5">
+<!-- Track A: Roast Chicken Resting Buffer -->
+<div class="relative w-full h-5 flex items-center">
+<div class="absolute left-[20%] w-[70%] h-full bg-charcoal-100 rounded flex items-center px-2 text-charcoal-700 text-xs font-medium">
+<span class="truncate">Roast Chicken Resting Window (15m Cushion)</span>
+</div>
+</div>
+<!-- Track B: Gravy Extension Timeline -->
+<div class="relative w-full h-5 flex items-center">
+<div class="absolute left-[45%] w-[25%] h-full bg-charcoal-100 rounded flex items-center px-2 text-charcoal-500 text-xs">
+<span class="truncate">Original (8m)</span>
+</div>
+<div class="absolute left-[45%] w-[34%] h-full bg-warm-amber-100 border border-warm-amber-200 rounded flex items-center justify-between px-2 text-warm-amber-800 text-xs font-bold shadow-sm">
+<span class="truncate">Proposed Gravy (+2m = 10m Simmer)</span>
+<span class="material-symbols-outlined text-[13px] text-warm-amber-700">alarm_on</span>
+</div>
+<!-- Landing Target Vertical Marker -->
+<div class="absolute right-[10%] top-0 bottom-0 w-0.5 bg-sage-600"></div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 pt-1 text-sage-700 text-xs font-medium">
+<span class="material-symbols-outlined text-[16px] text-sage-600">insights</span>
+<span>The additional 2 minutes of simmer are safely absorbed while the roasted chicken rests. Dinner lands on time.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= MODAL FOOTER (TOUCH ACTION BAR) ================= -->
+<div class="relative z-10 pt-6 mt-2 border-t border-[#EBEBE6] flex flex-col md:flex-row items-center justify-between gap-5">
+<!-- Left: Voice Assistant Prompt Bar with Microphone & Speech Bubble -->
+<div class="flex items-center gap-3.5 max-w-xl w-full md:w-auto">
+<div class="w-12 h-12 rounded-2xl bg-sage-50 border border-sage-200 text-sage-600 flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">graphic_eq</span>
+</div>
+<div class="flex flex-col">
+<div class="bg-charcoal-50 border border-[#E5E5DF] rounded-2xl rounded-tl-sm px-4 py-2 text-xs text-charcoal-800 italic">
+              "I have a milk-and-butter alternative ready. Would you like me to update the gravy and confirm the schedule?"
+            </div>
+<span class="text-[11px] text-charcoal-400 mt-1 pl-1">
+              Hands messy? Say <strong class="text-sage-700 font-bold">"Apply substitute"</strong> or tap the action button.
+            </span>
+</div>
+</div>
+<!-- Right: Action Button Cluster -->
+<div class="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto">
+<button class="h-14 px-5 rounded-2xl text-charcoal-600 hover:text-charcoal-900 hover:bg-charcoal-50 font-bold text-sm transition-colors cursor-pointer" id="cancel-btn" type="button">
+            Cancel
+          </button>
+<button class="h-14 px-6 rounded-2xl bg-charcoal-50 hover:bg-charcoal-100 text-charcoal-800 border border-[#E5E5DF] font-bold text-sm transition-colors cursor-pointer flex items-center gap-2 shadow-sm" id="other-options-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-charcoal-500">swap_horiz</span>
+<span>Choose Another Option</span>
+</button>
+<!-- Primary Sage Green CTA Button -->
+<div class="flex flex-col items-end">
+<button class="h-14 px-8 rounded-2xl bg-[#3D8065] hover:bg-[#2f6550] text-white font-display text-sm md:text-base font-bold tracking-wide transition-all shadow-md hover:shadow-lg active:scale-[0.99] flex items-center gap-3 cursor-pointer" id="apply-substitute-btn" type="button">
+<span>APPLY SUBSTITUTE &amp; UPDATE PLAN</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<span class="text-[11px] text-charcoal-400 mt-1">Updates Burner #2 timer, adjusts step instructions, and maintains sync</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Interactive Script for micro-interactions -->
+<script>
+  (function initPantryModalLight() {
+    const applyBtn = document.getElementById('apply-substitute-btn');
+    const closeBtn = document.getElementById('close-modal-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const restoreBtn = document.getElementById('restore-item-btn');
+    const otherOptionsBtn = document.getElementById('other-options-btn');
+    const toggleAltOptions = document.getElementById('toggle-alt-options');
+    const modalContainer = document.getElementById('modal-container');
+
+    function dismissModal(feedbackMsg) {
+      if (!modalContainer) return;
+      modalContainer.style.opacity = '0';
+      modalContainer.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        modalContainer.classList.add('hidden');
+        if (feedbackMsg) {
+          console.log('Landing Time Session Event:', feedbackMsg);
+        }
+      }, 300);
+    }
+
+    if (applyBtn) {
+      applyBtn.addEventListener('click', () => {
+        applyBtn.innerHTML = `
+          <span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+          <span>UPDATING SCHEDULE...</span>
+        `;
+        setTimeout(() => {
+          dismissModal('Substitute Whole Milk + Butter applied. Simmer adjusted +2m. Landing locked at 7:30 PM.');
+        }, 600);
+      });
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', () => dismissModal('Substitution modal dismissed.'));
+    if (cancelBtn) cancelBtn.addEventListener('click', () => dismissModal('Cancelled by user.'));
+    if (restoreBtn) restoreBtn.addEventListener('click', () => dismissModal('Heavy cream marked found.'));
+
+    if (toggleAltOptions) {
+      toggleAltOptions.addEventListener('click', () => {
+        const textSpan = toggleAltOptions.querySelector('span:nth-child(2)');
+        if (textSpan) {
+          textSpan.textContent = textSpan.textContent.includes('Greek Yogurt') 
+            ? 'Showing 3 alternatives: Greek Yogurt (1:1), Evaporated Milk (1:1), Cashew Purée'
+            : 'View other options (Greek Yogurt, Evaporated Milk, Cashew)';
+        }
+      });
+    }
+
+    if (otherOptionsBtn) {
+      otherOptionsBtn.addEventListener('click', () => {
+        if (toggleAltOptions) toggleAltOptions.click();
+      });
+    }
+  })();
+</script>
+</body></html>

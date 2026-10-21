@@ -1,0 +1,233 @@
+---
+name: Culinary Operating System
+colors:
+  surface: '#faf9fd'
+  surface-dim: '#dbd9dd'
+  surface-bright: '#faf9fd'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#f4f3f7'
+  surface-container: '#efedf1'
+  surface-container-high: '#e9e7eb'
+  surface-container-highest: '#e3e2e6'
+  on-surface: '#1a1b1e'
+  on-surface-variant: '#464555'
+  inverse-surface: '#2f3033'
+  inverse-on-surface: '#f1f0f4'
+  outline: '#777587'
+  outline-variant: '#c7c4d8'
+  surface-tint: '#4d44e3'
+  primary: '#3525cd'
+  on-primary: '#ffffff'
+  primary-container: '#4f46e5'
+  on-primary-container: '#dad7ff'
+  inverse-primary: '#c3c0ff'
+  secondary: '#256a50'
+  on-secondary: '#ffffff'
+  secondary-container: '#a9eece'
+  on-secondary-container: '#2a6e54'
+  tertiary: '#703a00'
+  on-tertiary: '#ffffff'
+  tertiary-container: '#934e00'
+  on-tertiary-container: '#ffd2b1'
+  error: '#ba1a1a'
+  on-error: '#ffffff'
+  error-container: '#ffdad6'
+  on-error-container: '#93000a'
+  primary-fixed: '#e2dfff'
+  primary-fixed-dim: '#c3c0ff'
+  on-primary-fixed: '#0f0069'
+  on-primary-fixed-variant: '#3323cc'
+  secondary-fixed: '#acf1d0'
+  secondary-fixed-dim: '#90d5b5'
+  on-secondary-fixed: '#002115'
+  on-secondary-fixed-variant: '#00513a'
+  tertiary-fixed: '#ffdcc3'
+  tertiary-fixed-dim: '#ffb77d'
+  on-tertiary-fixed: '#2f1500'
+  on-tertiary-fixed-variant: '#6e3900'
+  background: '#faf9fd'
+  on-background: '#1a1b1e'
+  surface-variant: '#e3e2e6'
+typography:
+  display-lg:
+    fontFamily: Epilogue
+    fontSize: 3.5rem
+    fontWeight: '700'
+    lineHeight: 4rem
+    letterSpacing: -0.03em
+  display-lg-mobile:
+    fontFamily: Epilogue
+    fontSize: 2.25rem
+    fontWeight: '700'
+    lineHeight: 2.75rem
+    letterSpacing: -0.02em
+  headline-lg:
+    fontFamily: Epilogue
+    fontSize: 2rem
+    fontWeight: '600'
+    lineHeight: 2.5rem
+    letterSpacing: -0.02em
+  headline-lg-mobile:
+    fontFamily: Epilogue
+    fontSize: 1.5rem
+    fontWeight: '600'
+    lineHeight: 2rem
+    letterSpacing: -0.01em
+  headline-md:
+    fontFamily: Epilogue
+    fontSize: 1.25rem
+    fontWeight: '600'
+    lineHeight: 1.75rem
+    letterSpacing: -0.01em
+  title-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 1.125rem
+    fontWeight: '600'
+    lineHeight: 1.5rem
+    letterSpacing: -0.005em
+  body-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 1rem
+    fontWeight: '400'
+    lineHeight: 1.6rem
+  body-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 0.875rem
+    fontWeight: '400'
+    lineHeight: 1.4rem
+  label-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 0.75rem
+    fontWeight: '600'
+    lineHeight: 1rem
+    letterSpacing: 0.04em
+  label-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 0.6875rem
+    fontWeight: '500'
+    lineHeight: 0.875rem
+    letterSpacing: 0.02em
+  numeric-timer:
+    fontFamily: Epilogue
+    fontSize: 2.75rem
+    fontWeight: '700'
+    lineHeight: 3rem
+    letterSpacing: -0.02em
+rounded:
+  sm: 0.25rem
+  DEFAULT: 0.5rem
+  md: 0.75rem
+  lg: 1rem
+  xl: 1.5rem
+  full: 9999px
+spacing:
+  gutter: 1.25rem
+  gutter-lg: 2rem
+  margin: 1rem
+  margin-md: 1.5rem
+  margin-lg: 2.5rem
+  space-xs: 0.25rem
+  space-sm: 0.5rem
+  space-md: 1rem
+  space-lg: 1.5rem
+  space-xl: 2rem
+  space-2xl: 3rem
+---
+
+## Brand & Style
+
+This design system establishes an editorial smart-kitchen aesthetic that pairs expressive modern typography with high-contrast ambient state accents. Rooted in the functional calm of modern appliance ergonomics and the clarity of editorial print, it serves high-stress kitchen coordination where glanceability from across a room is non-negotiable.
+
+The visual personality combines quiet architectural restraint with precision cues:
+- **Atmosphere:** Warm, serene, and uncluttered. Surfaces evoke limestone counter blocks, matte ceramic glazes, and powder-coated steel rather than cold commercial kitchen hardware.
+- **Audience:** Passionate home chefs, multi-course meal coordinators, and smart-display households who require zero cognitive overhead during multi-step meal prep.
+- **Style Language:** Modern Warm-Minimalism paired with tactile micro-depth. Surfaces use fine neutral borders and low-profile diffuse shadows to ensure readability under variable kitchen task lighting without glare.
+
+## Colors
+
+The palette balances a grounding chalk-and-ivory foundation with state-specific ambient accents designed to communicate burner, oven, timer, and prep states instantly:
+
+- **Canvas & Structural Surfaces:**
+  - `canvas-base`: `#F7F7F2` (warm limestone base, minimizes kitchen backlight glare)
+  - `surface-card`: `#FFFFFF` (crisp white card tier for interactive widgets)
+  - `surface-elevated`: `#F1F0E9` (subtle ivory contrast for secondary groups and drawers)
+  - `border-subtle`: `#E5E5DF` (precise, quiet boundaries)
+  - `border-strong`: `#D1D1C7` (deliberate structural dividers)
+
+- **Typography & Content Hierarchy:**
+  - `text-primary`: `#202124` (deep charcoal, maximum contrast without harsh jet-black glare)
+  - `text-secondary`: `#737780` (calm slate for auxiliary details, weights, and steps)
+  - `text-tertiary`: `#9CA3AF` (whisper gray for units, background metadata, and inactive steps)
+
+- **Operational Accents & Contextual States:**
+  - `accent-primary` (`#4F46E5`): Designates resting periods, synchronization phases, and focal step transitions.
+  - `accent-action` (`#3D8065`): Restrained sage green for primary actions, timers completed, and target temperature hits.
+  - `accent-thermal` (`#D97706`): Muted amber for active preheating, sear timers, and sequence delay alerts.
+  - `accent-voice` (`#0284C7` / tint `#E0F2FE`): Powder blue for voice assistant listening and low-temp hold loops.
+  - `accent-critical` (`#E11D48`): Soft rose for timer overruns, boil-overs, and probe disconnections.
+
+## Typography
+
+The typography couples the structured character of **Epilogue** for display headlines, timers, and meal-stage titles with the high legibility of **Plus Jakarta Sans** for multi-step recipes, ingredient tables, and micro-labels.
+
+Key implementation rules:
+- **Tabular Numerals:** All timer digits, temperature probes, and ingredient quantities must use `font-variant-numeric: tabular-nums` to eliminate jitter as countdowns run.
+- **Editorial Contrast:** Headings in Epilogue take subtle optical negative letter-spacing (`-0.02em` to `-0.03em`) to mimic architectural editorial magazines.
+- **Distance Scaling:** Primary timers and current recipe directives prioritize larger line-heights and open tracking to maintain legibility when viewed up to 6 feet away from counter mounted tablets.
+
+## Layout & Spacing
+
+Layouts conform to a responsive fluid grid optimized for fixed kitchen counter hubs (10" to 15" touch displays) while gracefully adapting down to handheld phones.
+
+- **Grid Architecture:**
+  - **Mobile (< 768px):** Single-column stacked layout with `margin: 1rem` and internal card padding of `space-md` (16px).
+  - **Tablet & Counter Displays (768px – 1199px):** 8-column layout with `gutter: 1.25rem` and `margin-md: 1.5rem`. Enables side-by-side timer overview and step directives.
+  - **Large Smart Consoles (1200px+):** 12-column layout with `gutter-lg: 2rem` and `margin-lg: 2.5rem`. Timers, temperature lanes, and parallel dish timelines split into dedicated modular panels.
+- **Touch-First Rhythm:** Tap targets never drop below 48x48px to accommodate wet, flour-dusted, or gloved hands.
+
+## Elevation & Depth
+
+This design system avoids harsh dropshadows in favor of crisp material layering, low-contrast boundaries, and warm micro-shadows:
+
+- **Level 0 (Canvas):** Pure `#F7F7F2` flat background.
+- **Level 1 (Card & Module Tiles):** Pure white (`#FFFFFF`) with a hair-line border of `1px solid #E5E5DF` and an ambient micro-drop shadow:
+  `box-shadow: 0 1px 3px rgba(32, 33, 36, 0.04), 0 4px 12px rgba(32, 33, 36, 0.02)`.
+- **Level 2 (Active Focus & Drag States):** Elevated ivory (`#F1F0E9`) or white tile with enhanced diffuse lift:
+  `box-shadow: 0 4px 6px -1px rgba(32, 33, 36, 0.06), 0 10px 24px -3px rgba(32, 33, 36, 0.04)`.
+- **Level 3 (Modal Sheets & Alert Banners):** Floating overlays paired with a high-transparency neutral backdrop blur:
+  `backdrop-filter: blur(12px); background: rgba(247, 247, 242, 0.85); box-shadow: 0 20px 32px -8px rgba(32, 33, 36, 0.08)`.
+
+## Shapes
+
+The interface employs a unified `roundedness: 2` scale that mirrors modern curved appliance housings and ceramic dishware:
+
+- **Base Radius (`0.5rem` / 8px):** Checkboxes, segmented control pills, input tags, and nested progress tracks.
+- **Large Radius (`rounded-lg: 1rem` / 16px):** Standard recipe cards, ambient timer widgets, and secondary contextual drawer containers.
+- **Extra-Large Radius (`rounded-xl: 1.5rem` / 24px):** Primary viewport canvases, large smart hub dashboard cards, and active meal timeline modules.
+- **Pills (`full rounded`):** Status indicator badges, countdown pills, voice activity capsules, and floating emergency action buttons.
+
+## Components
+
+### Buttons
+- **Primary Action (Sage):** Background `#3D8065`, text `#FFFFFF`, radius `rounded-lg` (16px), height 48px, horizontal padding `space-lg`. Hover/Active lifts brightness slightly and adds a `2px` focus ring of `rgba(61, 128, 101, 0.2)`.
+- **Secondary / Resting Phase (Indigo):** Background `#4F46E5`, text `#FFFFFF`. Reserved for stage synchronization and meal time alignments.
+- **Ghost / Neutral:** Surface transparent, border `1px solid #E5E5DF`, text `#202124`. When pressed, fills with `#F1F0E9`.
+
+### Timers & Metric Chips
+- **Status Chips:** Pill-shaped, 32px height, 12px font size with uppercase tabular weights.
+  - *Resting:* `#4F46E5` text on subtle indigo wash (`rgba(79, 70, 229, 0.08)`).
+  - *Oven/Thermal:* `#D97706` text on warm amber wash (`rgba(217, 119, 6, 0.1)`).
+  - *Voice/Hold:* `#0284C7` text on `#E0F2FE`.
+- **Countdown Module:** Prominent card tile with `numeric-timer` display, subtle SVG ring progress track in `#E5E5DF` with dynamic stroke colored according to the appliance state.
+
+### Cards & Modular Containers
+- Constructed on `#FFFFFF` with `1px solid #E5E5DF` boundary and `rounded-lg` curvature.
+- Header zones contain an uppercase `label-md` category tracker and an ambient status indicator dot (8px circular beacon).
+
+### Lists & Step Sequencing
+- Recipe steps use divider lines in `#E5E5DF` without extending to card edges.
+- Completed steps display a `#3D8065` check token; active steps feature a thick left indicator rail (`3px solid #4F46E5`) with an elevated ivory background (`#F1F0E9`).
+
+### Inputs & Controls
+- **Inputs & Sliders:** Text inputs use `#FFFFFF` background with `1px solid #E5E5DF`, shifting to `#4F46E5` on focus. Sliders for temperature adjustment feature an oversized 28px tactile circular thumb for easy handling on touch screens.
+- **Checkboxes & Toggles:** 24x24px dimensions with 6px border radius. Checked state defaults to `#3D8065` with a high-contrast white tick.

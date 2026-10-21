@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Landing Time - Master Live Cook-Along Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Epilogue:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+  @layer base {
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #F7F7F2;
+      color: #202124;
+    }
+    body {
+      overscroll-behavior: none;
+    }
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          canvas: "#F7F7F2",
+          card: "#FFFFFF",
+          "card-subtle": "#F8F8F5",
+          "card-hover": "#F1F0E9",
+          border: "#E5E5DF",
+          charcoal: "#202124",
+          secondary: "#737780",
+          muted: "#9CA3AF",
+          sage: {
+            DEFAULT: "#3D8065",
+            hover: "#336C55",
+            light: "#EBF4F0",
+            border: "#C4DDD3"
+          },
+          amber: {
+            DEFAULT: "#D97706",
+            light: "#FEF3C7",
+            border: "#FDE68A"
+          },
+          indigo: {
+            DEFAULT: "#4F46E5",
+            light: "#EEF2FF",
+            border: "#C7D2FE"
+          },
+          blue: {
+            DEFAULT: "#0284C7",
+            light: "#F0F9FF",
+            border: "#BAE6FD"
+          }
+        },
+        fontFamily: {
+          sans: ["'Plus Jakarta Sans'", "sans-serif"],
+          display: ["'Epilogue'", "sans-serif"]
+        },
+        boxShadow: {
+          'apple-card': '0 2px 10px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02)',
+          'apple-elevated': '0 10px 30px -10px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03)',
+          'apple-btn': '0 4px 14px rgba(61, 128, 101, 0.25)'
+        }
+      }
+    }
+  };
+</script>
+</head>
+<body class="bg-canvas font-sans text-charcoal antialiased min-h-screen">
+<!-- MAIN FIXED HEADER (Apple clean white chrome) -->
+<header class="fixed top-0 w-full z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-[0_1px_4px_rgba(0,0,0,0.02)]">
+<div class="h-[76px] w-full px-6 lg:px-8 flex items-center justify-between">
+<!-- Left: Branding & Sub-label -->
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-sage-light border border-sage-border/60 flex items-center justify-center text-sage shadow-sm">
+<span class="material-symbols-outlined text-[24px]">timer</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display font-bold text-[18px] tracking-wide text-charcoal leading-tight">LANDING TIME</span>
+<span class="text-[11px] font-semibold tracking-wider text-secondary uppercase">Smart Cooking Coordination</span>
+</div>
+</div>
+<!-- Center/Right Controls -->
+<div class="flex items-center gap-3">
+<div class="hidden sm:flex items-center px-4 py-1.5 rounded-full bg-card-subtle border border-border text-charcoal text-[12px] font-semibold tracking-wider uppercase">
+        New Cooking Session
+      </div>
+<div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sage-light border border-sage-border/80">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-sage"></span>
+</span>
+<span class="material-symbols-outlined text-sage text-[18px]">mic</span>
+<span class="text-[11px] font-bold tracking-wider text-sage uppercase">Voice Ready</span>
+</div>
+<button aria-label="Settings" class="w-10 h-10 flex items-center justify-center rounded-xl bg-card border border-border text-secondary hover:text-charcoal hover:bg-card-hover transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full pt-[76px] bg-canvas min-h-screen flex flex-col justify-between">
+<div class="flex flex-col w-full select-none pb-6">
+<!-- ZONE A: Session & Landing-Time Mission Control Header -->
+<section class="w-full bg-card border-b border-border px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+<!-- Left: Session Context -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2.5">
+<div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-card-subtle border border-border text-sage font-bold">
+<span class="material-symbols-outlined text-[19px]">dinner_dining</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-display font-bold text-[14px] tracking-wider text-charcoal uppercase">DINNER DIRECTORY</span>
+<span class="w-2 h-2 rounded-full bg-sage"></span>
+</div>
+<span class="text-[10px] font-semibold tracking-widest text-secondary uppercase">COORDINATED MEAL PLAN</span>
+</div>
+</div>
+<div class="h-6 w-px bg-border mx-1 hidden sm:block"></div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-card-subtle border border-border text-charcoal font-semibold text-[12px] tracking-wide">
+<span class="material-symbols-outlined text-amber text-[16px]">groups</span>
+<span>DINNER FOR 4</span>
+</div>
+</div>
+<!-- Center: Landing Target Mission Control -->
+<div class="flex items-center gap-4 bg-card-subtle px-5 py-2 rounded-xl border border-border shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="flex items-baseline gap-2">
+<span class="text-[11px] font-bold tracking-widest text-secondary uppercase">DEADLINE</span>
+<span class="font-display font-bold text-[20px] text-charcoal tracking-tight">LANDING AT 7:30 PM</span>
+</div>
+<div class="h-5 w-px bg-border"></div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-sage-light border border-sage-border text-sage font-bold text-[12px] tracking-wide">
+<span class="w-2 h-2 rounded-full bg-sage"></span>
+<span>42 MIN REMAINING · ON TRACK</span>
+</div>
+</div>
+<!-- Right: Appliance Hardware Status & Voice Indicator -->
+<div class="flex items-center gap-2.5">
+<!-- Oven Badge -->
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-light border border-amber-border text-amber font-semibold text-[12px]">
+<span class="material-symbols-outlined text-[18px]">local_fire_department</span>
+<span>OVEN · 425°F · BUSY</span>
+</div>
+<!-- Burners Badge -->
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-card-subtle border border-border text-secondary font-semibold text-[12px]">
+<span class="material-symbols-outlined text-[18px]">stove</span>
+<span class="text-charcoal font-medium">BURNERS · 2/4 ACTIVE</span>
+</div>
+<!-- Voice Indicator Pill -->
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-light border border-blue-border text-blue font-semibold text-[12px]">
+<span class="material-symbols-outlined text-[17px]">mic</span>
+<div class="flex items-center gap-0.5 h-3">
+<span class="w-0.5 h-2 bg-blue rounded-full"></span>
+<span class="w-0.5 h-3.5 bg-blue rounded-full"></span>
+<span class="w-0.5 h-1.5 bg-blue rounded-full"></span>
+</div>
+<span>VOICE READY</span>
+</div>
+<!-- Overflow -->
+<button aria-label="Menu" class="w-8 h-8 flex items-center justify-center rounded-lg bg-card-subtle border border-border text-secondary hover:text-charcoal hover:bg-card transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</section>
+<!-- ZONE B: Main Cooking Workspace (Cockpit Cards) -->
+<section class="w-full px-6 lg:px-8 pt-5 pb-3 grid grid-cols-12 gap-5 items-stretch">
+<!-- LEFT CARD: WHAT TO DO NOW (54% = 7 cols desktop) -->
+<div class="col-span-12 lg:col-span-7 bg-card rounded-2xl border border-border shadow-apple-card p-6 flex flex-col justify-between relative overflow-hidden">
+<!-- Subtle sage ambient glow -->
+<div class="absolute -top-24 -left-24 w-72 h-72 bg-sage-light/60 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Header & Progress Countdown -->
+<div class="relative z-10 flex items-start justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-sage-light border border-sage-border text-sage text-[11px] font-bold tracking-wider uppercase">
+                ACTIVE HANDS · STEP 04 OF 09
+              </span>
+<span class="px-2.5 py-0.5 rounded-full bg-card-subtle border border-border text-secondary text-[11px] font-medium">
+                EST. 5 MIN
+              </span>
+</div>
+<h1 class="font-display font-bold text-[28px] lg:text-[32px] tracking-tight text-charcoal leading-tight mt-1">
+              SMASH &amp; SEASON BOILED POTATOES
+            </h1>
+</div>
+<!-- Apple Circular Progress Timer Ring -->
+<div class="flex flex-col items-center justify-center pl-4 shrink-0">
+<div class="relative w-28 h-28 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-card-subtle" cx="50" cy="50" fill="transparent" r="42" stroke="#E5E5DF" stroke-width="7"></circle>
+<circle class="text-sage transition-all duration-500 ease-out" cx="50" cy="50" fill="transparent" r="42" stroke="currentColor" stroke-dasharray="263.89" stroke-dashoffset="36.9" stroke-linecap="round" stroke-width="7"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display font-bold text-[26px] tabular-nums tracking-tight text-charcoal">04:18</span>
+<span class="text-[9px] font-bold text-secondary tracking-widest uppercase">REMAINING</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Instruction Subtitle -->
+<p class="relative z-10 text-secondary text-[15px] lg:text-[16px] mt-2 leading-relaxed max-w-2xl font-normal">
+          Transfer the drained potatoes to a sheet pan. Gently crush each potato to about ½-inch thick. Drizzle generously with olive oil, garlic salt, and fresh chopped rosemary.
+        </p>
+<!-- Checklist Items -->
+<div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+<!-- Step 1: Done -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-card-subtle border border-border text-secondary">
+<div class="w-6 h-6 rounded-md bg-sage text-white flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+<span class="text-[13px] line-through opacity-75 font-medium leading-snug">Transfer to baking sheet</span>
+</div>
+<!-- Step 2: Active -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-sage-light/70 border border-sage-border text-charcoal ring-1 ring-sage/30 shadow-sm">
+<div class="w-6 h-6 rounded-md border-2 border-sage bg-sage/20 flex items-center justify-center shrink-0">
+<span class="w-2.5 h-2.5 rounded-sm bg-sage"></span>
+</div>
+<span class="text-[13px] font-bold leading-snug text-sage">Gently smash each potato</span>
+</div>
+<!-- Step 3: Pending -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-card-subtle/50 border border-border text-muted">
+<div class="w-6 h-6 rounded-md border-2 border-border flex items-center justify-center shrink-0"></div>
+<span class="text-[13px] font-medium leading-snug">Add oil &amp; seasoning</span>
+</div>
+</div>
+<!-- Action Button Area -->
+<div class="relative z-10 flex flex-col gap-2 pt-2">
+<button class="w-full h-[70px] rounded-xl bg-sage hover:bg-sage-hover text-white font-display font-bold text-[18px] tracking-wider uppercase flex items-center justify-center gap-3 shadow-apple-btn active:scale-[0.99] transition-all cursor-pointer" id="advance-step-btn">
+<span class="material-symbols-outlined text-[28px]">check_circle</span>
+<span>DONE · ADVANCE STEP</span>
+</button>
+<div class="flex items-center justify-between px-2 pt-1">
+<button class="flex items-center gap-1.5 text-secondary hover:text-charcoal text-[13px] font-medium transition-colors">
+<span class="material-symbols-outlined text-[17px]">volume_up</span>
+<span>Repeat instruction (Voice: "Repeat")</span>
+</button>
+<!-- Next Preview Strip -->
+<div class="flex items-center gap-2 text-[12px]">
+<span class="text-secondary font-semibold uppercase">UP NEXT:</span>
+<span class="font-medium text-charcoal">Oven entry alongside chicken</span>
+<span class="px-2 py-0.5 rounded bg-amber-light text-amber border border-amber-border font-bold text-[11px] uppercase">6:55 PM</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT CARD: YOUR KITCHEN RIGHT NOW (46% = 5 cols desktop) -->
+<div class="col-span-12 lg:col-span-5 bg-card rounded-2xl border border-border shadow-apple-card p-5 flex flex-col justify-between">
+<!-- Top Title -->
+<div class="flex items-center justify-between pb-3 border-b border-border">
+<div>
+<h2 class="font-display font-bold text-[18px] text-charcoal flex items-center gap-2">
+<span class="material-symbols-outlined text-amber text-[22px]">kitchen</span>
+              YOUR KITCHEN RIGHT NOW
+            </h2>
+<p class="text-[12px] text-secondary mt-0.5">Shared appliance availability and active cooking tasks.</p>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-amber-light text-amber border border-amber-border text-[11px] font-bold tracking-wider uppercase">
+            DUAL ZONE ACTIVE
+          </span>
+</div>
+<!-- SECTION A: PRIMARY OVEN -->
+<div class="my-3 p-3.5 rounded-xl bg-card-subtle border border-border flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-amber text-[20px]">local_fire_department</span>
+<span class="font-bold text-[13px] text-charcoal">PRIMARY OVEN</span>
+<span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-card border border-border text-secondary">425°F · CONVECTION</span>
+</div>
+<span class="text-[11px] font-bold text-amber">SHARED OVEN WINDOW</span>
+</div>
+<!-- Oven Item 1: Active Chicken -->
+<div class="bg-card rounded-lg p-2.5 border border-border flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-amber"></span>
+<span class="text-[13px] font-bold text-charcoal">Roast Chicken</span>
+<span class="text-secondary text-[12px]">· Center Rack</span>
+</div>
+<span class="text-[12px] font-bold tabular-nums text-amber">23 / 45 MIN (51%)</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 rounded-full bg-card-subtle overflow-hidden border border-border/40">
+<div class="h-full bg-amber rounded-full" style="width: 51%;"></div>
+</div>
+</div>
+<!-- Oven Item 2: Reserved Smashed Potatoes -->
+<div class="bg-card rounded-lg p-2.5 border border-dashed border-amber-border flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-amber text-[18px]">lock_clock</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[13px] font-bold text-charcoal">Smashed Potatoes</span>
+<span class="text-secondary text-[12px]">· Top Rack</span>
+</div>
+<span class="text-[11px] font-medium text-amber">Planned entry: 6:55 PM (in 4 min) · Req: 425°F</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-amber-light border border-amber-border text-amber text-[10px] font-bold uppercase">
+              RESERVED
+            </span>
+</div>
+</div>
+<!-- SECTION B: 4-BURNER COOKTOP -->
+<div class="p-3.5 rounded-xl bg-card-subtle border border-border flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-charcoal text-[20px]">stove</span>
+<span class="font-bold text-[13px] text-charcoal">FOUR-BURNER STOVETOP</span>
+</div>
+<span class="text-[11px] font-semibold text-secondary">LAYOUT 2x2</span>
+</div>
+<!-- 2x2 Burner Grid -->
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Burner 1 (Back Left) - OFF -->
+<div class="p-2.5 rounded-lg bg-card border border-border flex items-center justify-between opacity-70">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full border border-border flex items-center justify-center text-[10px] text-muted font-bold">BL</div>
+<span class="text-[12px] text-secondary font-medium">Back Left</span>
+</div>
+<span class="text-[10px] text-muted font-bold">OFF</span>
+</div>
+<!-- Burner 2 (Back Right) - ACTIVE HEAT -->
+<div class="p-2.5 rounded-lg bg-amber-light/70 border border-amber-border flex items-center justify-between ring-1 ring-amber/30">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-amber/20 border border-amber flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-amber animate-ping"></span>
+</div>
+<div>
+<p class="text-[12px] font-bold text-charcoal leading-tight">Pan Gravy Base</p>
+<p class="text-[10px] font-semibold text-amber">Simmer Low · 8m left</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-amber text-[18px]">soup_kitchen</span>
+</div>
+<!-- Burner 3 (Front Left) - RESERVED -->
+<div class="p-2.5 rounded-lg bg-card border border-dashed border-border flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full border border-secondary flex items-center justify-center text-[10px] text-secondary font-bold">FL</div>
+<div>
+<p class="text-[12px] font-bold text-charcoal leading-tight">Asparagus Skillet</p>
+<p class="text-[10px] font-medium text-secondary">Reserved · 7:15 PM</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[18px]">schedule</span>
+</div>
+<!-- Burner 4 (Front Right) - OFF -->
+<div class="p-2.5 rounded-lg bg-card border border-border flex items-center justify-between opacity-70">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full border border-border flex items-center justify-center text-[10px] text-muted font-bold">FR</div>
+<span class="text-[12px] text-secondary font-medium">Front Right</span>
+</div>
+<span class="text-[10px] text-muted font-bold">OFF</span>
+</div>
+</div>
+</div>
+<!-- Equipment Health Strip -->
+<div class="mt-2 flex items-center justify-between px-3 py-1.5 rounded-lg bg-sage-light border border-sage-border text-sage">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-sage">verified</span>
+<span class="text-[11px] font-bold tracking-wide">EQUIPMENT STATUS: NO KNOWN THERMAL CONFLICTS</span>
+</div>
+<span class="text-[11px] text-secondary font-medium">Synced With Oven Thermostat</span>
+</div>
+</div>
+</section>
+<!-- ZONE C: Critical-Path Cooking Timeline -->
+<section class="w-full px-6 lg:px-8 py-3">
+<div class="w-full bg-card rounded-2xl border border-border shadow-apple-card p-5 flex flex-col gap-4">
+<!-- Timeline Header & Color Key Legend -->
+<div class="flex flex-wrap items-center justify-between pb-3 border-b border-border gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sage text-[24px]">stacked_line_chart</span>
+<div>
+<h3 class="font-display font-bold text-[18px] tracking-tight text-charcoal">TODAY'S COOKING TIMELINE</h3>
+<p class="text-[11px] font-semibold text-secondary uppercase tracking-wider">3 DISHES · SHARED APPLIANCES · COORDINATED SCHEDULE</p>
+</div>
+</div>
+<!-- Apple Clean Legend Pills -->
+<div class="flex items-center flex-wrap gap-3 text-[12px]">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-sage"></span>
+<span class="text-charcoal font-medium">Active Hands</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-amber"></span>
+<span class="text-charcoal font-medium">Thermal Cooking</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-indigo"></span>
+<span class="text-charcoal font-medium">Resting / Passive</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-card-subtle border border-border"></span>
+<span class="text-secondary">Completed</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-2 rounded border border-dashed border-amber"></span>
+<span class="text-secondary">Scheduled Slot</span>
+</div>
+</div>
+</div>
+<!-- Time Axis Container & Tracks -->
+<div class="relative w-full overflow-x-auto select-none pt-2">
+<div class="min-w-[860px] relative">
+<!-- TIME LABELS AXIS -->
+<div class="relative h-6 w-full flex justify-between text-secondary font-semibold text-[12px] tabular-nums px-2 border-b border-border pb-2">
+<div class="absolute" style="left: 0%;">6:20 PM</div>
+<div class="absolute -translate-x-1/2" style="left: 20%;">6:45 PM</div>
+<div class="absolute -translate-x-1/2" style="left: 44%;">7:00 PM</div>
+<div class="absolute -translate-x-1/2" style="left: 68%;">7:15 PM</div>
+<div class="absolute -translate-x-1/2 font-bold text-amber" style="left: 92%;">7:30 PM (TARGET)</div>
+<div class="absolute -translate-x-full" style="left: 100%;">7:35 PM</div>
+</div>
+<!-- VERTICAL GUIDELINES -->
+<div class="absolute inset-y-6 inset-x-0 pointer-events-none">
+<div class="absolute top-0 bottom-0 border-l border-border" style="left: 20%;"></div>
+<div class="absolute top-0 bottom-0 border-l border-border" style="left: 44%;"></div>
+<div class="absolute top-0 bottom-0 border-l border-border" style="left: 68%;"></div>
+<div class="absolute top-0 bottom-0 border-l border-border" style="left: 92%;"></div>
+<!-- NOW NEEDLE (6:51 PM ~ 30% mark) -->
+<div class="absolute top-0 bottom-0 border-l-2 border-sage z-30" style="left: 30%;">
+<div class="bg-sage text-white text-[10px] font-bold px-2.5 py-0.5 rounded shadow absolute -top-5 -translate-x-1/2 flex items-center gap-1 whitespace-nowrap">
+<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+<span>NOW (6:51 PM)</span>
+</div>
+</div>
+<!-- TARGET TIME NEEDLE (7:30 PM = 92% mark) -->
+<div class="absolute top-0 bottom-0 border-l-2 border-dashed border-amber z-20" style="left: 92%;">
+<div class="bg-amber text-white text-[10px] font-bold px-2 py-0.5 rounded shadow absolute -top-5 -translate-x-1/2 flex items-center gap-1 whitespace-nowrap">
+<span class="material-symbols-outlined text-[12px]">dinner_dining</span>
+<span>SERVE · 7:30 PM</span>
+</div>
+</div>
+</div>
+<!-- TRACKS CONTAINER -->
+<div class="flex flex-col gap-3 py-4 mt-2">
+<!-- TRACK 1: ROAST CHICKEN -->
+<div class="flex items-center gap-4">
+<div class="w-48 shrink-0 flex items-center justify-between pr-2">
+<span class="font-display font-semibold text-[14px] text-charcoal">Roast Chicken</span>
+<span class="px-2 py-0.5 rounded bg-card-subtle border border-border text-secondary text-[11px] font-semibold">425° OVEN</span>
+</div>
+<div class="relative h-12 flex-1 bg-card-subtle rounded-xl p-1.5 overflow-hidden flex items-center border border-border">
+<!-- Prep block: 6:20 to 6:30 (0% - 8%) -->
+<div class="absolute h-9 bg-card text-secondary rounded-lg flex items-center px-2 text-[12px] font-medium border border-border shadow-sm" style="left: 0%; width: 8%;">
+<span class="truncate">Prep · 10m</span>
+</div>
+<!-- Roast block: 6:30 to 7:15 (8% to 68% -> width 60%) -->
+<div class="absolute h-9 bg-amber-light rounded-lg flex items-center justify-between px-3 border border-amber-border shadow-sm overflow-hidden" style="left: 8%; width: 60%;">
+<!-- Active roasted progress fill -->
+<div class="absolute inset-y-0 left-0 bg-amber/20 border-r-2 border-amber" style="width: 37%;"></div>
+<div class="relative z-10 flex items-center gap-2">
+<span class="material-symbols-outlined text-amber text-[16px]">local_fire_department</span>
+<span class="text-[12px] font-bold text-charcoal">Roast at 425°F (Center Rack)</span>
+</div>
+<span class="relative z-10 text-[11px] text-amber font-bold tabular-nums">45m total (21m left)</span>
+</div>
+<!-- Rest block: 7:15 to 7:30 (68% to 92% -> width 24%) -->
+<div class="absolute h-9 bg-indigo-light text-indigo rounded-lg flex items-center justify-between px-3 border border-indigo-border" style="left: 68%; width: 24%;">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-indigo text-[16px]">hourglass_top</span>
+<span class="text-[12px] font-semibold">Rest &amp; Carve</span>
+</div>
+<span class="text-[11px] font-bold">15m</span>
+</div>
+</div>
+</div>
+<!-- TRACK 2: SMASHED POTATOES -->
+<div class="flex items-center gap-4">
+<div class="w-48 shrink-0 flex items-center justify-between pr-2">
+<span class="font-display font-semibold text-[14px] text-charcoal">Smashed Potatoes</span>
+<span class="px-2 py-0.5 rounded bg-sage-light text-sage border border-sage-border text-[11px] font-bold">ACTIVE STEP</span>
+</div>
+<div class="relative h-12 flex-1 bg-card-subtle rounded-xl p-1.5 overflow-hidden flex items-center border border-border">
+<!-- Boil Yukons: 6:30 to 6:45 (8% to 20% -> 12%) -->
+<div class="absolute h-9 bg-card text-secondary rounded-lg flex items-center px-2.5 text-[12px] font-medium border border-border shadow-sm" style="left: 8%; width: 12%;">
+<span class="truncate">Boil yukons · 15m</span>
+</div>
+<!-- Active Smash & Season: 6:50 to 6:55 (28% to 33% -> 5%) -->
+<div class="absolute h-9 bg-sage text-white rounded-lg flex items-center justify-center text-[12px] font-bold shadow-md ring-2 ring-sage/30 z-10" style="left: 28%; width: 6%;">
+<span class="truncate px-1">SMASH · 5m</span>
+</div>
+<!-- Shared Oven Bake: 6:55 to 7:20 (33% to 76% -> 43%) -->
+<div class="absolute h-9 bg-amber-light/70 rounded-lg flex items-center justify-between px-3 border border-dashed border-amber" style="left: 34%; width: 42%;">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-amber text-[16px]">local_fire_department</span>
+<span class="text-[12px] font-semibold text-charcoal">Shared Oven Bake · Top Rack (425°F)</span>
+</div>
+<span class="text-[11px] text-amber font-bold">25m</span>
+</div>
+<!-- Rest & Crisp: 7:20 to 7:30 (76% to 92% -> 16%) -->
+<div class="absolute h-9 bg-indigo-light text-indigo rounded-lg flex items-center justify-between px-2.5 border border-indigo-border" style="left: 76%; width: 16%;">
+<span class="text-[12px] font-medium truncate">Warm &amp; Crisp</span>
+<span class="text-[11px] font-bold">10m</span>
+</div>
+</div>
+</div>
+<!-- TRACK 3: ASPARAGUS & PAN GRAVY -->
+<div class="flex items-center gap-4">
+<div class="w-48 shrink-0 flex items-center justify-between pr-2">
+<span class="font-display font-semibold text-[14px] text-charcoal">Asparagus &amp; Gravy</span>
+<span class="px-2 py-0.5 rounded bg-card-subtle border border-border text-secondary text-[11px] font-semibold">2 BURNERS</span>
+</div>
+<div class="relative h-12 flex-1 bg-card-subtle rounded-xl p-1.5 overflow-hidden flex items-center border border-border">
+<!-- Prep Trim: 6:40 to 6:45 (16% to 20% -> 4%) -->
+<div class="absolute h-9 bg-card text-secondary rounded-lg flex items-center px-1.5 text-[11px] font-medium border border-border shadow-sm" style="left: 16%; width: 5%;">
+<span class="truncate">Trim · 5m</span>
+</div>
+<!-- Simmer Gravy Base: 6:45 to 7:00 (20% to 44% -> 24%) -->
+<div class="absolute h-9 bg-amber-light rounded-lg flex items-center justify-between px-3 border border-amber-border" style="left: 21%; width: 23%;">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-amber"></span>
+<span class="text-[11px] text-charcoal font-semibold truncate">Simmer Gravy (BR)</span>
+</div>
+<span class="text-[11px] text-amber font-bold">15m</span>
+</div>
+<!-- Sauté Asparagus: 7:18 to 7:24 (73% to 82% -> 9%) -->
+<div class="absolute h-9 bg-amber-light/80 rounded-lg flex items-center justify-center px-2 border border-amber-border" style="left: 73%; width: 9%;">
+<span class="text-[11px] text-amber font-bold truncate">Sauté · 6m</span>
+</div>
+<!-- Whisk Pan Drippings: 7:24 to 7:30 (82% to 92% -> 10%) -->
+<div class="absolute h-9 bg-sage text-white rounded-lg flex items-center justify-center px-2 text-[11px] font-bold shadow-sm" style="left: 82%; width: 10%;">
+<span class="truncate">Finish Gravy</span>
+</div>
+<!-- Linker line indicator from Chicken exit at 7:15 to Gravy at 7:24 -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" style="overflow: visible;">
+<line stroke="#D97706" stroke-dasharray="3,3" stroke-opacity="0.6" stroke-width="1.5" x1="68%" x2="82%" y1="-12" y2="18"></line>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ZONE D: Persistent Voice Interaction Footer (Apple light styling) -->
+<footer class="w-full px-6 lg:px-8 py-2">
+<div class="w-full bg-card rounded-2xl border border-border shadow-apple-card px-4 py-2.5 flex items-center justify-between gap-4">
+<!-- Left: Voice Mic Active -->
+<div class="flex items-center gap-3 shrink-0">
+<button class="relative w-10 h-10 rounded-full bg-blue text-white flex items-center justify-center hover:scale-105 transition-transform shadow-md shadow-blue/20">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue opacity-30"></span>
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-blue uppercase tracking-wider">VOICE ENGINE</span>
+<span class="text-[12px] text-secondary font-medium">Listening for commands...</span>
+</div>
+</div>
+<!-- Center: Transcript Message -->
+<div class="flex-1 max-w-3xl flex items-center gap-3 px-4 py-2 rounded-xl bg-card-subtle border border-border">
+<span class="text-[11px] font-bold text-sage shrink-0 uppercase tracking-wide">ASSISTANT</span>
+<p class="text-[13px] text-charcoal truncate font-normal">
+            “The chicken is roasting at 425°. You have about four minutes to prepare the potatoes for the shared oven window.”
+          </p>
+</div>
+<!-- Right: Quick Command Chips -->
+<div class="flex items-center gap-2 shrink-0">
+<button class="px-3 py-1.5 rounded-lg bg-card-subtle hover:bg-card-hover text-charcoal text-[11px] font-bold border border-border transition-colors uppercase">
+            WHAT NOW?
+          </button>
+<button class="px-3 py-1.5 rounded-lg bg-card-subtle hover:bg-card-hover text-charcoal text-[11px] font-bold border border-border transition-colors uppercase">
+            REPORT A DELAY (+5M)
+          </button>
+<button class="px-3 py-1.5 rounded-lg bg-card-subtle hover:bg-card-hover text-red-600 text-[11px] font-bold border border-red-200 transition-colors uppercase">
+            INGREDIENT MISSING
+          </button>
+<button class="px-3 py-1.5 rounded-lg bg-card-subtle hover:bg-card-hover text-amber text-[11px] font-bold border border-amber-border transition-colors uppercase">
+            PAUSE TIMERS
+          </button>
+</div>
+</div>
+</footer>
+</div>
+</main>
+<script>
+  // Simple client-side micro-interaction for responsive feel
+  const advanceBtn = document.getElementById('advance-step-btn');
+  if (advanceBtn) {
+    advanceBtn.addEventListener('click', () => {
+      advanceBtn.classList.add('scale-[0.98]', 'bg-sage-hover');
+      advanceBtn.innerHTML = `
+        <span class="material-symbols-outlined text-[28px]">task_alt</span>
+        <span>STEP COMPLETED · SYNCING RAIL...</span>
+      `;
+      setTimeout(() => {
+        advanceBtn.classList.remove('scale-[0.98]');
+      }, 250);
+    });
+  }
+</script>
+</body></html>
