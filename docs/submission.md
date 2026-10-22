@@ -90,11 +90,17 @@ Onboarding with Kiro Crew and the Model Context Protocol specification was smoot
 ## 🎁 Mini-Challenge Submissions
 
 ### Open Source Mini-Challenge ($5,000)
-- **Contribution**: Extracted and published the pure Backward Critical Path Method DAG scheduling engine as a standalone, zero-dependency open-source library with tests, microsecond benchmarks, and CI workflows:
-  - **Standalone GitHub Repository**: [https://github.com/Chirag0096/cpm-dag-scheduler](https://github.com/Chirag0096/cpm-dag-scheduler)
-  - **In-Tree Monorepo Package**: [`packages/cpm-dag-scheduler`](./packages/cpm-dag-scheduler)
-- **License**: MIT Open Source License.
-- **What It Does**: Provides developers with an ultra-fast ($\mathcal{O}(V+E)$, <1ms) resource-constrained backward scheduler that solves precedence constraints, shared appliance limits, and shock-absorber delay recovery for any time-critical physical workflow.
+
+**Devpost Field Answers (Copy-Paste Ready):**
+- **GitHub Username:** `Chirag0096`
+- **Contribution / Repository URL:** `https://github.com/Chirag0096/cpm-dag-scheduler`
+- **Primary Project Repository URL:** `https://github.com/Chirag0096/LandingTime`
+- **License:** MIT Open Source License (OSI-Approved)
+- **Short Contribution Summary:**
+  > Pure TypeScript implementation of the Backward Critical Path Method (CPM) DAG scheduling and shock-absorber replanning engine (< 1ms latency, zero dependencies, $\mathcal{O}(V + E)$). Formulated from Kelley & Walker (1959) operations research and Harold McGee (2004) culinary resting kinetics.
+- **Detailed Description:**
+  Extracted and published as an independent, production-grade library with full TypeScript type definitions (`.d.ts`), Kahn's algorithm cycle detection, unit tests (100% passing), microsecond benchmarks, and GitHub Actions CI workflow (Node 20 & 22). Provides developers with an ultra-fast backward scheduling primitive that synchronizes multi-task landing milestones and absorbs thermal/hardware delays via rest compression cushions and float slack shifting.
+- **In-Tree Monorepo Package:** [`packages/cpm-dag-scheduler`](./packages/cpm-dag-scheduler)
 
 ### AWS Builder Mini-Challenge ($5,000)
 - **Contribution**: Utilized **Kiro Crew**, the qualifying AWS agentic developer tool, to orchestrate the specification-driven multi-agent development workflow during the hackathon:

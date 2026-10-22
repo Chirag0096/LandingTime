@@ -219,7 +219,7 @@ All screenshots below were captured live in Google Chrome using our automated Pl
 
 ![07_judge_demo_harness](tests/e2e/screenshots/07_judge_demo_harness.png)
 
-- **In-Memory CPM Benchmark:** **0.65ms** ($\mathcal{O}(V + E)$).
+- **In-Memory CPM Benchmark:** **0.65ms** (Full end-to-end 8-task kitchen coordination schedule with appliance assignment and oven temperature tolerance checks; pure mathematical DAG operations benchmark between **0.032ms** and **0.102ms**).
 - **1-Click Milestones:** 1. Plan $\to$ 2. Start $\to$ 3. Delay $\to$ 4. Accept $\to$ 5. Missing $\to$ 6. Apply $\to$ 7. Landed.
 
 ---
