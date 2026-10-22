@@ -46,6 +46,7 @@ lerna-debug.log*
 .cache/
 .temp/
 .tmp/
+.aistudio/
 
 # OS Metadata
 .DS_Store
