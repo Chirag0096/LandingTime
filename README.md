@@ -424,6 +424,24 @@ npm run test:e2e
 
 ---
 
+## 🛡️ Intellectual Property, Authorship & Anti-Plagiarism Notice
+
+**Project Title:** Landing Time — Voice-First Multi-Dish Kitchen Coordination System  
+**Creator & Sole Author:** Chirag Aswal ([@Chirag0096](https://github.com/Chirag0096))  
+**Contact:** `chiragaswal2@gmail.com`  
+**Official Competition Entry:** *Build, Ship, Shape: Amazon Developer Hackathon 2026* (Alexa+ Track)  
+**Copyright:** © 2026 Chirag Aswal. All rights reserved.
+
+### Prior Art & IP Protection
+The algorithmic methodology (Backward CPM multi-dish kitchen scheduling, Harold McGee resting compression shock-absorbers, and Oven Rule of 25 shared-chamber concurrency), system architecture, source code, and user interface designs are the original intellectual creations of **Chirag Aswal**.
+
+- **Cryptographic Provenance:** Cryptographically signed Git commit timestamps dating back to October 2026 establish public prior art and immutable proof of original authorship.
+- **Plagiarism Protection:** In strict accordance with the official rules of the Amazon Developer Hackathon, any unauthorized copying, re-submission, rebranding, or repackaging of this project, its code, or its core algorithmic logic without attribution constitutes plagiarism and will result in immediate disqualification and DMCA takedown.
+- **Attribution Requirement:** While distributed under the open-source MIT License to support the hackathon community, any permitted use, fork, or derivative of this software **must** retain the original copyright notice:  
+  `Copyright (c) 2026 Chirag Aswal`
+
+---
+
 ## 📄 License
 
-Licensed under the [MIT License](./LICENSE). Copyright (c) 2026 Chirag Aswal.
+Licensed under the [MIT License](./LICENSE). Copyright (c) 2026 Chirag Aswal. All rights reserved.

@@ -1,3 +1,12 @@
+/**
+ * Landing Time - Voice-First Multi-Dish Kitchen Coordination System
+ * Copyright (c) 2026 Chirag Aswal. All rights reserved.
+ *
+ * Author: Chirag Aswal <chiragaswal2@gmail.com>
+ * Project: Landing Time @ Amazon Developer Hackathon 2026 (Alexa+ Track)
+ * License: MIT (attribution required)
+ */
+
 import crypto from 'node:crypto';
 import type {
   TaskNode,
