@@ -87,6 +87,77 @@ Onboarding with Kiro Crew and the Model Context Protocol specification was smoot
 
 ---
 
+## ⚡ Developer Friction Log (Optional Submission Field — Up to 10% Bonus)
+
+### Friction Log Entry 1:
+- **Task Attempted**: Initializing `StreamableHTTPServerTransport` from `@modelcontextprotocol/sdk/server/streamableHttp.js` in an Express application.
+- **Steps Taken**:
+  1. Followed standard Streamable HTTP examples passing `{ endpoint: '/mcp' }` into `new StreamableHTTPServerTransport({ endpoint: '/mcp' })`.
+  2. Ran TypeScript compilation in Node ESM mode.
+- **Expected vs. Actual**:
+  - *Expected*: Transport accepts the endpoint path string or gracefully ignores it.
+  - *Actual*: TypeScript build failure: `TS2353: Object literal may only specify known properties, and 'endpoint' does not exist in type 'WebStandardStreamableHTTPServerTransportOptions'`.
+- **Severity**: Medium (Build blocker until diagnosed).
+- **Workaround Used**: Inspected `webStandardStreamableHttp.d.ts` and realized the Node transport diverges from WebStandard fetch options. Used `sessionIdGenerator: () => crypto.randomUUID()` and handled express route mounting directly via `app.all('/mcp', ...)`.
+- **Actionable Suggestion**: Ship a first-class `createExpressMcpMiddleware()` helper in the `@modelcontextprotocol/sdk` to eliminate manual transport boilerplate in Express.
+
+### Friction Log Entry 2:
+- **Task Attempted**: Verifying MCP specification version compliance (`2025-11-25`) for Alexa+ hackathon rules.
+- **Steps Taken**:
+  1. Cross-referenced Alexa+ developer guidelines with Model Context Protocol releases.
+  2. Checked pinned schema version strings inside `@modelcontextprotocol/sdk`.
+- **Expected vs. Actual**:
+  - *Expected*: A unified "Alexa+ MCP Readiness Checklist" or CLI verification command to test endpoint compliance.
+  - *Actual*: Spec requirements were spread across three different documentation pages without an automated validator.
+- **Severity**: Medium (Uncertainty regarding compliance verification).
+- **Workaround Used**: Wrote a dedicated automated integration test suite (`server/tests/integration/mcp_protocol.test.ts`) that asserts protocol headers, JSON-RPC 2.0 structure, and 2025-11-25 schema payloads.
+- **Actionable Suggestion**: Publish an official `alexa-mcp-verify` CLI or GitHub Action that verifies compliance before submission.
+
+### Friction Log Entry 3:
+- **Task Attempted**: Testing the Echo Show Webview PostMessage bridge locally in Vite development mode.
+- **Steps Taken**:
+  1. Developed rich multi-track Gantt timeline and circular SVG timer for Echo Show displays.
+  2. Attempted to simulate Alexa tool response push events (`ui.screen`, `ui.gantt`) inside browser dev mode.
+- **Expected vs. Actual**:
+  - *Expected*: An official Echo Show webview simulator package to test touch targets and message bus delivery.
+  - *Actual*: No official Echo Show webview simulator package exists on npm; physical devices enforce strict CSP policies preventing direct cross-origin fetches.
+- **Severity**: Medium.
+- **Workaround Used**: Built our own docked Judge Demo Bar (`?demo=true`) and simulated event bus inside `CookingSessionContext.tsx` to replicate postMessage delivery locally.
+- **Actionable Suggestion**: Release an official `@modelcontextprotocol/ext-apps-simulator` npm package with Echo Show 8/10/15 responsive viewports and simulated voice audio ducking.
+
+### Friction Log Entry 4:
+- **Task Attempted**: Aligning Kiro Crew agentic specification files (`.kiro/specs/`) with automated test runners.
+- **Steps Taken**:
+  1. Formulated functional requirements with numbered IDs (REQ-001 through REQ-004) in `.kiro/specs/*.spec.json`.
+  2. Ran Vitest test suites to verify requirements.
+- **Expected vs. Actual**:
+  - *Expected*: Kiro Crew CLI could parse test results and automatically update the `"status": "IMPLEMENTED"` tags in spec JSON.
+  - *Actual*: Had to manually maintain the specification status mapping.
+- **Severity**: Low.
+- **Workaround Used**: Added explicit `verification` test file paths in the spec JSON files and mapped assertions directly to requirement IDs.
+- **Actionable Suggestion**: Add a `kiro test --sync-specs` command in the Kiro developer tooling that maps test assertion passes directly to spec requirements.
+
+---
+
+## 💡 Feature Requests (Optional Submission Field)
+
+### Feature Request 1:
+- **Feature**: Local Echo Show Responsive Viewport & PostMessage Simulator in the Alexa CLI.
+- **Why It Matters**: Developing rich visual cards and Gantt-style interfaces for Echo Show 15 requires testing touch targets, high-contrast kitchen lighting visibility, and postMessage event buses. An official browser-based local simulator would save hours of trial-and-error without needing constant hardware deployment.
+- **Priority**: Important.
+
+### Feature Request 2:
+- **Feature**: MCP Tool Response Streaming for Multi-Dish Operations.
+- **Why It Matters**: When scheduling complex meals with many dishes (> 5 dishes, > 25 tasks), the CPM engine and AI parsing could stream partial schedules per dish as they compute, rather than blocking until the entire payload is serialized. This would improve perceived latency on voice devices.
+- **Priority**: Nice-to-have.
+
+### Feature Request 3:
+- **Feature**: Native Spec Verification CLI for Kiro Crew (`kiro verify --specs`).
+- **Why It Matters**: Specification-driven development is extremely powerful for hackathons and agentic coding, but currently requires manual bookkeeping between spec JSON files and CI/CD test passes. A native verification tool would cement Kiro Crew as the premier agentic development framework for AWS builders.
+- **Priority**: Important.
+
+---
+
 ## 🎁 Mini-Challenge Submissions
 
 ### Open Source Mini-Challenge ($5,000)
