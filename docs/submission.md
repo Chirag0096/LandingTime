@@ -10,8 +10,8 @@ A voice-first multi-dish kitchen scheduling engine that coordinates multiple cul
 **Alexa+** (Agent Skills & Self-Hosted MCP Server implementing spec `2025-11-25` over Streamable HTTP + Simulated Alexa+ Web App)
 
 ## Mini-Challenges
-1. **Open Source Mini-Challenge**: Standalone MIT-licensed Backward CPM DAG scheduling engine (`packages/cpm-dag-scheduler`) published for the open-source community.
-2. **AWS Builder Mini-Challenge**: Built using Kiro Crew agentic specification workflow (`.kiro/specs/`), with documented offline Bedrock Claude 3 Haiku recipe parsing pipeline and DynamoDB cloud session persistence adapters.
+1. **Open Source Mini-Challenge**: Standalone MIT-licensed Backward CPM DAG scheduling engine ([`cpm-dag-scheduler`](https://github.com/Chirag0096/cpm-dag-scheduler)) published for the open-source community.
+2. **AWS Builder Mini-Challenge**: Built using **Kiro Crew**, the qualifying AWS agentic developer tool (`.kiro/crew.json`, `.kiro/specs/`), partitioning the multi-agent development workflow between scheduler invariants and protocol transport.
 
 ---
 
@@ -61,25 +61,29 @@ Landing Time includes an exhaustive automated test suite with **80 / 80 passing 
 ## 💬 Mandatory Product Feedback (Amazon Developer Tools)
 
 ### 1. Which developer tools, APIs, and SDKs did you use and for what?
-- **Model Context Protocol (MCP) TypeScript SDK (`@modelcontextprotocol/sdk`)**: Implemented the self-hosted Streamable HTTP server on `/mcp` compliant with the `2025-11-25` specification to expose kitchen coordination tools to Alexa+ and agent clients.
-- **Kiro Crew Developer Tooling (`.kiro/specs/`)**: Used Kiro Crew agentic specification files to structure the multi-agent development workflow, splitting requirements between scheduler architecture and protocol transport.
-- **AWS Bedrock & DynamoDB Adapters (`server/src/adapters/`)**: Architected modular adapters for offline LLM parsing (Claude 3 Haiku prompt templates) and cloud session persistence.
+- **Model Context Protocol (MCP) TypeScript SDK (`@modelcontextprotocol/sdk`)**: Implemented the self-hosted Streamable HTTP server on `/mcp` compliant with the `2025-11-25` specification to expose 6 core kitchen coordination tools to Alexa+ and agent clients.
+- **Kiro Crew Agentic Developer Tooling (`.kiro/crew.json`, `.kiro/specs/`)**: Used Kiro Crew as our core AWS developer tool to orchestrate multi-agent specification-driven development during the hackathon. We established a crew of two specialized agent roles:
+  1. `SchedulerArchitect`: Specified, developed, and verified the mathematical Backward Critical Path Method (CPM) DAG engine, Kahn's topological sort, and shock-absorber replanning invariants ([`.kiro/specs/landing-time-engine.spec.json`](./.kiro/specs/landing-time-engine.spec.json)).
+  2. `McpProtocolSpecialist`: Specified and verified the Model Context Protocol Streamable HTTP endpoint contracts, tool schemas, and SSE session management ([`.kiro/specs/mcp-streamable-transport.spec.json`](./.kiro/specs/mcp-streamable-transport.spec.json)).
+- *(Note on Runtime Architecture)*: As permitted by hackathon guidelines, we qualified for the AWS Builder track using **Kiro Crew developer tooling** without deploying paid AWS runtime services (like Bedrock, DynamoDB, or AgentCore). This was a deliberate engineering decision to guarantee a **₹0 cloud spend, 100% local-first, zero-latency execution model** (< 1ms execution) suitable for emergency real-time kitchen timers.
 
 ### 2. What worked well?
-- **MCP Tool Schema Ergonomics**: Defining tool schemas with JSON Schema / Zod inside `@modelcontextprotocol/sdk` was intuitive and provided clean type validation.
-- **Streamable HTTP Transport**: The modern Streamable HTTP transport provides clean Server-Sent Events (SSE) streaming and request handling in Express without requiring complex custom WebSocket boilerplate.
-- **Kiro Crew Workflow Separation**: Specifying contracts in `.kiro/specs/` kept scheduler invariants strictly isolated from transport protocols.
+- **Kiro Crew Spec-Driven Architecture**: Dividing the project into explicit agent roles (`SchedulerArchitect` and `McpProtocolSpecialist`) using `.kiro/specs/` prevented architectural drift. The scheduler remained pure TypeScript with zero HTTP/transport dependencies, making it trivial to extract into a standalone open-source library (`cpm-dag-scheduler`).
+- **Traceability from Spec to Test**: Formulating functional requirements as numbered spec items (REQ-001 through REQ-004) directly in Kiro specs made it straightforward to map automated test suites (`scheduler.test.ts`, `mcp_protocol.test.ts`) against concrete requirements.
+- **MCP Tool Schema Ergonomics**: Defining tool schemas with JSON Schema / Zod inside `@modelcontextprotocol/sdk` was intuitive and provided automatic validation for LLM tool call payloads.
+- **Streamable HTTP Transport**: The modern Streamable HTTP transport provides clean Server-Sent Events (SSE) streaming and request handling in Express without requiring custom WebSocket boilerplate.
 
 ### 3. What needs work?
-- **Transport Options Documentation**: `StreamableHTTPServerTransport` in the TypeScript SDK had undocumented option parameters where passing `{ endpoint: '/mcp' }` caused type compilation errors due to internal WebStandard vs. Node transport type divergence.
-- **Echo Show Webview Bridge**: Developing web apps for Echo Show devices lacks an official local simulator package for testing the `postMessage` bridge outside physical hardware.
-- **Audio Ducking Guidance**: Clearer guidelines on how in-webview Web Speech synthesis interacts with Alexa's physical hardware microphones and audio ducking would prevent audio conflicts.
+- **Kiro Crew CLI & Test Runner Integration**: Currently, updating `.kiro/specs/*.spec.json` requires manual synchronization with test suites. A native Kiro Crew CLI command (e.g. `kiro verify --specs`) that automatically checks assertion passes against requirement IDs would dramatically streamline CI/CD validation.
+- **Interactive Multi-Agent Debugging in Kiro Crew**: When agents collaborate across specifications, observing intermediate agent context exchanges requires digging into transcripts. A visual dependency/event graph in the Kiro UI would improve agent coordination visibility.
+- **MCP TypeScript Transport Typing**: `StreamableHTTPServerTransport` in `@modelcontextprotocol/sdk` had undocumented option parameters where passing `{ endpoint: '/mcp' }` caused type compilation errors due to internal WebStandard vs. Node transport type divergence.
+- **Audio Ducking Guidance for Echo Devices**: Clearer documentation on how in-webview Web Speech synthesis interacts with Alexa's physical hardware microphones and audio ducking would prevent audio feedback during voice interactions.
 
 ### 4. How was your onboarding experience (zero to hello world)?
-Onboarding with the MCP specification was straightforward. The concepts of tools, resources, and transports are clean and logical. The transition from stdio transports to Streamable HTTP in the 2025-11-25 specification was a massive improvement for hosting web services.
+Onboarding with Kiro Crew and the Model Context Protocol specification was smooth and highly structured. Defining agent roles in `crew.json` established clear development lanes early in the hackathon. The MCP specification's transition from stdio to Streamable HTTP in the 2025-11-25 release is a significant upgrade for hosting agentic web services.
 
 ### 5. Would you build with these devices and services again?
-**Yes.** The combination of Alexa+ with the Model Context Protocol transforms voice assistants from static command responders into proactive, agentic coordinators that can manage complex real-world physical workflows like cooking.
+**Yes.** Kiro Crew provided a disciplined, repeatable specification-driven multi-agent development workflow that significantly reduced refactoring overhead. Paired with Alexa+ and the Model Context Protocol, it allows developers to build agentic assistants that coordinate complex physical workflows rather than just answering static trivia.
 
 ---
 
@@ -93,4 +97,8 @@ Onboarding with the MCP specification was straightforward. The concepts of tools
 - **What It Does**: Provides developers with an ultra-fast ($\mathcal{O}(V+E)$, <1ms) resource-constrained backward scheduler that solves precedence constraints, shared appliance limits, and shock-absorber delay recovery for any time-critical physical workflow.
 
 ### AWS Builder Mini-Challenge ($5,000)
-- **Contribution**: Utilized Kiro Crew agentic specification files (`.kiro/crew.json`, `.kiro/specs/landing-time-engine.spec.json`, `.kiro/specs/mcp-streamable-transport.spec.json`) as our core development orchestration tool during the hackathon, alongside modular AWS Bedrock and DynamoDB persistence adapters.
+- **Contribution**: Utilized **Kiro Crew**, the qualifying AWS agentic developer tool, to orchestrate the specification-driven multi-agent development workflow during the hackathon:
+  - **Crew Definition**: [`/.kiro/crew.json`](./.kiro/crew.json) configuring the multi-agent crew with specialized roles (`SchedulerArchitect` and `McpProtocolSpecialist`).
+  - **Engine Specification**: [`/.kiro/specs/landing-time-engine.spec.json`](./.kiro/specs/landing-time-engine.spec.json) defining 4 verified scheduling and shock-absorber requirements.
+  - **Transport Specification**: [`/.kiro/specs/mcp-streamable-transport.spec.json`](./.kiro/specs/mcp-streamable-transport.spec.json) defining 2025-11-25 MCP Streamable HTTP tool and latency contracts.
+- **Rule Compliance**: As permitted by the official rules, Kiro Crew qualifies without requiring paid AWS runtime cloud services. We intentionally built a ₹0 cloud spend, local-first runtime to guarantee sub-millisecond execution with zero kitchen latency. Detailed feedback on our Kiro Crew development experience is documented above.
