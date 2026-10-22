@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCookingSession } from '../context/CookingSessionContext';
-import { Mic, X, Send, Volume2, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Mic, X, Send, Volume2, Sparkles, MicOff, VolumeX } from 'lucide-react';
 
 interface VoiceModalProps {
   isOpen: boolean;
@@ -11,6 +11,58 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({ isOpen, onClose }) => {
   const { voiceTranscript, handleVoiceCommand } = useCookingSession();
   const [customInput, setCustomInput] = useState('');
   const [isListening, setIsListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const [speechMuted, setSpeechMuted] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  useEffect(() => {
+    // Check Web Speech API availability
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      setSpeechSupported(true);
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event: any) => {
+        const transcript = Array.from(event.results)
+          .map((result: any) => result[0].transcript)
+          .join('');
+        setCustomInput(transcript);
+      };
+
+      recognition.onerror = (event: any) => {
+        console.warn('[WebSpeech] Recognition error:', event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+    }
+  }, []);
+
+  // Speak assistant response aloud using Web Speech Synthesis TTS
+  useEffect(() => {
+    if (isOpen && voiceTranscript && !speechMuted && 'speechSynthesis' in window) {
+      // Remove surrounding quotes for clean speech
+      const cleanText = voiceTranscript.replace(/^["“]|["”]$/g, '');
+      window.speechSynthesis.cancel(); // Stop prior speech
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.rate = 1.05;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+  }, [voiceTranscript, isOpen, speechMuted]);
 
   if (!isOpen) return null;
 
@@ -31,12 +83,26 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({ isOpen, onClose }) => {
     setCustomInput('');
   };
 
+  const toggleMicListening = () => {
+    if (!recognitionRef.current) return;
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      try {
+        recognitionRef.current.start();
+      } catch (err: any) {
+        console.warn('[WebSpeech] Start error:', err.message);
+      }
+    }
+  };
+
   const handleCommandClick = (cmd: string) => {
     setIsListening(true);
     setTimeout(() => {
       handleVoiceCommand(cmd);
       setIsListening(false);
-    }, 400);
+    }, 300);
   };
 
   return (
@@ -50,25 +116,52 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({ isOpen, onClose }) => {
         {/* Header */}
         <div className="flex items-center justify-between pb-2 border-b border-[#E5E5DF]/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#F0F9FF] border border-[#BAE6FD] flex items-center justify-center text-[#0284C7]">
-              <Mic className="w-4 h-4 animate-pulse" />
-            </div>
+            <button
+              onClick={toggleMicListening}
+              title={speechSupported ? (isListening ? 'Stop listening' : 'Start microphone') : 'Microphone unsupported'}
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${
+                isListening
+                  ? 'bg-[#EF4444] border-[#DC2626] text-white animate-pulse shadow-md ring-4 ring-[#EF4444]/20'
+                  : 'bg-[#F0F9FF] border-[#BAE6FD] text-[#0284C7] hover:bg-[#E0F2FE]'
+              }`}
+            >
+              {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+            </button>
             <div>
-              <span className="text-[10px] font-bold tracking-widest text-[#0284C7] uppercase block">
+              <span className="text-[10px] font-bold tracking-widest text-[#0284C7] uppercase block flex items-center gap-1.5">
                 HANDS-FREE KITCHEN
+                {speechSupported && (
+                  <span className="px-1.5 py-0.2 rounded bg-[#E0F2FE] text-[#0369A1] text-[9px] font-mono">
+                    LIVE MIC READY
+                  </span>
+                )}
               </span>
               <h3 id="voice-modal-title" className="font-['Epilogue'] font-bold text-base text-[#202124]">
-                Voice Assistant Simulation
+                {isListening ? 'Listening to your voice...' : 'Voice Assistant'}
               </h3>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            aria-label="Close voice dialog"
-            className="w-8 h-8 rounded-full bg-[#F8F8F5] hover:bg-[#F1F0E9] text-[#737780] hover:text-[#202124] flex items-center justify-center transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setSpeechMuted(!speechMuted)}
+              aria-label={speechMuted ? 'Unmute voice' : 'Mute voice'}
+              title={speechMuted ? 'Unmute voice' : 'Mute voice'}
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${
+                speechMuted
+                  ? 'bg-[#FEF2F2] border-[#FCA5A5] text-[#EF4444]'
+                  : 'bg-[#F8F8F5] border-[#E5E5DF] text-[#737780] hover:text-[#202124]'
+              }`}
+            >
+              {speechMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            </button>
+            <button
+              onClick={onClose}
+              aria-label="Close voice dialog"
+              className="w-8 h-8 rounded-full bg-[#F8F8F5] hover:bg-[#F1F0E9] text-[#737780] hover:text-[#202124] flex items-center justify-center transition-colors border border-[#E5E5DF]"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* Assistant Response Bubble */}
@@ -77,8 +170,11 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({ isOpen, onClose }) => {
             <Volume2 className="w-4 h-4" />
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider">
+            <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider flex items-center gap-2">
               LANDING TIME ASSISTANT
+              {!speechMuted && (
+                <span className="text-[9px] text-[#0284C7]/70 font-mono">🔊 Spoken Aloud</span>
+              )}
             </span>
             <p className="text-xs sm:text-sm text-[#202124] italic leading-relaxed">
               {voiceTranscript}
@@ -89,7 +185,7 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({ isOpen, onClose }) => {
         {/* Quick Voice Suggestions */}
         <div className="flex flex-col gap-2">
           <span className="text-[11px] font-bold text-[#737780] uppercase tracking-wider">
-            Tap a simulated voice command:
+            Tap to test voice directive:
           </span>
           <div className="flex flex-wrap gap-2">
             {quickCommands.map((cmd) => (
@@ -106,15 +202,33 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Custom Input */}
+        {/* Real Mic & Custom Input Form */}
         <form onSubmit={handleSubmit} className="flex gap-2 pt-2 border-t border-[#E5E5DF]/70">
           <input
             type="text"
             value={customInput}
             onChange={(e) => setCustomInput(e.target.value)}
-            placeholder="Type a voice query (e.g. pause timers)..."
+            placeholder={
+              speechSupported
+                ? 'Speak into microphone or type query...'
+                : 'Type a voice query (e.g. pause timers)...'
+            }
             className="flex-1 h-11 px-3.5 rounded-xl bg-[#F8F8F5] border border-[#E5E5DF] text-xs sm:text-sm text-[#202124] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#3D8065]/20 focus:bg-white"
           />
+          {speechSupported && (
+            <button
+              type="button"
+              onClick={toggleMicListening}
+              className={`h-11 px-3.5 rounded-xl border flex items-center justify-center transition-all ${
+                isListening
+                  ? 'bg-[#EF4444] text-white border-[#DC2626] animate-pulse'
+                  : 'bg-[#F8F8F5] text-[#737780] hover:text-[#202124] border-[#E5E5DF]'
+              }`}
+              title="Toggle Live Microphone"
+            >
+              <Mic className="w-4 h-4" />
+            </button>
+          )}
           <button
             type="submit"
             disabled={!customInput.trim()}
@@ -126,7 +240,9 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({ isOpen, onClose }) => {
         </form>
 
         <p className="text-[11px] text-[#9CA3AF] text-center">
-          Calibrated for residential noise suppression. Tap any chip to simulate hands-free cooking.
+          {speechSupported
+            ? 'Real-time Web Speech recognition & speech synthesis enabled. Say or type commands.'
+            : 'Calibrated for residential noise suppression. Tap any chip to command.'}
         </p>
       </div>
     </div>

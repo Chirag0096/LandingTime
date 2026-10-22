@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "landing-time": {
+      "url": "http://localhost:3001/mcp",
+      "type": "http",
+      "description": "Landing Time multi-dish kitchen scheduling engine (Model Context Protocol streamable HTTP)",
+      "tools": [
+        "plan_meal",
+        "get_what_now",
+        "what_now",
+        "complete_step",
+        "report_delay",
+        "accept_replan",
+        "reject_replan",
+        "substitute",
+        "accept_substitution",
+        "resume_plan"
+      ]
+    }
+  }
+}

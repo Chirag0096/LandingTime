@@ -44,6 +44,7 @@ export const PlanningScreen: React.FC = () => {
     openEditDishModal,
     openSavePlanModal,
     showToast,
+    sessionId,
   } = useCookingSession();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -83,8 +84,17 @@ export const PlanningScreen: React.FC = () => {
           <span className="text-xs font-bold text-[#202124] tracking-wider uppercase">
             PLANNING MODE
           </span>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#F8F8F5] border border-[#E5E5DF] text-[#737780] font-mono font-medium">
-            SESSION #284
+          <span
+            onClick={() => {
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText(sessionId);
+                showToast('Session UUID Copied', sessionId, 'info');
+              }
+            }}
+            title="Click to copy full Session UUID"
+            className="text-[10px] px-2 py-0.5 rounded-full bg-[#F8F8F5] border border-[#E5E5DF] text-[#737780] font-mono font-medium cursor-pointer hover:bg-[#EBF4F0] hover:text-[#3D8065] transition-colors"
+          >
+            SESSION #{sessionId ? sessionId.slice(0, 8) : '284'}
           </span>
         </div>
       </div>

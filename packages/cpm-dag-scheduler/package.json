@@ -1,0 +1,30 @@
+{
+  "name": "cpm-dag-scheduler",
+  "version": "1.0.0",
+  "description": "Ultra-fast, deterministic Backward Critical Path Method (CPM) DAG scheduler with resource deconfliction and shock-absorber delay recovery.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "cpm",
+    "critical-path-method",
+    "dag",
+    "scheduler",
+    "mcp",
+    "kitchen-coordination",
+    "alexa-plus",
+    "deterministic",
+    "resource-constrained"
+  ],
+  "author": "Chirag Aswal",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

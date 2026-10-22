@@ -1,0 +1,35 @@
+{
+  "specVersion": "1.0",
+  "id": "landing-time-engine-spec",
+  "title": "Backward CPM Kitchen DAG Scheduling Specification",
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "title": "Kahn's Topological DAG Cycle Detection",
+      "description": "Ensure multi-recipe task graphs are strictly acyclic prior to scheduling pass",
+      "status": "IMPLEMENTED",
+      "verification": "server/tests/unit/scheduler.test.ts"
+    },
+    {
+      "id": "REQ-002",
+      "title": "Backward CPM Latest-Start Calculation",
+      "description": "Calculate makespan, latest start (LS), latest finish (LF), and total float from target serving time",
+      "status": "IMPLEMENTED",
+      "verification": "server/tests/unit/scheduler.test.ts"
+    },
+    {
+      "id": "REQ-003",
+      "title": "Oven Rule of 25 & Burner Constraints",
+      "description": "Enforce single oven chamber temperature sharing (tolerance <= 25°F) and 4 discrete burners",
+      "status": "IMPLEMENTED",
+      "verification": "server/src/scheduler/engine.ts"
+    },
+    {
+      "id": "REQ-004",
+      "title": "Shock-Absorber Delay Recovery",
+      "description": "Compress safe rest window down to food-safety floor and shift stovetop tasks without moving dinner time",
+      "status": "IMPLEMENTED",
+      "verification": "server/src/scheduler/engine.ts"
+    }
+  ]
+}

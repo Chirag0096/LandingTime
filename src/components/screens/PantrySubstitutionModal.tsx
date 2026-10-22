@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useCookingSession } from '../../context/CookingSessionContext';
 import { SUBSTITUTION_OPTIONS } from '../../data/mockKitchenData';
-import { SubstitutionOption } from '../../types';
+import { apiClient } from '../../api/client';
 import {
   X,
   Volume2,
@@ -18,6 +18,8 @@ import {
   Milk,
   RotateCcw,
   SlidersHorizontal,
+  Loader2,
+  Search,
 } from 'lucide-react';
 
 export const PantrySubstitutionModal: React.FC = () => {
@@ -33,13 +35,38 @@ export const PantrySubstitutionModal: React.FC = () => {
   const [activeSubId, setActiveSubId] = useState<string>('sub-milk-butter');
   const [showAlternativeSelector, setShowAlternativeSelector] = useState<boolean>(false);
 
+  // Gemini AI Dynamic Substitution State
+  const [customQuery, setCustomQuery] = useState('');
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [aiCustomSub, setAiCustomSub] = useState<any | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
+
   if (!isSubstitutionModalOpen) return null;
 
   const currentOption =
     SUBSTITUTION_OPTIONS.find((opt) => opt.id === activeSubId) || SUBSTITUTION_OPTIONS[0];
 
   const handleApply = () => {
-    applySubstitution(currentOption.id, currentOption.name);
+    if (aiCustomSub) {
+      applySubstitution(aiCustomSub.id, aiCustomSub.missingIngredient + ' Swap (' + (aiCustomSub.replacementIngredients[0]?.name || 'Substitute') + ')');
+    } else {
+      applySubstitution(currentOption.id, currentOption.name);
+    }
+  };
+
+  const handleQueryGemini = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customQuery.trim()) return;
+    setIsAiLoading(true);
+    setAiError(null);
+    try {
+      const res = await apiClient.generateAiSubstitution(customQuery, 'Pan Gravy & Asparagus', 'Deglaze & Simmer');
+      setAiCustomSub(res);
+    } catch (err: any) {
+      setAiError(err.message || 'Failed to generate AI substitute');
+    } finally {
+      setIsAiLoading(false);
+    }
   };
 
   return (
@@ -202,9 +229,10 @@ export const PantrySubstitutionModal: React.FC = () => {
                         key={opt.id}
                         onClick={() => {
                           setActiveSubId(opt.id);
+                          setAiCustomSub(null);
                         }}
                         className={`p-2.5 rounded-xl border text-left text-xs transition-all ${
-                          activeSubId === opt.id
+                          activeSubId === opt.id && !aiCustomSub
                             ? 'bg-[#EBF4F0] border-[#3D8065] font-bold text-[#202124]'
                             : 'bg-[#F8F8F5] border-[#E5E5DF] text-[#737780] hover:bg-white'
                         }`}
@@ -215,6 +243,49 @@ export const PantrySubstitutionModal: React.FC = () => {
                     ))}
                   </div>
                 )}
+
+                {/* Dynamic Gemini AI Custom Ingredient Box */}
+                <form onSubmit={handleQueryGemini} className="mt-3 pt-3 border-t border-[#E5E5DF] flex flex-col gap-2">
+                  <span className="text-[10px] font-bold text-[#737780] uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="w-3 h-3 text-[#3D8065]" />
+                    <span>Ask Gemini 2.5 Flash for Any Other Ingredient:</span>
+                  </span>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={customQuery}
+                      onChange={(e) => setCustomQuery(e.target.value)}
+                      placeholder="e.g. Buttermilk, White Wine, Mirin, Shallots..."
+                      className="flex-1 h-9 px-3 rounded-xl bg-[#F8F8F5] border border-[#E5E5DF] text-xs text-[#202124] focus:outline-none focus:bg-white focus:border-[#3D8065]"
+                    />
+                    <button
+                      type="submit"
+                      disabled={isAiLoading || !customQuery.trim()}
+                      className="px-3 py-1.5 rounded-xl bg-[#3D8065] text-white text-xs font-bold hover:bg-[#336C55] disabled:opacity-40 flex items-center gap-1.5 cursor-pointer"
+                    >
+                      {isAiLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+                      <span>Ask AI</span>
+                    </button>
+                  </div>
+                  {aiError && <p className="text-[11px] text-[#EF4444]">{aiError}</p>}
+                  {aiCustomSub && (
+                    <div className="p-3 bg-[#F0FDF4] border border-[#BBF7D0] rounded-xl text-xs flex flex-col gap-1 animate-in fade-in">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-[#166534]">
+                          {aiCustomSub.substituteName || aiCustomSub.replacementIngredients[0]?.name || 'AI Alternative'}
+                        </span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#DCFCE7] text-[#166534]">
+                          {aiCustomSub.flavorMatchPercentage || 95}% Match · Gemini AI
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-[#374151] leading-relaxed">{aiCustomSub.preparationChanges}</p>
+                      <div className="flex items-center justify-between pt-1 border-t border-[#BBF7D0]/60 text-[10px] text-[#15803D] font-mono">
+                        <span>Simmer Adjustment: {aiCustomSub.durationAdjustmentSeconds > 0 ? `+${aiCustomSub.durationAdjustmentSeconds}s` : `${aiCustomSub.durationAdjustmentSeconds}s`}</span>
+                        <span className="font-semibold uppercase text-[#166534]">Ready to apply</span>
+                      </div>
+                    </div>
+                  )}
+                </form>
               </div>
             </div>
           </div>

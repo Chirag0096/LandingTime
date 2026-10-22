@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "name": "landing-time-coordination-crew",
+  "description": "Kiro Crew agentic specification for multi-dish kitchen coordination and MCP server development",
+  "tools": [
+    "cpm-scheduler-engine",
+    "mcp-streamable-transport",
+    "gemini-recipe-parser",
+    "sqlite-persistence-manager"
+  ],
+  "agents": [
+    {
+      "name": "SchedulerArchitect",
+      "role": "DAG scheduling and critical path calculation",
+      "spec": ".kiro/specs/landing-time-engine.spec.json"
+    },
+    {
+      "name": "McpProtocolSpecialist",
+      "role": "Model Context Protocol 2025-11-25 Streamable HTTP compliance",
+      "spec": ".kiro/specs/mcp-streamable-transport.spec.json"
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import { EditDishModal } from './components/EditDishModal';
 import { SavePlanModal } from './components/SavePlanModal';
 import { CookingSummaryModal } from './components/CookingSummaryModal';
 import { SessionLogDrawer } from './components/SessionLogDrawer';
+import { DemoControlBar } from './components/DemoControlBar';
 
 const MainContent: React.FC = () => {
   const {
@@ -62,6 +63,7 @@ const MainContent: React.FC = () => {
       <CookingSummaryModal isOpen={isSummaryModalOpen} onClose={closeSummaryModal} />
       <SessionLogDrawer isOpen={isSessionLogOpen} onClose={closeSessionLog} />
       <Toast />
+      <DemoControlBar />
     </div>
   );
 };

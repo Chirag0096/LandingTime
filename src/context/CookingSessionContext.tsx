@@ -23,6 +23,7 @@ import {
   toTotalMinutes,
   calculateWorkloadMetrics,
 } from '../utils/scheduler';
+import { apiClient } from '../api/client';
 
 interface ToastState {
   show: boolean;
@@ -137,6 +138,10 @@ interface CookingSessionContextType {
   toast: ToastState;
   showToast: (title: string, message: string, type?: ToastState['type']) => void;
   hideToast: () => void;
+
+  // Persistence & Resume
+  sessionId: string;
+  resumeSessionById: (id: string) => Promise<void>;
 }
 
 const CookingSessionContext = createContext<CookingSessionContextType | undefined>(undefined);
@@ -197,6 +202,61 @@ export const CookingSessionProvider: React.FC<{ children: ReactNode }> = ({ chil
 
   // Verification modal
   const [isVerificationModalOpen, setIsVerificationModalOpen] = useState<boolean>(false);
+
+  // Session ID & Backend Sync
+  const [sessionId, setSessionId] = useState<string>('session-live-284');
+  const [proposalId, setProposalId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const initSession = async () => {
+      try {
+        const d = new Date();
+        d.setHours(targetHour, targetMinute, 0, 0);
+        const res = await apiClient.createSession({
+          dishIds: ['recipe-chicken', 'recipe-potatoes', 'recipe-asparagus-gravy'],
+          targetServingAt: d.toISOString(),
+          householdSize: 4,
+        });
+        if (res?.session?.sessionId) {
+          setSessionId(res.session.sessionId);
+        }
+      } catch {
+        // Fallback to local offline state
+      }
+    };
+    initSession();
+  }, []);
+
+  const resumeSessionById = async (id: string) => {
+    try {
+      const res = await apiClient.resumeSession(id);
+      if (res?.session) {
+        setSessionId(res.session.sessionId);
+        if (res.session.actualLandingTime) {
+          const date = new Date(res.session.actualLandingTime);
+          const hr = date.getHours() % 12 || 12;
+          const min = date.getMinutes();
+          const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+          setActualLandingTime(`${hr}:${min < 10 ? '0' : ''}${min} ${ampm}`);
+        }
+        if (res.session.platingChecklist) {
+          setPlatingItems(res.session.platingChecklist);
+        }
+        if (res.session.restockItems) {
+          setRestockItems(res.session.restockItems);
+        }
+        if (res.session.status === 'LIVE') {
+          setIsLiveCooking(true);
+          setCurrentScreen('live');
+        } else if (res.session.status === 'COMPLETE') {
+          setCurrentScreen('landed');
+        }
+        showToast('Session Resumed', `Session ${id} loaded from persistent storage.`, 'success');
+      }
+    } catch (err: any) {
+      showToast('Resume Error', err.message || 'Could not resume session.', 'error');
+    }
+  };
 
   // Voice Transcript
   const [voiceTranscript, setVoiceTranscript] = useState<string>(
@@ -736,6 +796,8 @@ export const CookingSessionProvider: React.FC<{ children: ReactNode }> = ({ chil
         toast,
         showToast,
         hideToast,
+        sessionId,
+        resumeSessionById,
       }}
     >
       {children}

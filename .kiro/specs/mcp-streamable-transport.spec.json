@@ -1,0 +1,28 @@
+{
+  "specVersion": "1.0",
+  "id": "mcp-streamable-transport-spec",
+  "title": "Model Context Protocol 2025-11-25 Streamable HTTP Specification",
+  "requirements": [
+    {
+      "id": "MCP-REQ-001",
+      "title": "Streamable HTTP Transport",
+      "description": "Implement StreamableHTTPServerTransport mounted at /mcp with sessionId generation and SSE streaming",
+      "status": "IMPLEMENTED",
+      "verification": "server/tests/integration/mcp_protocol.test.ts"
+    },
+    {
+      "id": "MCP-REQ-002",
+      "title": "6 Core MCP Tools Registration",
+      "description": "Register plan_meal, get_what_now, complete_step, report_delay, substitute, resume_plan",
+      "status": "IMPLEMENTED",
+      "verification": "server/src/mcp/server.ts"
+    },
+    {
+      "id": "MCP-REQ-003",
+      "title": "Deterministic Voice Latency Budget",
+      "description": "Ensure tool handler execution completes in under 5ms to satisfy 500ms voice round-trip SLA",
+      "status": "IMPLEMENTED",
+      "verification": "server/tests/integration/mcp_protocol.test.ts"
+    }
+  ]
+}
