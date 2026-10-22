@@ -1,3 +1,13 @@
-export * from '../../../server/src/domain/types.ts';
-export * from '../../../server/src/domain/validation.ts';
-export * from '../../../server/src/scheduler/engine.ts';
+/**
+ * cpm-dag-scheduler
+ *
+ * Deterministic Backward Critical Path Method (CPM) DAG scheduling and
+ * shock-absorber replanning engine in pure TypeScript (<1ms latency, O(V+E)).
+ *
+ * @license MIT
+ * @author Chirag Aswal <chiragaswal2@gmail.com>
+ */
+
+export * from './types.js';
+export * from './validation.js';
+export * from './engine.js';

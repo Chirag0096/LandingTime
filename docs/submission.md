@@ -86,7 +86,9 @@ Onboarding with the MCP specification was straightforward. The concepts of tools
 ## 🎁 Mini-Challenge Submissions
 
 ### Open Source Mini-Challenge ($5,000)
-- **Contribution**: Extracted the pure Backward Critical Path Method DAG scheduling engine into a standalone open-source TypeScript library: [`packages/cpm-dag-scheduler`](./packages/cpm-dag-scheduler).
+- **Contribution**: Extracted and published the pure Backward Critical Path Method DAG scheduling engine as a standalone, zero-dependency open-source library with tests, microsecond benchmarks, and CI workflows:
+  - **Standalone GitHub Repository**: [https://github.com/Chirag0096/cpm-dag-scheduler](https://github.com/Chirag0096/cpm-dag-scheduler)
+  - **In-Tree Monorepo Package**: [`packages/cpm-dag-scheduler`](./packages/cpm-dag-scheduler)
 - **License**: MIT Open Source License.
 - **What It Does**: Provides developers with an ultra-fast ($\mathcal{O}(V+E)$, <1ms) resource-constrained backward scheduler that solves precedence constraints, shared appliance limits, and shock-absorber delay recovery for any time-critical physical workflow.
 

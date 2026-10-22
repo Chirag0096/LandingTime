@@ -1,30 +1,55 @@
 {
   "name": "cpm-dag-scheduler",
   "version": "1.0.0",
-  "description": "Ultra-fast, deterministic Backward Critical Path Method (CPM) DAG scheduler with resource deconfliction and shock-absorber delay recovery.",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "description": "Deterministic Backward Critical Path Method (CPM) DAG scheduling and shock-absorber replanning engine in pure TypeScript (<1ms latency, O(V+E))",
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
-    "test": "vitest run"
+    "test": "node --test --import tsx tests/scheduler.test.ts",
+    "benchmark": "tsx tests/benchmark.ts",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run test && npm run build"
   },
   "keywords": [
     "cpm",
     "critical-path-method",
     "dag",
     "scheduler",
-    "mcp",
+    "topological-sort",
+    "operations-research",
+    "replanning",
+    "slack-time",
+    "float",
     "kitchen-coordination",
-    "alexa-plus",
-    "deterministic",
-    "resource-constrained"
+    "task-scheduling"
   ],
-  "author": "Chirag Aswal",
+  "author": "Chirag Aswal <chiragaswal2@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chirag0096/cpm-dag-scheduler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Chirag0096/cpm-dag-scheduler/issues"
+  },
+  "homepage": "https://github.com/Chirag0096/cpm-dag-scheduler#readme",
   "devDependencies": {
-    "typescript": "^5.7.0",
-    "vitest": "^3.0.0"
+    "@types/node": "^22.14.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.8.0"
   }
 }
