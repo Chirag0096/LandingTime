@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useCookingSession } from '../../context/CookingSessionContext';
-import { formatSecondsToMMSS } from '../../utils/scheduler';
-import { computeKitchenTimeline, TimelinePhaseType } from '../../utils/timelineEngine';
+import { formatSecondsToMMSS, fromTotalMinutes } from '../../utils/scheduler';
+import { computeKitchenTimeline, TimelinePhaseType, TimelineSegment } from '../../utils/timelineEngine';
 import {
   Utensils,
   Users,
@@ -29,6 +29,7 @@ export const LiveDashboardScreen: React.FC = () => {
     targetMinute,
     meridiem,
     formattedTargetTime,
+    adjustMinutes,
     activeStepTitle,
     activeStepInstruction,
     activeStepNumber,
@@ -40,6 +41,7 @@ export const LiveDashboardScreen: React.FC = () => {
     isTimerRunning,
     toggleTimer,
     resetTimer,
+    adjustTimerSeconds,
     advanceStep,
     jumpToStep,
     delayDetectedMinutes,
@@ -53,6 +55,13 @@ export const LiveDashboardScreen: React.FC = () => {
     showToast,
   } = useCookingSession();
 
+  // Dynamic simulation clock for timeline scrubbing
+  const [timelineMinute, setTimelineMinute] = useState<number>(18 * 60 + 51); // 6:51 PM default
+  const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>('pot-smash');
+  const [isScrubbingNeedle, setIsScrubbingNeedle] = useState<boolean>(false);
+  const timelineTracksRef = useRef<HTMLDivElement | null>(null);
+
+  // Recompute timeline dynamically on every change (time, replan, delay, substitution, or clock scrub)
   const timelineData = computeKitchenTimeline({
     targetHour,
     targetMinute,
@@ -62,7 +71,116 @@ export const LiveDashboardScreen: React.FC = () => {
     delayMinutes: delayDetectedMinutes,
     recoveredMinutes,
     isHeavyCreamSubstituted: appliedSubstitutionId !== null,
+    nowMinuteOfDay: timelineMinute,
   });
+
+  // Step to timeline minute mapping for bidirectional sync
+  const STEP_TIMELINE_MAPPING: Record<number, { minute: number; segmentId: string }> = {
+    1: { minute: 18 * 60 + 20, segmentId: 'chk-prep' },
+    2: { minute: 18 * 60 + 35, segmentId: 'chk-roast' },
+    3: { minute: 18 * 60 + 30, segmentId: 'pot-boil' },
+    4: { minute: 18 * 60 + 51, segmentId: 'pot-smash' },
+    5: { minute: 18 * 60 + 58, segmentId: 'pot-bake' },
+    6: { minute: 18 * 60 + 46, segmentId: 'gravy-simmer' },
+    7: { minute: 19 * 60 + 25, segmentId: 'asp-saute' },
+    8: { minute: 19 * 60 + 28, segmentId: 'chk-rest' },
+    9: { minute: 19 * 60 + 31, segmentId: 'pot-hold' },
+  };
+
+  // Sync timeline when active step changes from outside
+  useEffect(() => {
+    const map = STEP_TIMELINE_MAPPING[activeStepNumber];
+    if (map) {
+      setTimelineMinute(map.minute);
+      setSelectedSegmentId(map.segmentId);
+    }
+  }, [activeStepNumber]);
+
+  // Scrub handler: updates clock and finds matching task
+  const handleScrub = useCallback(
+    (targetMin: number) => {
+      const clamped = Math.max(
+        timelineData.windowStartMinute,
+        Math.min(timelineData.windowEndMinute, targetMin)
+      );
+      setTimelineMinute(clamped);
+
+      // Find matching segment
+      let matchedSeg: TimelineSegment | undefined;
+      for (const track of timelineData.tracks) {
+        for (const seg of track.segments) {
+          if (clamped >= seg.startMinute && clamped <= seg.endMinute) {
+            matchedSeg = seg;
+            break;
+          }
+        }
+        if (matchedSeg) break;
+      }
+
+      if (matchedSeg) {
+        setSelectedSegmentId(matchedSeg.id);
+        if (matchedSeg.stepNumber && matchedSeg.stepNumber !== activeStepNumber) {
+          jumpToStep(matchedSeg.stepNumber);
+        }
+      }
+    },
+    [timelineData, activeStepNumber, jumpToStep]
+  );
+
+  // Click handler for timeline segments
+  const handleSegmentClick = (seg: TimelineSegment) => {
+    setSelectedSegmentId(seg.id);
+    setTimelineMinute(seg.startMinute);
+    if (seg.stepNumber) {
+      jumpToStep(seg.stepNumber);
+    }
+    showToast(
+      `Focused: ${seg.label}`,
+      `${seg.appliance ? seg.appliance + ' · ' : ''}${seg.tooltipText}`,
+      'info'
+    );
+  };
+
+  // Dragging NOW needle with mouse
+  const handleRulerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!timelineTracksRef.current) return;
+    const rect = timelineTracksRef.current.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const pct = Math.max(0, Math.min(1, clickX / rect.width));
+    const targetMin = Math.round(
+      timelineData.windowStartMinute + pct * timelineData.totalSpanMinutes
+    );
+    handleScrub(targetMin);
+  };
+
+  const handleNeedleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsScrubbingNeedle(true);
+  };
+
+  useEffect(() => {
+    if (!isScrubbingNeedle) return;
+    const onMouseMove = (e: MouseEvent) => {
+      if (!timelineTracksRef.current) return;
+      const rect = timelineTracksRef.current.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = Math.max(0, Math.min(1, clickX / rect.width));
+      const targetMin = Math.round(
+        timelineData.windowStartMinute + pct * timelineData.totalSpanMinutes
+      );
+      handleScrub(targetMin);
+    };
+    const onMouseUp = () => {
+      setIsScrubbingNeedle(false);
+    };
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+  }, [isScrubbingNeedle, handleScrub, timelineData.windowStartMinute, timelineData.totalSpanMinutes]);
 
   const getSegmentClasses = (phaseType: TimelinePhaseType) => {
     switch (phaseType) {
@@ -104,6 +222,8 @@ export const LiveDashboardScreen: React.FC = () => {
   const progressRatio = timerSecondsRemaining / timerTotalSeconds;
   const strokeDashoffset = circumference * (1 - progressRatio);
 
+  const minutesRemaining = Math.max(0, timelineData.targetMinute - timelineMinute);
+
   return (
     <div className="w-full flex flex-col gap-6 pb-36">
       {/* ZONE A: Session & Landing-Time Mission Control Header */}
@@ -135,8 +255,8 @@ export const LiveDashboardScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Center: Landing Target Mission Control */}
-        <div className="flex items-center gap-4 bg-[#F8F8F5] px-5 py-2 rounded-xl border border-[#E5E5DF]">
+        {/* Center: Landing Target Mission Control with Dynamic Time Adjusters */}
+        <div className="flex items-center gap-3 sm:gap-4 bg-[#F8F8F5] px-4 sm:px-5 py-2 rounded-xl border border-[#E5E5DF]">
           <div className="flex items-baseline gap-2">
             <span className="text-[11px] font-bold tracking-widest text-[#737780] uppercase">
               DEADLINE
@@ -145,10 +265,31 @@ export const LiveDashboardScreen: React.FC = () => {
               LANDING AT {formattedTargetTime}
             </span>
           </div>
+
+          {/* Quick Target Time Adjusters (-5m / +5m) */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => adjustMinutes(-5)}
+              className="px-2 py-0.5 rounded text-[11px] font-bold bg-white hover:bg-[#EBF4F0] border border-[#E5E5DF] text-[#737780] hover:text-[#3D8065] transition-colors cursor-pointer"
+              title="Shift dinner 5 minutes earlier"
+            >
+              -5m
+            </button>
+            <button
+              onClick={() => adjustMinutes(5)}
+              className="px-2 py-0.5 rounded text-[11px] font-bold bg-white hover:bg-[#EBF4F0] border border-[#E5E5DF] text-[#737780] hover:text-[#3D8065] transition-colors cursor-pointer"
+              title="Shift dinner 5 minutes later"
+            >
+              +5m
+            </button>
+          </div>
+
           <div className="h-5 w-px bg-[#E5E5DF] hidden sm:block"></div>
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF4F0] border border-[#C4DDD3] text-[#3D8065] font-bold text-[12px] tracking-wide">
             <span className="w-2 h-2 rounded-full bg-[#3D8065] animate-pulse"></span>
-            <span>42 MIN REMAINING · ON TRACK</span>
+            <span>
+              {minutesRemaining} MIN REMAINING · {replanAccepted ? 'RE-PLANNED' : 'ON TRACK'}
+            </span>
           </div>
         </div>
 
@@ -240,23 +381,41 @@ export const LiveDashboardScreen: React.FC = () => {
                 </div>
               </div>
 
-              {/* Timer micro-controls */}
-              <div className="flex items-center gap-2 mt-1">
+              {/* Timer micro-controls with +/- increments */}
+              <div className="flex items-center gap-1.5 mt-1">
+                <button
+                  onClick={() => adjustTimerSeconds?.(-30)}
+                  className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold text-[#737780] hover:text-[#202124] hover:bg-[#F8F8F5] border border-transparent hover:border-[#E5E5DF] cursor-pointer"
+                  title="Subtract 30s"
+                >
+                  -30s
+                </button>
                 <button
                   onClick={toggleTimer}
-                  className="p-1 rounded-md text-[#737780] hover:text-[#202124] hover:bg-[#F8F8F5]"
+                  className="p-1 rounded-md text-[#737780] hover:text-[#202124] hover:bg-[#F8F8F5] cursor-pointer"
                   title={isTimerRunning ? 'Pause timer' : 'Resume timer'}
                   aria-label={isTimerRunning ? 'Pause timer' : 'Resume timer'}
                 >
-                  {isTimerRunning ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-[#3D8065]" />}
+                  {isTimerRunning ? (
+                    <Pause className="w-3.5 h-3.5" />
+                  ) : (
+                    <Play className="w-3.5 h-3.5 text-[#3D8065]" />
+                  )}
                 </button>
                 <button
                   onClick={resetTimer}
-                  className="p-1 rounded-md text-[#737780] hover:text-[#202124] hover:bg-[#F8F8F5]"
+                  className="p-1 rounded-md text-[#737780] hover:text-[#202124] hover:bg-[#F8F8F5] cursor-pointer"
                   title="Reset timer"
                   aria-label="Reset timer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => adjustTimerSeconds?.(60)}
+                  className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold text-[#737780] hover:text-[#202124] hover:bg-[#F8F8F5] border border-transparent hover:border-[#E5E5DF] cursor-pointer"
+                  title="Add 1 minute"
+                >
+                  +1m
                 </button>
               </div>
             </div>
@@ -317,13 +476,17 @@ export const LiveDashboardScreen: React.FC = () => {
             <div className="flex flex-wrap items-center justify-between px-2 pt-1 gap-2">
               <button
                 onClick={() => handleVoiceCommand('Repeat current instruction')}
-                className="flex items-center gap-1.5 text-[#737780] hover:text-[#202124] text-[13px] font-medium transition-colors"
+                className="flex items-center gap-1.5 text-[#737780] hover:text-[#202124] text-[13px] font-medium transition-colors cursor-pointer"
               >
                 <Volume2 className="w-4 h-4" />
                 <span>Repeat instruction (Voice: "Repeat")</span>
               </button>
 
-              <div className="flex items-center gap-2 text-[12px]">
+              <div
+                onClick={() => jumpToStep(Math.min(totalStepsCount, activeStepNumber + 1))}
+                className="flex items-center gap-2 text-[12px] cursor-pointer hover:opacity-80 transition-opacity"
+                title="Click to jump to next step"
+              >
                 <span className="text-[#737780] font-semibold uppercase">UP NEXT:</span>
                 <span className="font-medium text-[#202124]">Oven entry alongside chicken</span>
                 <span className="px-2 py-0.5 rounded bg-[#FEF3C7] text-[#D97706] border border-[#FDE68A] font-bold text-[11px] uppercase">
@@ -334,7 +497,7 @@ export const LiveDashboardScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* RIGHT CARD: YOUR KITCHEN RIGHT NOW (5 cols desktop) */}
+        {/* RIGHT CARD: YOUR KITCHEN RIGHT NOW (5 cols desktop - Interactive Equipment Matrix) */}
         <div className="col-span-12 lg:col-span-5 bg-white rounded-2xl border border-[#E5E5DF] shadow-[0_2px_10px_rgba(0,0,0,0.03)] p-5 flex flex-col justify-between">
           <div>
             {/* Top Title */}
@@ -345,7 +508,7 @@ export const LiveDashboardScreen: React.FC = () => {
                   YOUR KITCHEN RIGHT NOW
                 </h2>
                 <p className="text-[12px] text-[#737780] mt-0.5">
-                  Shared appliance availability and active cooking tasks.
+                  Shared appliance availability and active cooking tasks. (Click to focus)
                 </p>
               </div>
               <span className="px-2.5 py-1 rounded-md bg-[#FEF3C7] text-[#D97706] border border-[#FDE68A] text-[11px] font-bold tracking-wider uppercase">
@@ -366,8 +529,17 @@ export const LiveDashboardScreen: React.FC = () => {
                 <span className="text-[11px] font-bold text-[#D97706]">SHARED OVEN WINDOW</span>
               </div>
 
-              {/* Oven Item 1: Roast Chicken */}
-              <div className="bg-white rounded-lg p-2.5 border border-[#E5E5DF] flex flex-col gap-1.5 shadow-xs">
+              {/* Oven Item 1: Roast Chicken (Clickable to focus step 2) */}
+              <div
+                onClick={() => {
+                  jumpToStep(2);
+                  setTimelineMinute(18 * 60 + 35);
+                  setSelectedSegmentId('chk-roast');
+                  showToast('Primary Oven Focus', 'Roast Chicken on Center Rack (425°F)', 'info');
+                }}
+                className="bg-white rounded-lg p-2.5 border border-[#E5E5DF] hover:border-[#D97706] hover:shadow-xs transition-all cursor-pointer flex flex-col gap-1.5 shadow-xs"
+                title="Click to focus on Chicken Roast (Step 2)"
+              >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#D97706]"></span>
@@ -383,8 +555,17 @@ export const LiveDashboardScreen: React.FC = () => {
                 </div>
               </div>
 
-              {/* Oven Item 2: Reserved Smashed Potatoes */}
-              <div className="bg-white rounded-lg p-2.5 border border-dashed border-[#FDE68A] flex items-center justify-between">
+              {/* Oven Item 2: Reserved Smashed Potatoes (Clickable to focus step 5) */}
+              <div
+                onClick={() => {
+                  jumpToStep(5);
+                  setTimelineMinute(18 * 60 + 55);
+                  setSelectedSegmentId('pot-bake');
+                  showToast('Oven Reserve Focus', 'Smashed Potatoes top rack entry (425°F)', 'info');
+                }}
+                className="bg-white rounded-lg p-2.5 border border-dashed border-[#FDE68A] hover:border-[#D97706] transition-all cursor-pointer flex items-center justify-between"
+                title="Click to focus on Potato Bake Entry (Step 5)"
+              >
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-[#D97706]" />
                   <div>
@@ -411,19 +592,37 @@ export const LiveDashboardScreen: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-2.5">
-                {/* Burner 1 (BL) */}
-                <div className="p-2.5 rounded-lg bg-white border border-[#E5E5DF] flex items-center justify-between opacity-70">
+                {/* Burner 1 (BL - Parboil) */}
+                <div
+                  onClick={() => {
+                    jumpToStep(3);
+                    setTimelineMinute(18 * 60 + 30);
+                    setSelectedSegmentId('pot-boil');
+                    showToast('Burner Focus: BL', 'Parboil Baby Yukons (Step 3)', 'info');
+                  }}
+                  className="p-2.5 rounded-lg bg-white border border-[#E5E5DF] hover:border-[#3D8065] cursor-pointer flex items-center justify-between opacity-80 hover:opacity-100 transition-all"
+                  title="Click to focus on Parboil Yukons (Step 3)"
+                >
                   <div className="flex items-center gap-2">
                     <div className="w-5 h-5 rounded-full border border-[#E5E5DF] flex items-center justify-center text-[10px] text-[#9CA3AF] font-bold">
                       BL
                     </div>
-                    <span className="text-[12px] text-[#737780] font-medium">Back Left</span>
+                    <span className="text-[12px] text-[#737780] font-medium">Parboil Pot</span>
                   </div>
-                  <span className="text-[10px] text-[#9CA3AF] font-bold">OFF</span>
+                  <span className="text-[10px] text-[#3D8065] font-bold">READY</span>
                 </div>
 
-                {/* Burner 2 (BR) */}
-                <div className="p-2.5 rounded-lg bg-[#FEF3C7]/70 border border-[#FDE68A] flex items-center justify-between ring-1 ring-[#D97706]/30">
+                {/* Burner 2 (BR - Gravy) */}
+                <div
+                  onClick={() => {
+                    jumpToStep(6);
+                    setTimelineMinute(18 * 60 + 46);
+                    setSelectedSegmentId('gravy-simmer');
+                    showToast('Burner Focus: BR', 'Pan Gravy Base Simmer (Step 6)', 'info');
+                  }}
+                  className="p-2.5 rounded-lg bg-[#FEF3C7]/70 border border-[#FDE68A] hover:border-[#D97706] cursor-pointer flex items-center justify-between ring-1 ring-[#D97706]/30 transition-all"
+                  title="Click to focus on Pan Gravy Base (Step 6)"
+                >
                   <div className="flex items-center gap-2">
                     <div className="w-5 h-5 rounded-full bg-[#D97706]/20 border border-[#D97706] flex items-center justify-center">
                       <span className="w-2 h-2 rounded-full bg-[#D97706] animate-ping"></span>
@@ -436,8 +635,17 @@ export const LiveDashboardScreen: React.FC = () => {
                   <Soup className="w-4 h-4 text-[#D97706]" />
                 </div>
 
-                {/* Burner 3 (FL) */}
-                <div className="p-2.5 rounded-lg bg-white border border-dashed border-[#E5E5DF] flex items-center justify-between">
+                {/* Burner 3 (FL - Asparagus) */}
+                <div
+                  onClick={() => {
+                    jumpToStep(7);
+                    setTimelineMinute(19 * 60 + 25);
+                    setSelectedSegmentId('asp-saute');
+                    showToast('Burner Focus: FL', 'Asparagus Skillet Sauté (Step 7)', 'info');
+                  }}
+                  className="p-2.5 rounded-lg bg-white border border-dashed border-[#E5E5DF] hover:border-[#3D8065] cursor-pointer flex items-center justify-between transition-all"
+                  title="Click to focus on Asparagus Sauté (Step 7)"
+                >
                   <div className="flex items-center gap-2">
                     <div className="w-5 h-5 rounded-full border border-[#737780] flex items-center justify-center text-[10px] text-[#737780] font-bold">
                       FL
@@ -450,7 +658,7 @@ export const LiveDashboardScreen: React.FC = () => {
                   <Clock className="w-4 h-4 text-[#737780]" />
                 </div>
 
-                {/* Burner 4 (FR) */}
+                {/* Burner 4 (FR - Off) */}
                 <div className="p-2.5 rounded-lg bg-white border border-[#E5E5DF] flex items-center justify-between opacity-70">
                   <div className="flex items-center gap-2">
                     <div className="w-5 h-5 rounded-full border border-[#E5E5DF] flex items-center justify-center text-[10px] text-[#9CA3AF] font-bold">
@@ -518,11 +726,90 @@ export const LiveDashboardScreen: React.FC = () => {
           </div>
         </div>
 
+        {/* Dynamic Timeline Scrubber Control Bar */}
+        <div className="bg-[#F8F8F5] rounded-xl p-3 border border-[#E5E5DF] flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#3D8065] animate-pulse"></span>
+            <span className="text-[11px] font-bold text-[#202124] uppercase tracking-wider">
+              TIMELINE CLOCK:
+            </span>
+            <span className="text-[13px] font-mono font-bold text-[#3D8065] px-2.5 py-0.5 rounded-md bg-white border border-[#C4DDD3] shadow-xs">
+              {timelineData.nowFormatted}
+            </span>
+            <span className="text-[11px] text-[#737780] font-medium hidden md:inline">
+              (Drag slider or click any segment to scrub)
+            </span>
+          </div>
+
+          {/* Quick Scrub Preset Checkpoints */}
+          <div className="flex items-center flex-wrap gap-1.5 text-[11px]">
+            <button
+              onClick={() => handleScrub(18 * 60 + 20)}
+              className="px-2 py-0.5 rounded-md bg-white hover:bg-[#EBF4F0] border border-[#E5E5DF] text-[#737780] hover:text-[#3D8065] font-semibold transition-colors cursor-pointer"
+            >
+              6:20 PM Prep
+            </button>
+            <button
+              onClick={() => handleScrub(18 * 60 + 35)}
+              className="px-2 py-0.5 rounded-md bg-white hover:bg-[#EBF4F0] border border-[#E5E5DF] text-[#737780] hover:text-[#3D8065] font-semibold transition-colors cursor-pointer"
+            >
+              6:30 PM Roast
+            </button>
+            <button
+              onClick={() => handleScrub(18 * 60 + 51)}
+              className="px-2 py-0.5 rounded-md bg-[#EBF4F0] border border-[#C4DDD3] text-[#3D8065] font-bold shadow-xs cursor-pointer"
+            >
+              6:51 PM Smash (Now)
+            </button>
+            <button
+              onClick={() => handleScrub(18 * 60 + 58)}
+              className="px-2 py-0.5 rounded-md bg-white hover:bg-[#EBF4F0] border border-[#E5E5DF] text-[#737780] hover:text-[#3D8065] font-semibold transition-colors cursor-pointer"
+            >
+              6:55 PM Oven Sync
+            </button>
+            <button
+              onClick={() => handleScrub(19 * 60 + 25)}
+              className="px-2 py-0.5 rounded-md bg-white hover:bg-[#EBF4F0] border border-[#E5E5DF] text-[#737780] hover:text-[#3D8065] font-semibold transition-colors cursor-pointer"
+            >
+              7:25 PM Sauté
+            </button>
+            <button
+              onClick={() => handleScrub(timelineData.targetMinute)}
+              className="px-2 py-0.5 rounded-md bg-[#FEF3C7] border border-[#FDE68A] text-[#D97706] font-bold shadow-xs cursor-pointer"
+            >
+              Serve ({timelineData.targetFormatted})
+            </button>
+          </div>
+
+          {/* Scrubber Range Slider */}
+          <div className="w-full flex items-center gap-3 pt-1">
+            <span className="text-[11px] font-mono text-[#737780] shrink-0 font-bold">
+              {fromTotalMinutes(timelineData.windowStartMinute).formatted}
+            </span>
+            <input
+              type="range"
+              min={timelineData.windowStartMinute}
+              max={timelineData.windowEndMinute}
+              value={timelineMinute}
+              onChange={(e) => handleScrub(Number(e.target.value))}
+              className="w-full h-2 bg-[#E5E5DF] rounded-lg appearance-none cursor-pointer accent-[#3D8065]"
+              aria-label="Timeline time scrubber"
+            />
+            <span className="text-[11px] font-mono text-[#737780] shrink-0 font-bold">
+              {fromTotalMinutes(timelineData.windowEndMinute).formatted}
+            </span>
+          </div>
+        </div>
+
         {/* Timeline Tracks Container */}
         <div className="relative w-full overflow-x-auto select-none pt-2">
-          <div className="min-w-[860px] relative">
-            {/* Dynamic Time labels axis */}
-            <div className="relative h-6 w-full text-[#737780] font-semibold text-[12px] tabular-nums px-2 border-b border-[#E5E5DF] pb-2">
+          <div ref={timelineTracksRef} className="min-w-[860px] relative">
+            {/* Dynamic Time labels axis (Clickable to scrub) */}
+            <div
+              onClick={handleRulerClick}
+              className="relative h-6 w-full text-[#737780] font-semibold text-[12px] tabular-nums px-2 border-b border-[#E5E5DF] pb-2 cursor-pointer group"
+              title="Click anywhere along ruler to move current simulation time"
+            >
               {timelineData.axisTicks.map((tick, i) => (
                 <div
                   key={i}
@@ -543,7 +830,10 @@ export const LiveDashboardScreen: React.FC = () => {
             </div>
 
             {/* Vertical guidelines */}
-            <div className="absolute inset-y-6 inset-x-0 pointer-events-none">
+            <div
+              onClick={handleRulerClick}
+              className="absolute inset-y-6 inset-x-0 cursor-pointer"
+            >
               {timelineData.axisTicks.map((tick, i) => (
                 <div
                   key={i}
@@ -552,14 +842,17 @@ export const LiveDashboardScreen: React.FC = () => {
                 />
               ))}
 
-              {/* NOW NEEDLE */}
+              {/* DYNAMIC NOW NEEDLE (Draggable and clickable) */}
               <div
-                className="absolute top-0 bottom-0 border-l-2 border-[#3D8065] z-30"
+                onMouseDown={handleNeedleMouseDown}
+                className="absolute top-0 bottom-0 border-l-2 border-[#3D8065] z-30 cursor-ew-resize transition-all group/needle"
                 style={{ left: `${timelineData.nowPercent}%` }}
+                title="Drag or scrub NOW indicator"
               >
-                <div className="bg-[#3D8065] text-white text-[10px] font-bold px-2.5 py-0.5 rounded shadow absolute -top-5 -translate-x-1/2 flex items-center gap-1 whitespace-nowrap">
+                <div className="bg-[#3D8065] text-white text-[10px] font-bold px-2.5 py-0.5 rounded shadow-md absolute -top-5 -translate-x-1/2 flex items-center gap-1 whitespace-nowrap group-hover/needle:scale-105 transition-transform">
                   <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
                   <span>NOW ({timelineData.nowFormatted})</span>
+                  <span className="opacity-75 text-[9px]">↔</span>
                 </div>
               </div>
 
@@ -593,24 +886,40 @@ export const LiveDashboardScreen: React.FC = () => {
                   </div>
 
                   <div className="relative h-12 flex-1 bg-[#F8F8F5] rounded-xl p-1.5 overflow-hidden flex items-center border border-[#E5E5DF]">
-                    {track.segments.map((seg) => (
-                      <div
-                        key={seg.id}
-                        title={seg.tooltipText}
-                        className={`absolute h-9 rounded-lg flex items-center justify-between px-2.5 text-[12px] transition-all overflow-hidden ${getSegmentClasses(
-                          seg.phaseType
-                        )}`}
-                        style={{
-                          left: `${seg.leftPercent}%`,
-                          width: `${Math.max(4, seg.widthPercent)}%`,
-                        }}
-                      >
-                        <span className="truncate">{seg.label}</span>
-                        <span className="text-[10px] font-bold tabular-nums ml-1 opacity-90 shrink-0">
-                          {seg.durationMinutes}m
-                        </span>
-                      </div>
-                    ))}
+                    {track.segments.map((seg) => {
+                      const isSelected = selectedSegmentId === seg.id;
+                      return (
+                        <div
+                          key={seg.id}
+                          onClick={() => handleSegmentClick(seg)}
+                          title={`${seg.tooltipText} · Click to focus`}
+                          className={`absolute h-9 rounded-lg flex items-center justify-between px-2.5 text-[12px] transition-all overflow-hidden cursor-pointer hover:scale-[1.01] hover:brightness-105 active:scale-[0.99] ${getSegmentClasses(
+                            seg.phaseType
+                          )} ${
+                            isSelected
+                              ? 'ring-2 ring-[#3D8065] ring-offset-1 shadow-md z-20 font-bold'
+                              : ''
+                          } ${seg.status === 'completed' ? 'opacity-85' : ''}`}
+                          style={{
+                            left: `${seg.leftPercent}%`,
+                            width: `${Math.max(4, seg.widthPercent)}%`,
+                          }}
+                        >
+                          <div className="flex items-center gap-1 truncate">
+                            {seg.status === 'completed' && (
+                              <Check className="w-3 h-3 text-[#3D8065] shrink-0 stroke-[3]" />
+                            )}
+                            {seg.status === 'active' && (
+                              <span className="w-2 h-2 rounded-full bg-[#3D8065] animate-pulse shrink-0"></span>
+                            )}
+                            <span className="truncate">{seg.label}</span>
+                          </div>
+                          <span className="text-[10px] font-bold tabular-nums ml-1 opacity-90 shrink-0">
+                            {seg.durationMinutes}m
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               ))}
@@ -625,7 +934,7 @@ export const LiveDashboardScreen: React.FC = () => {
         <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={() => handleVoiceCommand('Listening')}
-            className="relative w-10 h-10 rounded-full bg-[#0284C7] text-white flex items-center justify-center hover:scale-105 transition-transform shadow-md shadow-[#0284C7]/20"
+            className="relative w-10 h-10 rounded-full bg-[#0284C7] text-white flex items-center justify-center hover:scale-105 transition-transform shadow-md shadow-[#0284C7]/20 cursor-pointer"
           >
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0284C7] opacity-30"></span>
             <Mic className="w-4 h-4" />

@@ -74,6 +74,7 @@ interface CookingSessionContextType {
   isTimerRunning: boolean;
   toggleTimer: () => void;
   resetTimer: () => void;
+  adjustTimerSeconds: (delta: number) => void;
   advanceStep: () => void;
   jumpToStep: (stepNumber: number) => void;
 
@@ -535,6 +536,11 @@ export const CookingSessionProvider: React.FC<{ children: ReactNode }> = ({ chil
     showToast('Timer Reset', `Countdown reset for Step ${activeStepNumber}.`, 'info');
   };
 
+  const adjustTimerSeconds = (delta: number) => {
+    setTimerSecondsRemaining((prev) => Math.max(0, prev + delta));
+    showToast('Timer Adjusted', `${delta > 0 ? '+' : ''}${delta}s applied to active step.`, 'info');
+  };
+
   const toggleSubItem = (id: string) => {
     setStepSubItems((prev) =>
       prev.map((item) => (item.id === id ? { ...item, completed: !item.completed } : item))
@@ -748,6 +754,7 @@ export const CookingSessionProvider: React.FC<{ children: ReactNode }> = ({ chil
         isTimerRunning,
         toggleTimer,
         resetTimer,
+        adjustTimerSeconds,
         advanceStep,
         jumpToStep,
         isEditDishModalOpen,

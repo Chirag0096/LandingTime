@@ -24,6 +24,7 @@ export interface TimelineSegment {
   tooltipText: string;
   appliance?: string;
   status: 'completed' | 'active' | 'upcoming' | 'holding';
+  stepNumber?: number;
 }
 
 export interface TimelineTrack {
@@ -107,6 +108,23 @@ export function computeKitchenTimeline({
   // Helper for formatting time
   const fmt = (min: number) => fromTotalMinutes(min).formatted;
 
+  // Helper for dynamic segment status and progress based on current clock
+  const calcSegState = (
+    segStart: number,
+    segEnd: number,
+    segDuration: number,
+    isHoldPhase = false
+  ): { status: 'completed' | 'active' | 'upcoming' | 'holding'; progressPercent: number } => {
+    if (nowMinuteOfDay > segEnd) {
+      return { status: 'completed', progressPercent: 100 };
+    }
+    if (nowMinuteOfDay >= segStart && nowMinuteOfDay <= segEnd) {
+      const p = Math.min(100, Math.max(0, Math.round(((nowMinuteOfDay - segStart) / Math.max(1, segDuration)) * 100)));
+      return { status: isHoldPhase ? 'holding' : 'active', progressPercent: p };
+    }
+    return { status: 'upcoming', progressPercent: 0 };
+  };
+
   // Track 1: Roast Chicken
   // Baseline: Prep (10m): 6:20-6:30, Roast (45m): 6:30-7:15, Rest (15m): 7:15-7:30
   // If delay detected & replanned: Roast +12m (6:30-7:27), Rest 10m (7:27-7:37)
@@ -130,7 +148,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(10),
       tooltipText: `Truss & Herb Butter (${fmt(chickenPrepStart)} – ${fmt(chickenPrepEnd)})`,
       appliance: 'Prep Counter',
-      status: 'completed',
+      stepNumber: 1,
+      ...calcSegState(chickenPrepStart, chickenPrepEnd, 10),
     },
     {
       id: 'chk-roast',
@@ -143,10 +162,10 @@ export function computeKitchenTimeline({
       durationMinutes: chickenRoastDuration,
       leftPercent: toPercent(chickenRoastStart),
       widthPercent: toWidthPercent(chickenRoastDuration),
-      progressPercent: 51,
       tooltipText: `Center Rack, Convection 425°F (${fmt(chickenRoastStart)} – ${fmt(chickenRoastEnd)})`,
       appliance: 'Shared Oven (Center)',
-      status: 'active',
+      stepNumber: 2,
+      ...calcSegState(chickenRoastStart, chickenRoastEnd, chickenRoastDuration),
     },
     {
       id: 'chk-rest',
@@ -159,7 +178,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(chickenRestDuration),
       tooltipText: `Rest on cutting board to preserve juices (${fmt(chickenRoastEnd)} – ${fmt(chickenRestEnd)})`,
       appliance: 'Carving Station',
-      status: 'upcoming',
+      stepNumber: 8,
+      ...calcSegState(chickenRoastEnd, chickenRestEnd, chickenRestDuration),
     },
   ];
 
@@ -187,7 +207,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(15),
       tooltipText: `Boil until fork-tender (${fmt(potBoilStart)} – ${fmt(potBoilEnd)})`,
       appliance: 'Burner #1 (Front Left)',
-      status: 'completed',
+      stepNumber: 3,
+      ...calcSegState(potBoilStart, potBoilEnd, 15),
     },
     {
       id: 'pot-smash',
@@ -200,7 +221,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(5),
       tooltipText: `Crush to 1/2" thick, season with rosemary & flaky salt (${fmt(potSmashStart)} – ${fmt(potSmashEnd)})`,
       appliance: 'Prep Island',
-      status: 'active',
+      stepNumber: 4,
+      ...calcSegState(potSmashStart, potSmashEnd, 5),
     },
     {
       id: 'pot-bake',
@@ -213,7 +235,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(25),
       tooltipText: `High ambient crisping (${fmt(potBakeStart)} – ${fmt(potBakeEnd)})`,
       appliance: 'Shared Oven (Top Rack)',
-      status: 'upcoming',
+      stepNumber: 5,
+      ...calcSegState(potBakeStart, potBakeEnd, 25),
     },
     {
       id: 'pot-hold',
@@ -226,7 +249,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(potHoldingDuration),
       tooltipText: `Ventilated rack at 170°F (${fmt(potBakeEnd)} – ${fmt(potHoldingEnd)})`,
       appliance: 'Warming Drawer',
-      status: 'upcoming',
+      stepNumber: 9,
+      ...calcSegState(potBakeEnd, potHoldingEnd, potHoldingDuration, isReplanApplied),
     },
   ];
 
@@ -259,7 +283,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(5),
       tooltipText: `Snap woody stems (${fmt(aspTrimStart)} – ${fmt(aspTrimEnd)})`,
       appliance: 'Prep Island',
-      status: 'completed',
+      stepNumber: 6,
+      ...calcSegState(aspTrimStart, aspTrimEnd, 5),
     },
     {
       id: 'gravy-simmer',
@@ -272,7 +297,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(gravyDuration),
       tooltipText: `Simmer base stock and aromatics (${fmt(gravyStart)} – ${fmt(gravyEnd)})`,
       appliance: 'Burner #2 (Back Right)',
-      status: 'active',
+      stepNumber: 6,
+      ...calcSegState(gravyStart, gravyEnd, gravyDuration),
     },
     {
       id: 'asp-saute',
@@ -285,7 +311,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(sauteduration),
       tooltipText: `High flame skillet sear (${fmt(sauteStart)} – ${fmt(sauteEnd)})`,
       appliance: 'Burner #1 (Front Left)',
-      status: 'upcoming',
+      stepNumber: 7,
+      ...calcSegState(sauteStart, sauteEnd, sauteduration),
     },
     {
       id: 'gravy-finish',
@@ -298,7 +325,8 @@ export function computeKitchenTimeline({
       widthPercent: toWidthPercent(gravyFinishDuration),
       tooltipText: `Deglaze chicken skillet drippings & whisk (${fmt(gravyFinishStart)} – ${fmt(gravyFinishEnd)})`,
       appliance: 'Burner #2 (Back Right)',
-      status: 'upcoming',
+      stepNumber: 8,
+      ...calcSegState(gravyFinishStart, gravyFinishEnd, gravyFinishDuration),
     },
   ];
 

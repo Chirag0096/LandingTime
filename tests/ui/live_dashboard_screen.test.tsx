@@ -123,4 +123,67 @@ describe('UI: LiveDashboardScreen Component', () => {
     expect(screen.getByRole('button', { name: /INGREDIENT MISSING/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /PAUSE TIMERS/i })).toBeInTheDocument();
   });
+
+  it('dynamically updates simulation clock when clicking timeline scrubber presets', () => {
+    render(
+      <CookingSessionProvider>
+        <LiveDashboardScreen />
+      </CookingSessionProvider>
+    );
+
+    // Initial clock display
+    expect(screen.getByText('6:51 PM')).toBeInTheDocument();
+
+    // Click 6:20 PM Prep preset
+    const prepPreset = screen.getByRole('button', { name: /6:20 PM Prep/i });
+    fireEvent.click(prepPreset);
+
+    // Now clock and active step 1 should be active
+    expect(screen.getAllByText('6:20 PM').length).toBeGreaterThan(0);
+    expect(screen.getByText(/ACTIVE HANDS · STEP 01 OF 09/i)).toBeInTheDocument();
+  });
+
+  it('jumps to corresponding cooking step when clicking a timeline segment', () => {
+    render(
+      <CookingSessionProvider>
+        <LiveDashboardScreen />
+      </CookingSessionProvider>
+    );
+
+    // Click Boil yukons segment
+    const boilSeg = screen.getByText(/Boil yukons · 15m/i);
+    fireEvent.click(boilSeg);
+
+    // Should switch to step 3
+    expect(screen.getByText(/ACTIVE HANDS · STEP 03 OF 09/i)).toBeInTheDocument();
+  });
+
+  it('jumps to corresponding cooking step when clicking interactive equipment cards', () => {
+    render(
+      <CookingSessionProvider>
+        <LiveDashboardScreen />
+      </CookingSessionProvider>
+    );
+
+    // Click primary oven roast chicken card
+    const chickenCard = screen.getByTitle(/Click to focus on Chicken Roast \(Step 2\)/i);
+    fireEvent.click(chickenCard);
+
+    // Active step should become Step 2
+    expect(screen.getByText(/ACTIVE HANDS · STEP 02 OF 09/i)).toBeInTheDocument();
+  });
+
+  it('adjusts target serving deadline with +/- 5m quick buttons', () => {
+    render(
+      <CookingSessionProvider>
+        <LiveDashboardScreen />
+      </CookingSessionProvider>
+    );
+
+    const plus5Btn = screen.getByTitle(/Shift dinner 5 minutes later/i);
+    fireEvent.click(plus5Btn);
+
+    // Target was 7:30 PM, now 7:35 PM
+    expect(screen.getByText(/LANDING AT 7:35 PM/i)).toBeInTheDocument();
+  });
 });
