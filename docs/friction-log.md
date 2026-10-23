@@ -1,58 +1,51 @@
 # Landing Time — Developer Friction Log
 
-This log captures developer experience hurdles, protocol edge cases, and SDK quirks encountered during the development of Landing Time for the Amazon Developer Hackathon (Alexa+ Track).
+This log captures developer experience hurdles, protocol edge cases, and SDK quirks encountered during the development of Landing Time for the Amazon Developer Hackathon 2026 (Alexa+ Track).
 
 ---
 
-### Entry 1: MCP Streamable HTTP Transport Options Parameter Mismatch
-- **Task Attempted**: Initializing `StreamableHTTPServerTransport` from `@modelcontextprotocol/sdk/server/streamableHttp.js`.
-- **Steps**:
-  1. Followed standard HTTP server examples passing `{ endpoint: '/mcp' }` into `new StreamableHTTPServerTransport({ endpoint: '/mcp' })`.
-  2. Ran TypeScript check with Node ESM compilation.
-- **Expected vs Actual**:
-  - *Expected*: Transport accepts endpoint path option or ignores non-conflicting config.
-  - *Actual*: TypeScript error `TS2353: Object literal may only specify known properties, and 'endpoint' does not exist in type 'WebStandardStreamableHTTPServerTransportOptions'`.
-- **Severity**: Medium (Build blocker until diagnosed).
-- **Workaround**: Inspected `webStandardStreamableHttp.d.ts` and observed that options only accept `sessionIdGenerator?: () => string`, `onsessioninitialized`, and `onsessionclosed`. Configured `sessionIdGenerator: () => crypto.randomUUID()`.
-- **Suggestion**: Update MCP SDK documentation and TypeScript definitions to include clear Express/Node.js adapter examples alongside Web Standards Fetch API examples.
+### Entry 1: Express Middleware for Streamable HTTP in `@modelcontextprotocol/sdk`
+* **Task Attempted:** Initializing `StreamableHTTPServerTransport` from `@modelcontextprotocol/sdk/server/streamableHttp.js` in an Express application.
+* **Steps Taken:** Passed `{ endpoint: '/mcp' }` into `new StreamableHTTPServerTransport({ endpoint: '/mcp' })`.
+* **Expected vs. Actual:**
+  * *Expected:* Transport accepts standard Express path options or gracefully ignores non-conflicting config.
+  * *Actual:* TypeScript compiler error `TS2353: Object literal may only specify known properties, and 'endpoint' does not exist in type 'WebStandardStreamableHTTPServerTransportOptions'`.
+* **Severity:** Medium (Build blocker until diagnosed).
+* **Workaround Used:** Inspected `webStandardStreamableHttp.d.ts` and realized the Node transport diverges from WebStandard fetch options. Used `sessionIdGenerator: () => crypto.randomUUID()` and handled Express route mounting directly via `app.all('/mcp', ...)`.
+* **Actionable Suggestion:** Ship a first-class `createExpressMcpMiddleware()` helper in `@modelcontextprotocol/sdk` to eliminate manual transport boilerplate in Express.
 
 ---
 
-### Entry 2: Echo Show Webview PostMessage Bridge Isolation
-- **Task Attempted**: Direct client-to-backend communication from Echo Show 15 webview.
-- **Steps**:
-  1. Analyzed frontend architecture connecting to backend in Alexa-hosted webview.
-  2. Evaluated browser `fetch()` directly from webview to local server.
-- **Expected vs Actual**:
-  - *Expected*: Webview can freely make CORS requests to backend server.
-  - *Actual*: On real Echo Show hardware, CSP policies block arbitrary external origins from webviews unless routed through Alexa tool responses (`postMessage` bridge).
-- **Severity**: High (Runtime communication blocker on physical devices).
-- **Workaround**: Followed the official MCP Apps pattern: MCP tool responses include structured `ui` payload keys (`screen`, `gantt`, `masterClock`). Alexa's orchestration layer delivers these payloads down to the webview via message bus, and the webview updates its local countdown timer with zero per-tick network round trips.
-- **Suggestion**: Provide an official `@modelcontextprotocol/ext-apps` simulator package in npm for testing the webview bridge locally in Vite dev mode.
+### Entry 2: MCP Spec Version Compliance (`2025-11-25`) Verification
+* **Task Attempted:** Validating that our self-hosted MCP server strictly adheres to spec version `2025-11-25` for Alexa+ hackathon rules.
+* **Steps Taken:** Cross-referenced Alexa+ developer guidelines with Model Context Protocol release notes.
+* **Expected vs. Actual:**
+  * *Expected:* A unified "Alexa+ MCP Readiness Checklist" or CLI verification command to test endpoint compliance.
+  * *Actual:* Spec requirements were spread across three different documentation pages without an automated validator.
+* **Severity:** Medium (Uncertainty regarding compliance verification).
+* **Workaround Used:** Wrote a dedicated automated integration test suite (`server/tests/integration/mcp_protocol.test.ts`) that asserts protocol headers, JSON-RPC 2.0 structure, and 2025-11-25 schema payloads.
+* **Actionable Suggestion:** Publish an official `alexa-mcp-verify` CLI or GitHub Action that verifies compliance before submission.
 
 ---
 
-### Entry 3: Node ESM `.ts` Extension Resolution with tsx
-- **Task Attempted**: Importing internal server TypeScript modules in an ESM repository (`"type": "module"`).
-- **Steps**:
-  1. Configured server with Node.js ES2022 modules.
-  2. Created separate `server/tsconfig.json` with `"moduleResolution": "bundler"` and `"allowImportingTsExtensions": true`.
-- **Expected vs Actual**:
-  - *Expected*: Native node loader runs TypeScript without extension complaints.
-  - *Actual*: Standard Node ESM requires explicit file extensions. Without bundler resolution or tsx loader, imports fail.
-- **Severity**: Medium.
-- **Workaround**: Explicitly used `.ts` import specifiers (e.g. `import ... from './types.ts'`), and configured `tsx` for server development execution.
-- **Suggestion**: Clarify TypeScript project guidance for monorepo-adjacent Node server directories inside Vite roots.
+### Entry 3: Echo Show Webview PostMessage Simulation
+* **Task Attempted:** Testing Echo Show webview communication locally in Vite development mode.
+* **Steps Taken:** Attempted to test simulated Alexa tool response push events (`ui.screen`, `ui.gantt`) inside browser dev mode.
+* **Expected vs. Actual:**
+  * *Expected:* An official Echo Show webview simulator package to test touch targets and message bus delivery.
+  * *Actual:* No official Echo Show webview simulator package exists on npm; physical devices enforce strict CSP policies preventing direct cross-origin fetches.
+* **Severity:** Medium.
+* **Workaround Used:** Built our own docked Judge Demo Bar (`?demo=true`) and simulated event bus inside `CookingSessionContext.tsx` to replicate postMessage delivery locally.
+* **Actionable Suggestion:** Release an official `@modelcontextprotocol/ext-apps-simulator` npm package with Echo Show 8/10/15 responsive viewports and simulated voice audio ducking.
 
 ---
 
-### Entry 4: SpeechSynthesis API vs Alexa Native TTS
-- **Task Attempted**: Generating spoken feedback for cooking steps.
-- **Steps**:
-  1. Audited existing browser code calling `window.speechSynthesis`.
-- **Expected vs Actual**:
-  - *Expected*: Web speech API works on Echo Show.
-  - *Actual*: Echo Show handles text-to-speech directly via Alexa voice orchestration. In-webview speech synthesis conflicts with Alexa's physical microphones and speaker ducking.
-- **Severity**: Medium.
-- **Workaround**: Removed browser-side speech synthesis calls; tool responses emit textual responses in the MCP content array that Alexa naturally speaks before displaying visual cards.
-- **Suggestion**: Document in the Alexa+ developer portal that all voice output should be returned via tool `content[].text` fields.
+### Entry 4: Kiro Crew Agentic Specification Files (`.kiro/specs/`) Alignment
+* **Task Attempted:** Aligning Kiro Crew agentic specification files (`.kiro/specs/`) with automated test runners.
+* **Steps Taken:** Formulated functional requirements with numbered IDs (REQ-001 through REQ-004) in `.kiro/specs/*.spec.json`. Ran Vitest test suites to verify requirements.
+* **Expected vs. Actual:**
+  * *Expected:* Kiro Crew CLI could parse test results and automatically update the `"status": "IMPLEMENTED"` tags in spec JSON.
+  * *Actual:* Had to manually maintain the specification status mapping.
+* **Severity:** Low.
+* **Workaround Used:** Added explicit `verification` test file paths in the spec JSON files and mapped assertions directly to requirement IDs.
+* **Actionable Suggestion:** Add a `kiro test --sync-specs` command in the Kiro developer tooling that maps test assertion passes directly to spec requirements.
