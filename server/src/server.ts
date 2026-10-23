@@ -55,16 +55,28 @@ export async function createApp(dbPath?: string) {
     }
   });
 
-  // Root status
-  app.get('/', (_req, res) => {
-    res.json({
-      name: 'Landing Time Backend & MCP Server',
-      status: 'active',
-      endpoints: {
-        api: '/api/v1',
-        health: '/api/v1/health',
-        mcp: '/mcp',
-      },
+  // Static frontend serving from dist folder
+  const distPath = path.resolve(__dirname, '../../dist');
+  app.use(express.static(distPath));
+
+  // SPA fallback / Root route
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path === '/mcp') {
+      return next();
+    }
+    const indexPath = path.join(distPath, 'index.html');
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        res.json({
+          name: 'Landing Time Backend & MCP Server',
+          status: 'active',
+          endpoints: {
+            api: '/api/v1',
+            health: '/api/v1/health',
+            mcp: '/mcp',
+          },
+        });
+      }
     });
   });
 
