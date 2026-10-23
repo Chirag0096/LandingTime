@@ -1,0 +1,18 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://guys-proposition-prot-tokyo.trycloudflare.com/api/$1"
+    },
+    {
+      "source": "/mcp",
+      "destination": "https://guys-proposition-prot-tokyo.trycloudflare.com/mcp"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
