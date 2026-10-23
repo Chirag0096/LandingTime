@@ -49,12 +49,22 @@ Landing Time turns multi-dish meal planning into an agentic conversation:
 
 ---
 
+## 🌐 Live Shareable Deployment URL (No Localhost Required)
+- **Live Interactive Web App (Judge Demo Mode):**  
+  👉 **`https://guys-proposition-prot-tokyo.trycloudflare.com/?demo=true`**
+- **Live REST API Health Endpoint:**  
+  👉 **`https://guys-proposition-prot-tokyo.trycloudflare.com/api/v1/health`**
+- **Live Model Context Protocol (MCP) Streamable HTTP Server:**  
+  👉 **`https://guys-proposition-prot-tokyo.trycloudflare.com/mcp`**
+
+---
+
 ## 🧪 Testing & Verification
-Landing Time includes an exhaustive automated test suite with **80 / 80 passing tests (100% pass rate)**:
-- **Playwright Chrome Live Browser E2E** (`tests/e2e/user_flow.spec.ts`): Drives real Google Chrome on macOS against `http://localhost:3000` through all 8 user milestones.
-- **React UI Component Tests** (`tests/ui/*.test.tsx`): 35 tests covering all screens, modals, timers, and Gantt charts.
+Landing Time includes an exhaustive automated test suite with **83 / 83 passing tests (100% pass rate)**:
+- **React UI Component Tests** (`tests/ui/*.test.tsx`): 39 tests covering all screens, modals, interactive timeline scrubber, and appliance controls.
 - **Server, Persistence, & MCP Tests** (`server/tests/`): 35 tests covering CPM DAG math, 21-step acceptance scenarios, optimistic concurrency, and live Gemini AI calls.
 - **Timeline Utilities** (`src/utils/`): 9 tests verifying 12-hour arithmetic, prep triggers, and dynamic landing deltas.
+- **Playwright Chrome Live Browser E2E** (`tests/e2e/user_flow.spec.ts`): Drives real Google Chrome on macOS through all 8 user milestones.
 
 ---
 
